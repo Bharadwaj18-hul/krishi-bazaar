@@ -20,6 +20,7 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from backend.core import config
 from backend.core.database import ensure_schema
+from backend.core.seed import seed_if_empty
 from backend.routes import (
     api_router,
     web_admin_router,
@@ -36,6 +37,7 @@ logger = logging.getLogger("krishi")
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     ensure_schema()  # create tables / add new columns on start
+    seed_if_empty()  # populate demo accounts & 13 crops only when DB is empty
     yield
 
 
