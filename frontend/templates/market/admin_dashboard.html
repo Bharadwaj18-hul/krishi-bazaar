@@ -1,0 +1,117 @@
+{% extends "market/base.html" %}
+{% block title %}Executive Console · Krishi Bazaar{% endblock %}
+{% block content %}
+<div class="container py-2">
+
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+    <div>
+      <span class="text-uppercase small fw-bold letter-spacing-1" style="color: var(--lux-gold-dark);">PLATFORM GOVERNANCE</span>
+      <h1 class="display-6 fw-bold mb-1">Executive Monitoring Dashboard</h1>
+      <p class="text-muted mb-0">High-level telemetry on platform growth, market liquidity, and direct transactions.</p>
+    </div>
+  </div>
+
+  <!-- Metric Badges Row -->
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-4 col-lg-2">
+      <div class="lux-metric-card">
+        <div>
+          <div class="lux-metric-label">Total Users</div>
+          <div class="lux-metric-val">{{ users }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-2">
+      <div class="lux-metric-card">
+        <div>
+          <div class="lux-metric-label">Cultivators</div>
+          <div class="lux-metric-val">{{ farmers }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-2">
+      <div class="lux-metric-card">
+        <div>
+          <div class="lux-metric-label">Buyers</div>
+          <div class="lux-metric-val">{{ buyers }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-2">
+      <div class="lux-metric-card">
+        <div>
+          <div class="lux-metric-label">Active Crops</div>
+          <div class="lux-metric-val">{{ products }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-2">
+      <div class="lux-metric-card">
+        <div>
+          <div class="lux-metric-label">Transactions</div>
+          <div class="lux-metric-val">{{ orders }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-2">
+      <div class="lux-metric-card" style="border-color: var(--lux-gold);">
+        <div>
+          <div class="lux-metric-label">Gross Value</div>
+          <div class="lux-metric-val" style="font-size: 1.35rem; color: var(--lux-forest);">₹{{ sales }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audit Table: Recent Transactions -->
+  <div class="lux-table-card">
+    <div class="lux-table-header">
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-clock-history text-warning fs-5"></i>
+        <h3 class="h5 mb-0">Recent Platform Transactions</h3>
+      </div>
+      <span class="badge border border-warning text-warning">Realtime Ledger</span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table lux-table align-middle">
+        <thead>
+          <tr>
+            <th>Tx ID</th>
+            <th>Buyer</th>
+            <th>Commodity</th>
+            <th>Volume Price</th>
+            <th class="text-end">State</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for o in recent_orders %}
+            <tr>
+              <td><span class="badge bg-light text-dark border">#{{ o.id }}</span></td>
+              <td><strong>{{ o.buyer.username }}</strong></td>
+              <td>{{ o.product.crop_name }}</td>
+              <td><strong class="fs-6" style="color: var(--lux-forest);">₹{{ o.total_price }}</strong></td>
+              <td class="text-end">
+                {% if o.status == 'pending' %}
+                  <span class="badge-lux-pending">Pending Review</span>
+                {% elif o.status == 'accepted' %}
+                  <span class="badge-lux-accepted">Accepted</span>
+                {% elif o.status == 'fulfilled' %}
+                  <span class="badge-lux-fulfilled">Fulfilled</span>
+                {% else %}
+                  <span class="badge-lux-rejected">Declined</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="5" class="text-center py-4 text-muted">No transactions recorded yet.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

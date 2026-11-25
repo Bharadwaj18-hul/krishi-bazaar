@@ -1,0 +1,202 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Google Authentication Setup · Krishi Bazaar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
+  <style>
+    :root {
+      --lux-dark: #07150e;
+      --lux-forest: #0d261a;
+      --lux-emerald: #143a28;
+      --lux-gold: #d4af37;
+      --lux-gold-light: #f3e2b1;
+      --lux-gold-dark: #a67c1e;
+      --lux-bg: #f7f5f0;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--lux-bg);
+      color: var(--lux-dark);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .setup-card {
+      background: #ffffff;
+      border: 1px solid rgba(212,175,55,0.3);
+      box-shadow: 0 16px 48px rgba(7,21,14,0.08);
+      border-radius: 16px;
+      max-width: 620px;
+      width: 100%;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .setup-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(135deg, #f0d596 0%, #d4af37 50%, #a67c1e 100%);
+    }
+    .badge-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 1.5px solid #eaeaea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+    }
+    .setup-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .setup-desc {
+      color: #666;
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .quick-test-box {
+      background: rgba(20,58,40,0.04);
+      border: 1px solid rgba(212,175,55,0.35);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .quick-test-box h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--lux-forest);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-test-google {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 13px;
+      background: #ffffff;
+      border: 1.5px solid #dadce0;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #3c4043;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      margin-top: 12px;
+    }
+    .btn-test-google:hover {
+      background: #f8f9fa;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-color: #c6c6c6;
+    }
+    .env-steps {
+      background: #181d1a;
+      color: #d1d5db;
+      border-radius: 10px;
+      padding: 16px;
+      font-family: Consolas, monospace;
+      font-size: 12.5px;
+      line-height: 1.5;
+      overflow-x: auto;
+      margin-top: 10px;
+      user-select: all;
+    }
+    .steps-list {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.7;
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--lux-gold-dark);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 20px;
+    }
+    .back-btn:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="setup-card">
+    <div class="badge-icon">
+      <svg width="28" height="28" viewBox="0 0 24 24">
+        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+      </svg>
+    </div>
+
+    <h1 class="setup-title">Google Sign-In Ready</h1>
+    <p class="setup-desc">
+      The Google OAuth 2.0 integration is fully supported. To connect real Google accounts, supply your OAuth Client ID and Secret in your <code>.env</code> file. For immediate local testing, you can use the instant 1-click simulation below.
+    </p>
+
+    <!-- Instant 1-Click Simulation -->
+    <div class="quick-test-box">
+      <h4><i class="bi bi-lightning-charge-fill" style="color: var(--lux-gold);"></i> Instant Test Simulation</h4>
+      <p style="font-size: 12.5px; color: #555;">Sign in immediately as an authenticated Google user without configuring Google Cloud credentials:</p>
+      
+      <form method="post" action="/auth/google/mock/">
+        {% csrf_token %}
+        <input type="hidden" name="email" value="demo.google.buyer@krishibazaar.local"/>
+        <input type="hidden" name="name" value="Google Demo Patron"/>
+        <input type="hidden" name="role" value="buyer"/>
+        <button type="submit" class="btn-test-google">
+          <svg width="18" height="18" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          Continue as Demo Google Account (Instant 1-Click)
+        </button>
+      </form>
+    </div>
+
+    <!-- Production Configuration Guide -->
+    <h3 style="font-size: 14px; font-weight: 700; margin-bottom: 8px;">To Enable Real Google Accounts:</h3>
+    <ol class="steps-list">
+      <li>Visit the <a href="https://console.cloud.google.com/apis/credentials" target="_blank" style="color:var(--lux-gold-dark);">Google Cloud Console</a> &rarr; <strong>APIs &amp; Services &rarr; Credentials</strong>.</li>
+      <li>Create an <strong>OAuth 2.0 Client ID</strong> (Web application).</li>
+      <li>Set <strong>Authorized redirect URIs</strong> to: <code>http://localhost:8000/auth/google/callback/</code></li>
+      <li>Add the keys to your <code>.env</code> file:</li>
+    </ol>
+
+    <div class="env-steps">
+GOOGLE_CLIENT_ID=your-client-id.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=your-client-secret
+    </div>
+
+    <div>
+      <a href="/login/" class="back-btn">&larr; Return to Sign In</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,172 @@
+{% extends "market/base.html" %}
+{% block title %}{{ product.crop_name }} · Krishi Bazaar Reserve{% endblock %}
+{% block content %}
+<div class="container py-2">
+
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb small">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-decoration-none" style="color: var(--lux-gold-dark);">Catalog</a></li>
+      <li class="breadcrumb-item text-muted">{{ product.location }}</li>
+      <li class="breadcrumb-item active text-dark" aria-current="page">{{ product.crop_name }}</li>
+    </ol>
+  </nav>
+
+  <div class="row g-4 align-items-start">
+    <!-- Left: Gallery & Cultivator Badge -->
+    <div class="col-12 col-lg-6">
+      <div class="lux-detail-gallery mb-4">
+        {% if product.image %}
+          <img src="{{ product.image_url }}" class="w-100 object-fit-cover" style="max-height: 480px; min-height: 320px;" alt="{{ product.crop_name }}">
+        {% else %}
+          <div class="lux-placeholder-img" style="height: 420px;">
+            🌾
+            <span class="mt-2">Single-Origin Harvest Allotment</span>
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Cultivator Credential Card -->
+      <div class="card p-4 rounded-4 shadow-sm border" style="border-color: var(--lux-border-gold) !important; background: #ffffff;">
+        <div class="d-flex align-items-center gap-3">
+          <div class="lux-brand-emblem" style="width: 52px; height: 52px; font-size: 24px;">
+            <i class="bi bi-person-badge"></i>
+          </div>
+          <div>
+            <span class="text-uppercase small fw-bold text-muted letter-spacing-1">Cultivator / Landholder</span>
+            <h4 class="h5 mb-0 fw-bold">{{ product.farmer.get_full_name|default:product.farmer.username }}</h4>
+            <span class="badge text-bg-success mt-1"><i class="bi bi-patch-check-fill me-1"></i> Verified Agrarian Partner</span>
+          </div>
+        </div>
+        <hr class="my-3 opacity-25">
+        <p class="small text-muted mb-0">
+          <i class="bi bi-shield-check text-warning me-1"></i> Allotments from this producer undergo direct origin affirmation. Guaranteed no chemical blending or synthetic ripening after dispatch.
+        </p>
+      </div>
+    </div>
+
+    <!-- Right: Specification & Acquisition Box -->
+    <div class="col-12 col-lg-6">
+      <div class="lux-detail-card">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="lux-badge-pill"><i class="bi bi-award text-warning"></i> LOT #{{ product.id }}</span>
+          <span class="badge bg-light text-dark border px-3 py-2"><i class="bi bi-box-seam me-1 text-success"></i> {{ product.quantity }} {{ product.unit }} Available</span>
+        </div>
+
+        <h1 class="display-6 fw-bold mb-2 mt-2">{{ product.crop_name }}</h1>
+        {% if reviews %}<div class="mb-3" style="color:#b8860b;">{{ '★' * (product.avg_rating|round|int) }}{{ '☆' * (5 - (product.avg_rating|round|int)) }} <span class="text-muted small">{{ product.avg_rating }} · {{ reviews|length }} review{{ reviews|length|pluralize }}</span></div>{% endif %}
+        <p class="text-muted leading-relaxed" style="font-size: 15px;">
+          {{ product.description|default:"Direct farm-fresh produce cultivated in accordance with wholesome agrarian practices. Harvested at optimal maturity to preserve natural aroma, nutrient density, and terroir character." }}
+        </p>
+
+        <!-- Price Banner -->
+        <div class="p-3 my-4 rounded-3 d-flex align-items-baseline justify-content-between" style="background: var(--lux-alabaster-muted); border: 1px solid var(--lux-border-gold);">
+          <div>
+            <span class="small text-muted text-uppercase d-block fw-semibold">Direct Sovereign Price</span>
+            <span class="display-6 fw-bold" style="color: var(--lux-forest); font-family: var(--font-serif);">₹{{ product.price }}</span>
+            <span class="text-muted">/ {{ product.unit }}</span>
+          </div>
+          <span class="badge border border-success text-success px-3 py-2"><i class="bi bi-check2-circle me-1"></i> 0% Middleman Margin</span>
+        </div>
+
+        <!-- Provenance Specs -->
+        <ul class="lux-provenance-list">
+          <li class="lux-provenance-item">
+            <span class="lux-provenance-label"><i class="bi bi-geo-alt-fill text-warning"></i> Geographical Origin</span>
+            <span class="lux-provenance-val">{{ product.location }}</span>
+          </li>
+          <li class="lux-provenance-item">
+            <span class="lux-provenance-label"><i class="bi bi-calendar-event text-warning"></i> Harvest Date</span>
+            <span class="lux-provenance-val">{{ product.harvest_date|default:"Seasonal In-Progress" }}</span>
+          </li>
+          <li class="lux-provenance-item">
+            <span class="lux-provenance-label"><i class="bi bi-boxes text-warning"></i> Minimum Order / Unit</span>
+            <span class="lux-provenance-val">1 {{ product.unit }}</span>
+          </li>
+          <li class="lux-provenance-item">
+            <span class="lux-provenance-label"><i class="bi bi-truck text-warning"></i> Logistics</span>
+            <span class="lux-provenance-val">Farm Gate Direct Dispatch</span>
+          </li>
+        </ul>
+
+        <!-- Ordering & Bag Actions -->
+        <div class="mt-4 pt-2">
+          
+          <!-- Add to Acquisition Bag Form -->
+          <form method="post" action="{% url 'cart_add' product.pk %}" class="mb-3">
+            {% csrf_token %}
+            <div class="p-3 rounded-3 mb-3" style="background: rgba(212,175,55,0.06); border: 1.5px solid rgba(212,175,55,0.3);">
+              <label class="small fw-bold text-dark d-block mb-2">
+                <i class="bi bi-box-seam me-1 text-warning"></i> Select Acquisition Volume:
+              </label>
+              <div class="row g-2 align-items-center">
+                <div class="col-5 col-sm-4">
+                  <div class="input-group">
+                    <input type="number" name="quantity" value="1" min="0.01" max="{{ product.quantity }}" step="any" class="form-control text-center fw-bold" style="border: 1.5px solid var(--lux-gold); border-radius: 8px 0 0 8px;">
+                    <span class="input-group-text small bg-white text-muted fw-semibold" style="border: 1.5px solid var(--lux-gold); border-left: none; border-radius: 0 8px 8px 0;">{{ product.unit }}</span>
+                  </div>
+                </div>
+                <div class="col-7 col-sm-8">
+                  <button type="submit" class="btn btn-gold w-100 py-2 fw-bold" style="height: 40px; font-size: 13.5px;">
+                    <i class="bi bi-bag-plus-fill me-1"></i> Add to Acquisition Bag
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          {% if user.is_authenticated and role == 'buyer' %}
+            <a class="btn btn-gold-outline w-100 py-2 fw-bold text-center" href="{% url 'place_order' product.pk %}">
+              <i class="bi bi-lightning-charge me-1"></i> Direct Single Allotment Checkout
+            </a>
+          {% elif not user.is_authenticated %}
+            <div class="text-center mt-2">
+              <small class="text-muted">Direct settlement guaranteed. <a href="{% url 'login' %}" class="fw-semibold" style="color: var(--lux-gold-dark);">Sign In</a> or <a href="{% url 'register' %}" class="fw-semibold" style="color: var(--lux-gold-dark);">Register Buyer Account</a></small>
+            </div>
+          {% elif user.is_authenticated and role == 'farmer' %}
+            <div class="alert alert-secondary text-center mb-0 small">
+              <i class="bi bi-info-circle me-1"></i> You are signed in as a registered Producer. To place orders, please switch to a Buyer account.
+            </div>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Ratings & Reviews -->
+  <div class="row mt-5"><div class="col-12 col-lg-8">
+    <h2 class="h4 fw-bold mb-3"><i class="bi bi-star-fill text-warning me-2"></i>Ratings &amp; Reviews</h2>
+
+    {% if can_review %}
+    <form method="post" action="{% url 'product_review' product.pk %}" class="p-3 rounded-3 mb-4" style="background: rgba(212,175,55,0.06); border: 1.5px solid rgba(212,175,55,0.3);">
+      {% csrf_token %}
+      <label class="small fw-bold d-block mb-2">{% if my_review %}Update your review{% else %}Rate this produce{% endif %}</label>
+      <div class="row g-2">
+        <div class="col-12 col-sm-3">
+          <select name="rating" class="lux-input" required>
+            {% for n in [5, 4, 3, 2, 1] %}<option value="{{ n }}" {% if my_review and my_review.rating == n %}selected{% endif %}>{{ '★' * n }} ({{ n }})</option>{% endfor %}
+          </select>
+        </div>
+        <div class="col-12 col-sm-7"><input class="lux-input" name="comment" maxlength="500" placeholder="Share your experience (optional)" value="{{ my_review.comment if my_review else '' }}"></div>
+        <div class="col-12 col-sm-2 d-grid"><button class="btn btn-gold">Save</button></div>
+      </div>
+    </form>
+    {% endif %}
+
+    {% for r in reviews %}
+      <div class="p-3 mb-2 rounded-3 border bg-white">
+        <div class="d-flex justify-content-between">
+          <strong>{{ r.user.get_full_name }}</strong>
+          <span style="color:#b8860b;">{{ '★' * r.rating }}{{ '☆' * (5 - r.rating) }}</span>
+        </div>
+        {% if r.comment %}<p class="mb-1 mt-1">{{ r.comment }}</p>{% endif %}
+        <small class="text-muted">{{ r.created_at|date:"d M Y" }} · Verified buyer</small>
+      </div>
+    {% else %}
+      <p class="text-muted">No reviews yet. Buyers can review this produce after delivery.</p>
+    {% endfor %}
+  </div></div>
+
+</div>
+{% endblock %}

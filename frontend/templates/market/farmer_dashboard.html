@@ -1,0 +1,336 @@
+{% extends "market/base.html" %}
+{% block title %}Producer Portal · Krishi Bazaar{% endblock %}
+{% block content %}
+<div class="container py-2">
+
+  <!-- Header & Add Produce -->
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+    <div>
+      <span class="text-uppercase small fw-bold letter-spacing-1" style="color: var(--lux-gold-dark);">PRODUCER COMMAND CONSOLE</span>
+      <h1 class="display-6 fw-bold mb-1">Estate & Harvest Management</h1>
+      <p class="text-muted mb-0">Oversee your agricultural inventory, manage orders directly from buyers, and monitor fulfilment.</p>
+    </div>
+    <a class="btn btn-gold py-2 px-4 shadow-sm" href="{% url 'product_create' %}">
+      <i class="bi bi-plus-lg me-1"></i> Register New Harvest
+    </a>
+  </div>
+
+  <!-- Metric Badges -->
+  <div class="row g-3 mb-4">
+    <div class="col-12 col-sm-6 col-md-4">
+      <div class="lux-metric-card">
+        <div class="lux-metric-icon"><i class="bi bi-collection"></i></div>
+        <div>
+          <div class="lux-metric-label">Active Listings</div>
+          <div class="lux-metric-val">{{ products|length }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+      <div class="lux-metric-card">
+        <div class="lux-metric-icon" style="color: #dfc288;"><i class="bi bi-inbox-fill"></i></div>
+        <div>
+          <div class="lux-metric-label">Incoming Orders</div>
+          <div class="lux-metric-val">{{ orders|length }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+      <div class="lux-metric-card">
+        <div class="lux-metric-icon" style="color: #8be0a4;"><i class="bi bi-shield-check"></i></div>
+        <div>
+          <div class="lux-metric-label">Agrarian Verification</div>
+          <div class="lux-metric-val" style="font-size: 1.25rem;">Active Steward</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table 1: Listed Produce -->
+  <div class="lux-table-card mb-5">
+    <div class="lux-table-header">
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-flower1 text-warning fs-5"></i>
+        <h3 class="h5 mb-0">Registered Harvest Inventory</h3>
+      </div>
+      <span class="badge border border-warning text-warning">{{ products|length }} Total</span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table lux-table align-middle">
+        <thead>
+          <tr>
+            <th>Commodity</th>
+            <th>Available Stock</th>
+            <th>Unit Price</th>
+            <th>Origin / Terroir</th>
+            <th>Status</th>
+            <th class="text-end">Management</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in products %}
+            <tr>
+              <td>
+                <div class="d-flex align-items-center gap-2">
+                  <div class="rounded-circle d-flex align-items-center justify-content-center bg-light border" style="width: 38px; height: 38px;">
+                    {% if p.image %}
+                      <img src="{{ p.image_url }}" class="rounded-circle" style="width: 100%; height: 100%; object-fit: cover;">
+                    {% else %}
+                      🌾
+                    {% endif %}
+                  </div>
+                  <div>
+                    <strong class="text-dark d-block">{{ p.crop_name }}</strong>
+                    <small class="text-muted">Batch #{{ p.id }}</small>
+                  </div>
+                </div>
+              </td>
+              <td><strong>{{ p.quantity }}</strong> <span class="text-muted small">{{ p.unit }}</span></td>
+              <td><span class="fw-bold" style="color: var(--lux-forest);">₹{{ p.price }}</span> <small class="text-muted">/ {{ p.unit }}</small></td>
+              <td><i class="bi bi-geo-alt text-muted me-1"></i>{{ p.location }}</td>
+              <td>
+                {% if p.is_active %}
+                  <span class="badge-lux-fulfilled"><i class="bi bi-check-circle-fill me-1"></i> Public Catalog</span>
+                {% else %}
+                  <span class="badge-lux-pending"><i class="bi bi-eye-slash me-1"></i> Private / Hidden</span>
+                {% endif %}
+              </td>
+              <td class="text-end text-nowrap">
+                <a href="{% url 'product_edit' p.pk %}" class="btn btn-sm btn-outline-secondary me-1">
+                  <i class="bi bi-pencil-square"></i> Edit
+                </a>
+                <a href="{% url 'product_delete' p.pk %}" class="btn btn-sm btn-outline-danger">
+                  <i class="bi bi-trash3"></i> Delete
+                </a>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="6" class="text-center py-5 text-muted">
+                <div class="fs-2 mb-2">🌾</div>
+                <h5 class="h6">No produce registered in your portfolio yet.</h5>
+                <a href="{% url 'product_create' %}" class="btn btn-gold btn-sm mt-2">+ Register Your First Harvest</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Table 2: Incoming Orders -->
+  <div class="lux-table-card">
+    <div class="lux-table-header">
+      <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-inbox-fill text-warning fs-5"></i>
+        <h3 class="h5 mb-0">Incoming Acquisition Orders</h3>
+      </div>
+      <span class="badge border border-warning text-warning">{{ orders|length }} Orders</span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table lux-table align-middle">
+        <thead>
+          <tr>
+            <th>Order Ref</th>
+            <th>Commodity</th>
+            <th>Client Buyer</th>
+            <th>Quantity</th>
+            <th>Settlement Value</th>
+            <th>Status</th>
+            <th>Tracking Docket</th>
+            <th class="text-end">Contract Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for o in orders %}
+            <tr>
+              <td><span class="badge bg-light text-dark border">#{{ o.id }}</span></td>
+              <td><strong>{{ o.product.crop_name }}</strong></td>
+              <td>
+                <div class="d-flex align-items-center gap-1">
+                  <i class="bi bi-person me-1 text-muted"></i>
+                  <strong>{{ o.buyer.get_full_name|default:o.buyer.username }}</strong>
+                </div>
+                {% if o.status == 'accepted' or o.status == 'fulfilled' %}
+                  {% if o.buyer.profile.phone %}
+                    <a href="tel:{{ o.buyer.profile.phone }}" class="badge rounded-pill text-decoration-none mt-1 d-inline-flex align-items-center" style="background: rgba(20,58,40,0.12); color: var(--lux-forest); border: 1.5px solid rgba(20,58,40,0.35); font-size: 11px; padding: 3px 8px; font-weight: 700;">
+                      <i class="bi bi-telephone-fill text-success me-1"></i> {{ o.buyer.profile.phone }}
+                    </a>
+                  {% endif %}
+                {% else %}
+                  <span class="badge rounded-pill text-muted mt-1 d-inline-flex align-items-center" style="background: #f0ede6; font-size: 9.5px; padding: 2px 6px; border: 1px solid #ded8ce;">
+                    <i class="bi bi-lock-fill me-1"></i> Contact reveals on accept
+                  </span>
+                {% endif %}
+              </td>
+              <td>{{ o.quantity }} <small class="text-muted">{{ o.product.unit }}</small></td>
+              <td><strong class="fs-6" style="color: var(--lux-forest);">₹{{ o.total_price }}</strong></td>
+              <td>
+                {% if o.status == 'pending' %}
+                  <span class="badge-lux-pending"><i class="bi bi-hourglass-split me-1"></i> Pending Review</span>
+                {% elif o.status == 'accepted' %}
+                  <span class="badge-lux-accepted"><i class="bi bi-box-seam me-1"></i> Accepted (Awaiting Handover)</span>
+                {% elif o.status == 'fulfilled' %}
+                  <span class="badge-lux-fulfilled"><i class="bi bi-truck me-1"></i> Parcel Dispatched</span>
+                {% else %}
+                  <span class="badge-lux-rejected"><i class="bi bi-x-circle me-1"></i> Declined</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if o.tracking_number %}
+                  <div class="d-flex align-items-center gap-1 font-monospace small">
+                    <span class="badge bg-light text-dark border"><i class="bi bi-upc-scan text-warning me-1"></i>{{ o.tracking_number }}</span>
+                  </div>
+                  <small class="text-muted d-block mt-1" style="font-size: 11px;">{{ o.courier_partner }}</small>
+                {% elif o.status == 'accepted' %}
+                  <span class="badge bg-warning-subtle text-warning-emphasis border border-warning" style="font-size: 10.5px;">
+                    <i class="bi bi-box-seam me-1"></i>Ready for Parcel Handover
+                  </span>
+                {% else %}
+                  <span class="text-muted small">&mdash;</span>
+                {% endif %}
+              </td>
+              <td class="text-end text-nowrap">
+                {% if o.status == 'pending' %}
+                  <form method="post" action="{% url 'update_order' o.pk 'accepted' %}" class="d-inline">{% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-gold me-1"><i class="bi bi-check-lg"></i> Accept</button>
+                  </form>
+                  <form method="post" action="{% url 'update_order' o.pk 'rejected' %}" class="d-inline" onsubmit="return confirm('Reject this order?')">{% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-x-lg"></i> Reject</button>
+                  </form>
+                {% elif o.status == 'accepted' %}
+                  <!-- Button to open Handover Parcel / Dispatch Modal -->
+                  <button type="button" class="btn btn-sm btn-gold d-inline-flex align-items-center gap-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#dispatchModal{{ o.id }}">
+                    <i class="bi bi-box-seam-fill"></i> Handover Parcel
+                  </button>
+                {% elif o.status == 'fulfilled' %}
+                  <a class="btn btn-sm btn-gold-outline d-inline-flex align-items-center gap-1" href="{% url 'order_tracking' o.pk %}">
+                    <i class="bi bi-truck"></i> Live Tracking
+                  </a>
+                {% else %}
+                  <span class="text-muted small">No actions remaining</span>
+                {% endif %}
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="8" class="text-center py-5 text-muted">
+                <i class="bi bi-check-circle fs-3 text-muted d-block mb-2"></i>
+                All buyer requests have been addressed. No pending orders.
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Handover Parcel / Dispatch Modals -->
+  {% for o in orders %}
+    {% if o.status == 'accepted' %}
+      <div class="modal fade" id="dispatchModal{{ o.id }}" tabindex="-1" aria-labelledby="dispatchModalLabel{{ o.id }}" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content" style="border: 1.5px solid var(--lux-gold); border-radius: 18px; overflow: hidden; box-shadow: 0 20px 45px rgba(7,21,14,0.25);">
+            <div class="modal-header text-white" style="background: var(--lux-dark-grad); border-bottom: 1.5px solid rgba(212,175,55,0.4);">
+              <div class="d-flex align-items-center gap-2">
+                <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background: rgba(212,175,55,0.2); border: 1px solid var(--lux-gold); color: var(--lux-gold);">
+                  <i class="bi bi-box-seam-fill"></i>
+                </div>
+                <div>
+                  <h5 class="modal-title fw-bold fs-6 mb-0 text-white" id="dispatchModalLabel{{ o.id }}">Handover Parcel &amp; Dispatch</h5>
+                  <small class="text-white-50">Order #{{ o.id }} &bull; {{ o.product.crop_name }}</small>
+                </div>
+              </div>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <form method="post" action="{% url 'dispatch_order' o.pk %}">
+              {% csrf_token %}
+              <div class="modal-body p-4 text-start">
+                
+                <!-- Allotment Summary Card -->
+                <div class="p-3 rounded-3 mb-3" style="background: #faf8f4; border: 1px solid #ede8dc;">
+                  <div class="row g-2 small">
+                    <div class="col-6">
+                      <span class="text-muted d-block">Client Recipient:</span>
+                      <strong class="text-dark">{{ o.buyer.get_full_name|default:o.buyer.username }}</strong>
+                      {% if o.buyer.profile.phone %}
+                        <div class="text-success"><i class="bi bi-telephone-fill me-1"></i>{{ o.buyer.profile.phone }}</div>
+                      {% endif %}
+                    </div>
+                    <div class="col-6 text-end">
+                      <span class="text-muted d-block">Reserved Volume:</span>
+                      <strong class="text-dark">{{ o.quantity }} {{ o.product.unit }} (₹{{ o.total_price }})</strong>
+                    </div>
+                    <div class="col-12 pt-2 border-top">
+                      <span class="text-muted d-block"><i class="bi bi-geo-alt me-1 text-danger"></i>Destination:</span>
+                      <span class="text-dark">{{ o.buyer.profile.location|default:"Client registered delivery address" }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Select Logistics / Courier Partner -->
+                <div class="mb-3">
+                  <label class="form-label small fw-bold text-uppercase" style="letter-spacing: 0.5px; color: var(--lux-forest);">
+                    Logistics / Delivery Carrier <span class="text-danger">*</span>
+                  </label>
+                  <select class="form-select" name="courier_partner" required style="border-radius: 10px; border-color: #d2dbd6;">
+                    <option value="Krishi Express Cold-Chain Logistics" selected>Krishi Express Cold-Chain Logistics (Recommended)</option>
+                    <option value="Delhivery Agrarian Direct">Delhivery Agrarian Direct</option>
+                    <option value="India Post Speed Post Rural">India Post Speed Post Rural</option>
+                    <option value="BlueDart Agri Logistics">BlueDart Agri Logistics</option>
+                    <option value="Local Transit / Direct Runner">Local Transit / Direct Runner</option>
+                  </select>
+                  <div class="form-text small">Select the carrier picking up or transporting the harvest parcel.</div>
+                </div>
+
+                <!-- Tracking Docket Number -->
+                <div class="mb-3">
+                  <label class="form-label small fw-bold text-uppercase" style="letter-spacing: 0.5px; color: var(--lux-forest);">
+                    Tracking Docket / Consignment ID <span class="text-muted fw-normal">(Optional, auto-generated if blank)</span>
+                  </label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-light text-muted font-monospace"><i class="bi bi-upc-scan"></i></span>
+                    <input type="text" class="form-control font-monospace" name="tracking_number" placeholder="Leave empty for auto-generated Docket ID" style="border-radius: 0 10px 10px 0; border-color: #d2dbd6;">
+                  </div>
+                  <div class="form-text small">Leave blank to automatically assign a secure sovereign tracking docket (e.g. <code>KB-DISP-{{ o.id|stringformat:"04d" }}-XXXX</code>).</div>
+                </div>
+
+                <!-- Packaging Notes -->
+                <div class="mb-3">
+                  <label class="form-label small fw-bold text-uppercase" style="letter-spacing: 0.5px; color: var(--lux-forest);">
+                    Packaging &amp; Handling Verification
+                  </label>
+                  <textarea class="form-control" name="dispatch_notes" rows="2" placeholder="e.g. Graded Grade-A stock, hermetically moisture-sealed sacks handed to transit driver." style="border-radius: 10px; border-color: #d2dbd6;">Hermetically sealed agro-packaging inspected and handed over to logistics partner.</textarea>
+                </div>
+
+                <div class="p-3 rounded-2" style="background: rgba(212,175,55,0.1); border: 1px dashed var(--lux-gold);">
+                  <div class="d-flex align-items-center gap-2 small">
+                    <i class="bi bi-info-circle-fill text-warning fs-5"></i>
+                    <div>
+                      <strong class="text-dark d-block">Handover Notification:</strong>
+                      <span class="text-muted" style="font-size: 11.5px;">Clicking confirm records that you have handed the parcel to the carrier. The buyer's consignment tracking console activates immediately!</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="modal-footer bg-light" style="border-top: 1px solid #ede8dc;">
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-gold btn-sm fw-bold px-3">
+                  <i class="bi bi-truck me-1"></i> Confirm Handover &amp; Dispatch Parcel
+                </button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+
+</div>
+{% endblock %}

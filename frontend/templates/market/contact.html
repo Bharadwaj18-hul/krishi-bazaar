@@ -1,0 +1,232 @@
+{% extends "market/base.html" %}
+{% block title %}Concierge &amp; Inquiries · Krishi Bazaar Sovereign Exchange{% endblock %}
+
+{% block content %}
+<div class="container py-3">
+
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb small">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-decoration-none text-muted"><i class="bi bi-house me-1"></i>Home</a></li>
+      <li class="breadcrumb-item active" style="color: var(--lux-gold-dark);" aria-current="page">Concierge &amp; Inquiries</li>
+    </ol>
+  </nav>
+
+  <!-- Luxury Contact Hero -->
+  <div class="lux-hero my-3">
+    <div class="row align-items-center">
+      <div class="col-lg-9">
+        <div class="lux-badge-pill mb-3">
+          <i class="bi bi-headset" style="color: var(--lux-gold);"></i> SOVEREIGN CONCIERGE &amp; CLIENT RELATIONS
+        </div>
+        <h1 class="lux-hero-title">
+          Connect With The Exchange. <br>
+          <span class="gold-text">Dedicated Inquiries for Cultivators &amp; Patrons.</span>
+        </h1>
+        <p class="lux-hero-desc">
+          Whether you represent an independent single-origin estate seeking accredited admission, a gourmet culinary buyer reserving seasonal allotments, or an academic researcher studying sovereign agricultural disintermediation—our desk is at your disposal.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="row g-4 my-4">
+
+    <!-- Left: Contact Information & Terroir Hubs -->
+    <div class="col-lg-5">
+      
+      <!-- Primary Secretariat Card -->
+      <div class="lux-card p-4 mb-4">
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <div class="lux-brand-emblem" style="width: 48px; height: 48px; font-size: 22px;">
+            <i class="bi bi-building"></i>
+          </div>
+          <div>
+            <span class="text-uppercase small fw-bold" style="color: var(--lux-gold-dark); letter-spacing: 1px;">HEADQUARTERS</span>
+            <h3 class="h5 fw-bold mb-0">Central Agrarian Secretariat</h3>
+          </div>
+        </div>
+
+        <div class="d-flex flex-column gap-3 small text-muted">
+          <div class="d-flex align-items-start gap-3">
+            <i class="bi bi-geo-alt-fill fs-5" style="color: var(--lux-gold);"></i>
+            <div>
+              <strong class="text-dark d-block">Principal Secretariat</strong>
+              Chamber of Sovereign Commerce, 4th Floor, Lavelle Road, Bengaluru, Karnataka 560001, India
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start gap-3">
+            <i class="bi bi-telephone-fill fs-5" style="color: var(--lux-gold);"></i>
+            <div>
+              <strong class="text-dark d-block">Concierge Direct Lines</strong>
+              <span>+91 (080) 4920 1800</span> &bull; <span>+91 98450 12026</span>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start gap-3">
+            <i class="bi bi-envelope-fill fs-5" style="color: var(--lux-gold);"></i>
+            <div>
+              <strong class="text-dark d-block">Official Inquiries Dispatch</strong>
+              <span>concierge@krishibazaar.exchange</span>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start gap-3">
+            <i class="bi bi-clock-fill fs-5" style="color: var(--lux-gold);"></i>
+            <div>
+              <strong class="text-dark d-block">Concierge Operating Hours</strong>
+              Monday through Saturday, 08:30 – 19:30 IST <br>
+              <span class="text-success fw-semibold"><i class="bi bi-dot"></i> Priority Response within 2 hours</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Regional Terroir Liaison Offices -->
+      <div class="lux-card p-4">
+        <h4 class="h6 fw-bold text-uppercase mb-3" style="color: var(--lux-gold-dark); letter-spacing: 1.5px;">
+          <i class="bi bi-compass me-1"></i> Regional Terroir Desks
+        </h4>
+        <p class="small text-muted mb-3">On-ground field officers stationed directly at major single-origin micro-regions:</p>
+
+        <ul class="list-unstyled mb-0 d-flex flex-column gap-2 small">
+          <li class="d-flex justify-content-between p-2 rounded-2" style="background: rgba(212,175,55,0.06); border: 1px solid rgba(212,175,55,0.15);">
+            <span><i class="bi bi-flower1 me-2" style="color: var(--lux-gold-dark);"></i><strong>Pampore, Kashmir</strong></span>
+            <span class="text-muted">Saffron &amp; Walnut Guild</span>
+          </li>
+          <li class="d-flex justify-content-between p-2 rounded-2" style="background: rgba(212,175,55,0.06); border: 1px solid rgba(212,175,55,0.15);">
+            <span><i class="bi bi-cup-hot-fill me-2" style="color: var(--lux-gold-dark);"></i><strong>Madikeri, Coorg</strong></span>
+            <span class="text-muted">Highland Arabica Reserve</span>
+          </li>
+          <li class="d-flex justify-content-between p-2 rounded-2" style="background: rgba(212,175,55,0.06); border: 1px solid rgba(212,175,55,0.15);">
+            <span><i class="bi bi-tree me-2" style="color: var(--lux-gold-dark);"></i><strong>Wayanad, Kerala</strong></span>
+            <span class="text-muted">Malabar Pepper &amp; Cardamom</span>
+          </li>
+          <li class="d-flex justify-content-between p-2 rounded-2" style="background: rgba(212,175,55,0.06); border: 1px solid rgba(212,175,55,0.15);">
+            <span><i class="bi bi-sun-fill me-2" style="color: var(--lux-gold-dark);"></i><strong>Ratnagiri, Maharashtra</strong></span>
+            <span class="text-muted">Coastal Hapus Orchards</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Right: Contact Dossier Form -->
+    <div class="col-lg-7">
+      <div class="lux-auth-card" style="box-shadow: 0 15px 40px rgba(0,0,0,0.06);">
+        <div class="mb-4">
+          <span class="text-uppercase small fw-bold" style="color: var(--lux-gold-dark); letter-spacing: 2px;">DISPATCH FORM</span>
+          <h2 class="h3 fw-bold mt-1">Submit an Official Inquiry</h2>
+          <p class="text-muted small">Complete the requisition form below. Your message will be routed directly to the appropriate regional trade attaché.</p>
+        </div>
+
+        <form method="post" action="{% url 'contact' %}" id="contactForm">
+          {% csrf_token %}
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="lux-form-label" for="id_name"><i class="bi bi-person me-1"></i> Full Name *</label>
+              <input type="text" class="lux-input w-100" id="id_name" name="name" placeholder="e.g. Maharani S. Sharma" required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="lux-form-label" for="id_email"><i class="bi bi-envelope me-1"></i> Official Email *</label>
+              <input type="email" class="lux-input w-100" id="id_email" name="email" placeholder="e.g. sharma@estate.in" required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="lux-form-label" for="id_phone"><i class="bi bi-telephone me-1"></i> Telephone Contact</label>
+              <input type="tel" class="lux-input w-100" id="id_phone" name="phone" placeholder="+91 98000 00000">
+            </div>
+
+            <div class="col-md-6">
+              <label class="lux-form-label" for="id_inquiry_type"><i class="bi bi-tag me-1"></i> Inquiry Classification</label>
+              <select class="lux-input w-100" id="id_inquiry_type" name="inquiry_type">
+                <option value="Cultivator Accreditation">Cultivator Estate Accreditation</option>
+                <option value="Enterprise Procurement">Enterprise / Culinary Bulk Allotments</option>
+                <option value="Terroir Verification">Terroir &amp; Purity Certification Query</option>
+                <option value="Logistics & Dispatch">Specialized Dispatch &amp; Cold-Chain</option>
+                <option value="Partnership & Press">Institutional Partnership / Media</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <label class="lux-form-label" for="id_subject"><i class="bi bi-chat-left-text me-1"></i> Subject Requisition</label>
+              <input type="text" class="lux-input w-100" id="id_subject" name="subject" placeholder="e.g. Bulk Basmati procurement for luxury restaurant group...">
+            </div>
+
+            <div class="col-12">
+              <label class="lux-form-label" for="id_message"><i class="bi bi-pencil-square me-1"></i> Detailed Dossier / Message *</label>
+              <textarea class="lux-input w-100" id="id_message" name="message" rows="5" placeholder="Specify your estate details, commodity requirements, intended volumes, or questions regarding our sovereign exchange protocol..." required></textarea>
+            </div>
+
+            <div class="col-12 pt-2">
+              <button type="submit" class="btn btn-gold w-100 py-3 fw-bold fs-6">
+                <i class="bi bi-send-fill me-2"></i> Transmit Inquiry to Sovereign Secretariat
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <div class="mt-4 pt-3 border-top text-center text-muted small">
+          <i class="bi bi-shield-lock me-1" style="color: var(--lux-gold);"></i> All inquiries are handled under agrarian trade confidentiality protocols.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Frequently Addressed Questions -->
+  <div class="my-5 p-4 p-md-5 rounded-4" style="background: #ffffff; border: 1.5px solid rgba(212,175,55,0.25);">
+    <div class="text-center mb-4">
+      <span class="text-uppercase small fw-bold" style="color: var(--lux-gold-dark); letter-spacing: 2px;">CONCIERGE CLARIFICATIONS</span>
+      <h3 class="h4 fw-bold mt-1">Frequently Inquired Matters</h3>
+    </div>
+
+    <div class="accordion accordion-flush" id="conciergeFaq">
+      <div class="accordion-item border-bottom">
+        <h2 class="accordion-header" id="faq1Heading">
+          <button class="accordion-button collapsed fw-semibold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+            How does Krishi Bazaar authenticate single-origin terroir?
+          </button>
+        </h2>
+        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#conciergeFaq">
+          <div class="accordion-body small text-muted">
+            Our Agrarian Field Officers conduct physical audits verifying geographic indication (GI) status, micro-climatic soil testing, chemical-free acreage boundaries, and harvesting methods prior to issuing producer listing privileges.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item border-bottom">
+        <h2 class="accordion-header" id="faq2Heading">
+          <button class="accordion-button collapsed fw-semibold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+            Are there broker commissions or mandi deductions taken from farmers?
+          </button>
+        </h2>
+        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#conciergeFaq">
+          <div class="accordion-body small text-muted">
+            Zero percent. The price set by the producer on Krishi Bazaar is the exact net remuneration transferred directly to the farmer upon confirmed acquisition delivery.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item border-bottom">
+        <h2 class="accordion-header" id="faq3Heading">
+          <button class="accordion-button collapsed fw-semibold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+            Can institutional culinary groups arrange private estate visits?
+          </button>
+        </h2>
+        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#conciergeFaq">
+          <div class="accordion-body small text-muted">
+            Yes. Our Agrarian Concierge regularly arranges curated harvest audits and cupping sessions for accredited chefs and institutional buyers at our partner estates in Coorg, Kashmir, and Wayanad.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+

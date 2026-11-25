@@ -1,0 +1,206 @@
+{% extends "market/base.html" %}
+{% block title %}Marketplace · Krishi Bazaar Sovereign Exchange{% endblock %}
+{% block content %}
+<div class="container">
+
+  <!-- Luxury Hero Section -->
+  <div class="lux-hero my-3">
+    <div class="row align-items-center">
+      <div class="col-lg-9">
+        <div class="lux-badge-pill mb-3">
+          <i class="bi bi-stars" style="color: var(--lux-gold);"></i> PRIVATE ESTATE & DIRECT PRODUCER RESERVE
+        </div>
+        <h1 class="lux-hero-title">
+          Pure Soil. Pristine Harvests. <br>
+          <span class="gold-text">Direct From The Stewards.</span>
+        </h1>
+        <p class="lux-hero-desc">
+          Bypass layers of wholesale middlemen. Acquire authenticated, single-origin agricultural commodities sourced directly from the growers who cultivate them with generational care.
+        </p>
+
+        <!-- Trust Badges Strip -->
+        <div class="d-flex flex-wrap gap-2 mt-4 pt-1">
+          <div class="lux-hero-tag">
+            <i class="bi bi-patch-check-fill" style="color: var(--lux-gold);"></i>
+            <span>Verified Origin Traceability</span>
+          </div>
+          <div class="lux-hero-tag">
+            <i class="bi bi-currency-rupee" style="color: var(--lux-gold);"></i>
+            <span>100% Value Returned To Producers</span>
+          </div>
+          <div class="lux-hero-tag">
+            <i class="bi bi-lightning-charge-fill" style="color: var(--lux-gold);"></i>
+            <span>Freshly Gathered Allotments</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Filter & Search Console -->
+  <div class="lux-filter-card mb-4">
+    <form method="get">
+      {% if selected_category %}<input type="hidden" name="category" value="{{ selected_category }}">{% endif %}
+      <div class="row g-2 align-items-center">
+        <div class="col-12 col-md-3">
+          <label class="lux-form-label"><i class="bi bi-search me-1" style="color: var(--lux-gold-dark);"></i> Produce / Commodity</label>
+          <input class="lux-input" name="q" placeholder="e.g. Basmati Rice, Alphonso, Turmeric..." value="{{ request.GET.q if (request and request.GET) else '' }}">
+        </div>
+        <div class="col-12 col-md-2">
+          <label class="lux-form-label"><i class="bi bi-geo-alt-fill me-1" style="color: var(--lux-gold-dark);"></i> Terroir / Origin</label>
+          <input class="lux-input" name="location" placeholder="e.g. Shimla, Nashik, Mysuru..." value="{{ request.GET.location if (request and request.GET) else '' }}">
+        </div>
+        <div class="col-6 col-md-2">
+          <label class="lux-form-label"><i class="bi bi-arrow-down-left me-1"></i> Min ₹</label>
+          <input class="lux-input" type="number" step="0.01" name="min_price" placeholder="Min ₹" value="{{ request.GET.min_price if (request and request.GET) else '' }}">
+        </div>
+        <div class="col-6 col-md-2">
+          <label class="lux-form-label"><i class="bi bi-arrow-up-right me-1"></i> Max ₹</label>
+          <input class="lux-input" type="number" step="0.01" name="max_price" placeholder="Max ₹" value="{{ request.GET.max_price if (request and request.GET) else '' }}">
+        </div>
+        <div class="col-12 col-md-2">
+          <label class="lux-form-label"><i class="bi bi-sort-down me-1"></i> Sort by</label>
+          <select class="lux-input" name="sort">
+            <option value="newest" {% if sort == 'newest' %}selected{% endif %}>Newest first</option>
+            <option value="price_asc" {% if sort == 'price_asc' %}selected{% endif %}>Price: low to high</option>
+            <option value="price_desc" {% if sort == 'price_desc' %}selected{% endif %}>Price: high to low</option>
+            <option value="name" {% if sort == 'name' %}selected{% endif %}>Name A-Z</option>
+          </select>
+        </div>
+        <div class="col-12 col-md-1 d-grid">
+          <label class="lux-form-label d-none d-md-block">&nbsp;</label>
+          <button class="btn btn-gold w-100 py-2"><i class="bi bi-funnel-fill"></i> Go</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Category Filter Chips -->
+  <div class="lux-category-scroll mb-4">
+    <a href="{% url 'home' %}" class="lux-cat-chip {% if not selected_category %}active{% endif %}">
+      <i class="bi bi-collection"></i> All Allotments
+    </a>
+    {% for key, label in categories %}
+    <a href="{% url 'home' %}?category={{ key }}" class="lux-cat-chip {% if selected_category == key %}active{% endif %}">
+      {{ label }}
+    </a>
+    {% endfor %}
+  </div>
+
+  <!-- GlobalFarms Style Four Pillars Strip -->
+  <div class="lux-pillar-strip">
+    <div class="row g-3">
+      <div class="col-6 col-md-3">
+        <div class="lux-pillar">
+          <div class="lux-pillar-icon"><i class="bi bi-geo-alt"></i></div>
+          <h4 class="lux-pillar-title">Single-Origin Terroir</h4>
+          <p class="lux-pillar-text">Directly traceable to specific agro-climatic zones and independent estates.</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="lux-pillar">
+          <div class="lux-pillar-icon"><i class="bi bi-shield-check"></i></div>
+          <h4 class="lux-pillar-title">Cultivator Verification</h4>
+          <p class="lux-pillar-text">Every seller is an authenticated agrarian steward with documented acreage.</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="lux-pillar">
+          <div class="lux-pillar-icon"><i class="bi bi-graph-up-arrow"></i></div>
+          <h4 class="lux-pillar-title">Sovereign Fair Value</h4>
+          <p class="lux-pillar-text">Producers set their own benchmarks, eliminating predatory mandi commissions.</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="lux-pillar">
+          <div class="lux-pillar-icon"><i class="bi bi-box-seam"></i></div>
+          <h4 class="lux-pillar-title">Direct-From-Field</h4>
+          <p class="lux-pillar-text">Harvested to order and dispatched without prolonged cold-chain holding.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Catalog Section Header -->
+  <div id="catalog" class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-end gap-2 mb-4 pt-2">
+    <div>
+      <span class="text-uppercase small fw-bold letter-spacing-1" style="color: var(--lux-gold-dark);">CURATED CATALOG</span>
+      <h2 class="display-6 fw-bold mb-0">Available Seasonal Allotments</h2>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <span class="badge border border-secondary text-dark px-3 py-2 fs-6 rounded-pill" style="background: #ffffff;">
+        <i class="bi bi-boxes me-1" style="color: var(--lux-gold-dark);"></i> {{ products|length }} Allotment{{ products|length|pluralize }} Listed
+      </span>
+    </div>
+  </div>
+
+  <!-- Product Catalog Grid -->
+  <div class="row g-4">
+    {% for product in products %}
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="lux-card">
+          <div class="lux-card-img-wrap">
+            {% if product.image %}
+              <img src="{{ product.image_url }}" alt="{{ product.crop_name }}" loading="lazy">
+            {% else %}
+              <div class="lux-placeholder-img">
+                🌾
+                <span>Estate Crop</span>
+              </div>
+            {% endif %}
+            <span class="lux-origin-badge"><i class="bi bi-check-circle-fill me-1" style="color: var(--lux-gold);"></i> Single Origin</span>
+            <span class="lux-stock-tag">{{ product.quantity }} {{ product.unit }} left</span>
+          </div>
+
+          <div class="lux-card-body">
+            <div class="lux-card-farmer">
+              <i class="bi bi-person-fill" style="color: var(--lux-gold-dark);"></i>
+              {{ product.farmer.get_full_name|default:product.farmer.username }}
+            </div>
+            <h3 class="lux-card-title">{{ product.crop_name }}</h3>
+            {% if product.reviews %}<div class="small" style="color:#b8860b;">{{ '★' * (product.avg_rating|round|int) }}{{ '☆' * (5 - (product.avg_rating|round|int)) }} <span class="text-muted">{{ product.avg_rating }} ({{ product.reviews|length }})</span></div>{% endif %}
+            <div class="lux-card-loc">
+              <i class="bi bi-geo-alt-fill text-danger me-1"></i> {{ product.location }}
+            </div>
+
+            <div class="lux-card-price-row">
+              <div>
+                <span class="lux-card-price">₹{{ product.price }}</span>
+                <span class="lux-card-unit">/ {{ product.unit }}</span>
+              </div>
+              {% if product.harvest_date %}
+                <span class="small text-muted"><i class="bi bi-calendar3 me-1"></i> {{ product.harvest_date }}</span>
+              {% endif %}
+            </div>
+
+            <div class="d-flex gap-2 mt-2">
+              <a href="{% url 'product_detail' product.pk %}" class="btn btn-gold-outline flex-grow-1 text-center py-2 fw-semibold" style="font-size: 12.5px;">
+                Inspect
+              </a>
+              <form method="post" action="{% url 'cart_add' product.pk %}" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="btn btn-gold py-2 px-3 fw-bold" title="Add 1 {{ product.unit }} to Acquisition Bag" style="font-size: 12.5px; white-space: nowrap;">
+                  <i class="bi bi-bag-plus-fill me-1"></i> + Bag
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <div class="card p-5 text-center shadow-sm rounded-4 border-0" style="background: #ffffff; border: 1.5px solid rgba(212,175,55,0.3) !important;">
+          <div class="fs-1 text-muted mb-2">🌾</div>
+          <h3 class="h4">No matching harvest allotments found</h3>
+          <p class="text-muted">Adjust your filter parameters or search term to discover available farm commodities.</p>
+          <div>
+            <a href="{% url 'home' %}" class="btn btn-gold"><i class="bi bi-arrow-clockwise me-1"></i> Reset All Filters</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,312 @@
+{% extends "market/base.html" %}
+{% block title %}Sovereign Agrarian Services · Krishi Bazaar{% endblock %}
+
+{% block content %}
+<div class="container py-3">
+
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb small">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-decoration-none text-muted"><i class="bi bi-house me-1"></i>Home</a></li>
+      <li class="breadcrumb-item active" style="color: var(--lux-gold-dark);" aria-current="page">Services &amp; Protocols</li>
+    </ol>
+  </nav>
+
+  <!-- Luxury Services Hero -->
+  <div class="lux-hero my-3">
+    <div class="row align-items-center">
+      <div class="col-lg-10">
+        <div class="lux-badge-pill mb-3">
+          <i class="bi bi-shield-check" style="color: var(--lux-gold);"></i> INSTITUTIONAL AGRARIAN PROTOCOLS
+        </div>
+        <h1 class="lux-hero-title">
+          Bespoke Agricultural Services. <br>
+          <span class="gold-text">Bridging Prestigious Estates &amp; Discerning Patrons.</span>
+        </h1>
+        <p class="lux-hero-desc">
+          Krishi Bazaar is not merely a marketplace—it is an end-to-end agrarian infrastructure designed to dismantle exploitative middleman cartels, verify unadulterated terroir provenance, and ensure complete sovereign remuneration for India's master cultivators.
+        </p>
+
+        <!-- Trust badges -->
+        <div class="d-flex flex-wrap gap-2 mt-4 pt-1">
+          <div class="lux-hero-tag">
+            <i class="bi bi-patch-check-fill" style="color: var(--lux-gold);"></i>
+            <span>0% Mandi Commission Deductions</span>
+          </div>
+          <div class="lux-hero-tag">
+            <i class="bi bi-geo-alt-fill" style="color: var(--lux-gold);"></i>
+            <span>Micro-Climatic Terroir Certification</span>
+          </div>
+          <div class="lux-hero-tag">
+            <i class="bi bi-truck-front-fill" style="color: var(--lux-gold);"></i>
+            <span>Direct-From-Field Logistics</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Statistics Banner -->
+  <div class="row g-3 my-4">
+    <div class="col-6 col-md-3">
+      <div class="lux-metric-card text-center p-4">
+        <div class="lux-metric-val fs-2 fw-bold text-dark">100%</div>
+        <div class="lux-metric-lbl text-uppercase small text-muted mt-1">Direct Settlement to Cultivator</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="lux-metric-card text-center p-4">
+        <div class="lux-metric-val fs-2 fw-bold" style="color: var(--lux-gold-dark);">13+</div>
+        <div class="lux-metric-lbl text-uppercase small text-muted mt-1">Protected Terroir Regions</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="lux-metric-card text-center p-4">
+        <div class="lux-metric-val fs-2 fw-bold text-dark">48hr</div>
+        <div class="lux-metric-lbl text-uppercase small text-muted mt-1">Field-To-Dispatch Window</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="lux-metric-card text-center p-4">
+        <div class="lux-metric-val fs-2 fw-bold" style="color: var(--lux-emerald);">₹0</div>
+        <div class="lux-metric-lbl text-uppercase small text-muted mt-1">Intermediary Brokerage Toll</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section Header -->
+  <div class="text-center my-5">
+    <div class="text-uppercase small fw-bold letter-spacing-2" style="color: var(--lux-gold-dark); letter-spacing: 2px;">
+      PORTFOLIO OF CAPABILITIES
+    </div>
+    <h2 class="display-6 fw-bold mt-2">Comprehensive Agrarian Exchange Services</h2>
+    <p class="text-muted mx-auto" style="max-width: 650px;">
+      Engineered for estate proprietors, progressive organic farmers, luxury hospitality culinary buyers, and private bulk acquirers.
+    </p>
+  </div>
+
+  <!-- Service Cards Grid -->
+  <div class="row g-4 mb-5">
+    
+    <!-- Service 1 -->
+    <div class="col-md-6 col-lg-4">
+      <div class="lux-card p-4 h-100 d-flex flex-column">
+        <div class="lux-brand-emblem mb-3" style="width: 52px; height: 52px; font-size: 24px;">
+          <i class="bi bi-geo-alt-fill"></i>
+        </div>
+        <h3 class="h5 fw-bold mb-2">Single-Origin Terroir Traceability</h3>
+        <p class="text-muted small flex-grow-1">
+          Every harvest allotment is mapped to precise geo-climatic coordinates, elevation tiers, and certified estate acreage. Buyers acquire agricultural commodities with verifiable single-origin authenticity.
+        </p>
+        <div class="pt-3 border-top mt-auto">
+          <span class="badge border border-warning-subtle text-dark-emphasis small">
+            <i class="bi bi-qr-code me-1 text-warning"></i> QR Lot Authenticated
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service 2 -->
+    <div class="col-md-6 col-lg-4">
+      <div class="lux-card p-4 h-100 d-flex flex-column">
+        <div class="lux-brand-emblem mb-3" style="width: 52px; height: 52px; font-size: 24px;">
+          <i class="bi bi-currency-rupee"></i>
+        </div>
+        <h3 class="h5 fw-bold mb-2">Sovereign Cultivator Remuneration</h3>
+        <p class="text-muted small flex-grow-1">
+          Producers set their own reserve benchmarks based on seasonal input and true organic yield value, bypassing exploitative APMC commission agents and predatory cartels entirely.
+        </p>
+        <div class="pt-3 border-top mt-auto">
+          <span class="badge border border-warning-subtle text-dark-emphasis small">
+            <i class="bi bi-shield-check me-1 text-warning"></i> 100% Farmer Net Receipt
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service 3 -->
+    <div class="col-md-6 col-lg-4">
+      <div class="lux-card p-4 h-100 d-flex flex-column">
+        <div class="lux-brand-emblem mb-3" style="width: 52px; height: 52px; font-size: 24px;">
+          <i class="bi bi-boxes"></i>
+        </div>
+        <h3 class="h5 fw-bold mb-2">Bespoke Enterprise &amp; Culinary Reserves</h3>
+        <p class="text-muted small flex-grow-1">
+          Tailored procurement programs for luxury boutique hotels, Michelin-starred culinary establishments, organic food brands, and discerning institutional bulk buyers seeking pristine ingredients.
+        </p>
+        <div class="pt-3 border-top mt-auto">
+          <span class="badge border border-warning-subtle text-dark-emphasis small">
+            <i class="bi bi-building me-1 text-warning"></i> Hospitality Allotments
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service 4 -->
+    <div class="col-md-6 col-lg-4">
+      <div class="lux-card p-4 h-100 d-flex flex-column">
+        <div class="lux-brand-emblem mb-3" style="width: 52px; height: 52px; font-size: 24px;">
+          <i class="bi bi-truck-front-fill"></i>
+        </div>
+        <h3 class="h5 fw-bold mb-2">Hermetic Field-to-Door Logistics</h3>
+        <p class="text-muted small flex-grow-1">
+          Dispatched straight from post-harvest drying yards and estate packing stations. Eliminates destructive multi-tiered warehouse re-handling and artificial cold storage aging.
+        </p>
+        <div class="pt-3 border-top mt-auto">
+          <span class="badge border border-warning-subtle text-dark-emphasis small">
+            <i class="bi bi-lightning-charge me-1 text-warning"></i> Expedited Dispatch
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service 5 -->
+    <div class="col-md-6 col-lg-4">
+      <div class="lux-card p-4 h-100 d-flex flex-column">
+        <div class="lux-brand-emblem mb-3" style="width: 52px; height: 52px; font-size: 24px;">
+          <i class="bi bi-clipboard2-pulse-fill"></i>
+        </div>
+        <h3 class="h5 fw-bold mb-2">Organoleptic &amp; Purity Audits</h3>
+        <p class="text-muted small flex-grow-1">
+          Continuous testing for zero synthetic pesticides, heavy metals, artificial ripening chemicals, or adulterants. Each batch of saffron, basmati, coffee, and spices undergoes rigorous scrutiny.
+        </p>
+        <div class="pt-3 border-top mt-auto">
+          <span class="badge border border-warning-subtle text-dark-emphasis small">
+            <i class="bi bi-award me-1 text-warning"></i> ISO &amp; Organic Grade
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service 6 -->
+    <div class="col-md-6 col-lg-4">
+      <div class="lux-card p-4 h-100 d-flex flex-column">
+        <div class="lux-brand-emblem mb-3" style="width: 52px; height: 52px; font-size: 24px;">
+          <i class="bi bi-person-lines-fill"></i>
+        </div>
+        <h3 class="h5 fw-bold mb-2">Dedicated Agrarian Concierge</h3>
+        <p class="text-muted small flex-grow-1">
+          Personalized advisory service for private collectors and procurement heads. Arrange estate harvest visits, sample cuppings, and reserve seasonal allocations before open market release.
+        </p>
+        <div class="pt-3 border-top mt-auto">
+          <span class="badge border border-warning-subtle text-dark-emphasis small">
+            <i class="bi bi-headset me-1 text-warning"></i> White-Glove Support
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Future Scope Innovation Corridor Banner -->
+  <div class="lux-filter-card p-4 p-lg-5 my-5" style="border: 2px dashed rgba(212,175,55,0.45); background: #faf8f3;">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-7">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span class="lux-badge-pill">
+            <i class="bi bi-rocket-takeoff" style="color: var(--lux-gold);"></i> FUTURE ROADMAP &amp; INNOVATION
+          </span>
+          <span class="badge bg-warning-subtle text-warning-emphasis border border-warning px-2 py-1 small">
+            Active Prototypes
+          </span>
+        </div>
+        <h3 class="h3 fw-bold mb-2">Next-Generation Agrarian Technologies</h3>
+        <p class="text-muted small mb-0">
+          We are expanding the Sovereign Exchange beyond commodity trading into collective mechanization and AI diagnostics. Explore our newly released prototype corridors:
+        </p>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="d-flex flex-column gap-2">
+          <a href="{% url 'equipment_rental' %}" class="p-3 rounded-3 text-decoration-none d-flex align-items-center justify-content-between" style="background: #ffffff; border: 1.5px solid rgba(212,175,55,0.4); transition: transform 0.2s;" onmouseover="this.style.transform='translateX(4px)'" onmouseout="this.style.transform='none'">
+            <div class="d-flex align-items-center gap-3">
+              <div class="lux-brand-emblem" style="width: 40px; height: 40px; font-size: 18px; animation: none;">
+                <i class="bi bi-truck"></i>
+              </div>
+              <div>
+                <strong class="d-block text-dark small">Agri-Machinery &amp; Tools Rental</strong>
+                <span class="text-muted" style="font-size: 11px;">Tractors, Drones, Solar Pumps &amp; Harvesters</span>
+              </div>
+            </div>
+            <i class="bi bi-arrow-right text-warning fs-5"></i>
+          </a>
+
+          <a href="{% url 'crop_health' %}" class="p-3 rounded-3 text-decoration-none d-flex align-items-center justify-content-between" style="background: #ffffff; border: 1.5px solid rgba(212,175,55,0.4); transition: transform 0.2s;" onmouseover="this.style.transform='translateX(4px)'" onmouseout="this.style.transform='none'">
+            <div class="d-flex align-items-center gap-3">
+              <div class="lux-brand-emblem" style="width: 40px; height: 40px; font-size: 18px; animation: none;">
+                <i class="bi bi-heart-pulse"></i>
+              </div>
+              <div>
+                <strong class="d-block text-dark small">AI Plant Disease Pathology Scanner</strong>
+                <span class="text-muted" style="font-size: 11px;">Computer Vision Leaf Diagnosis &amp; Curatives</span>
+              </div>
+            </div>
+            <i class="bi bi-arrow-right text-warning fs-5"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How The Sovereign Protocol Operates -->
+  <div class="p-4 p-lg-5 rounded-4 mb-5" style="background: linear-gradient(135deg, #07150e 0%, #0d261a 100%) !important; color: #ffffff !important; border: 1.5px solid rgba(212,175,55,0.35);">
+    <div class="text-center mb-5">
+      <span class="text-uppercase small fw-bold" style="color: var(--lux-gold) !important; letter-spacing: 2px;">THE EXCHANGE BLUEPRINT</span>
+      <h2 class="display-6 fw-bold mt-2" style="color: #ffffff !important;">How The Sovereign Protocol Operates</h2>
+      <p class="mx-auto" style="max-width: 600px; color: rgba(255, 255, 255, 0.75) !important;">A four-phase sovereign execution designed to guarantee complete transparency and speed.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-3">
+        <div class="p-3 text-center text-md-start">
+          <div class="fs-1 fw-bold mb-2" style="color: var(--lux-gold) !important;">01</div>
+          <h4 class="h6 fw-bold mb-2" style="color: #ffffff !important;">Terroir Vetting</h4>
+          <p class="small mb-0" style="color: rgba(255, 255, 255, 0.7) !important;">Farmer identity, micro-climatic zone, and chemical-free acreage are rigorously verified.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="p-3 text-center text-md-start">
+          <div class="fs-1 fw-bold mb-2" style="color: var(--lux-gold) !important;">02</div>
+          <h4 class="h6 fw-bold mb-2" style="color: #ffffff !important;">Sovereign Listing</h4>
+          <p class="small mb-0" style="color: rgba(255, 255, 255, 0.7) !important;">Producer lists verified stock with transparent sovereign reserve pricing &amp; terroir notes.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="p-3 text-center text-md-start">
+          <div class="fs-1 fw-bold mb-2" style="color: var(--lux-gold) !important;">03</div>
+          <h4 class="h6 fw-bold mb-2" style="color: #ffffff !important;">Direct Acquisition</h4>
+          <p class="small mb-0" style="color: rgba(255, 255, 255, 0.7) !important;">Buyer places acquisition order directly with the cultivator without speculative broker friction.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="p-3 text-center text-md-start">
+          <div class="fs-1 fw-bold mb-2" style="color: var(--lux-gold) !important;">04</div>
+          <h4 class="h6 fw-bold mb-2" style="color: #ffffff !important;">Estate Dispatch</h4>
+          <p class="small mb-0" style="color: rgba(255, 255, 255, 0.7) !important;">Produce is gathered, hermetically packaged, and dispatched directly from the source estate.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom CTA -->
+  <div class="lux-filter-card text-center p-5 my-4">
+    <div class="lux-badge-pill mb-3 mx-auto d-inline-block">
+      <i class="bi bi-stars" style="color: var(--lux-gold);"></i> ADMISSION INTO THE COLLECTIVE
+    </div>
+    <h2 class="display-6 fw-bold mb-3">Begin Your Agrarian Partnership</h2>
+    <p class="text-muted mx-auto mb-4" style="max-width: 580px;">
+      Whether you cultivate generational single-origin estates or seek uncompromised purity for your establishment, Krishi Bazaar welcomes your participation.
+    </p>
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <a href="{% url 'register' %}" class="btn btn-gold px-4 py-3 fw-bold">
+        <i class="bi bi-person-plus me-1"></i> Register as Cultivator or Buyer
+      </a>
+      <a href="{% url 'contact' %}" class="btn btn-gold-outline px-4 py-3 fw-bold">
+        <i class="bi bi-envelope me-1"></i> Inquire with Concierge
+      </a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+

@@ -1,0 +1,24 @@
+# ==============================================================================
+# Krishi Bazaar — Production Dependencies
+# ==============================================================================
+
+# --- Core Web Framework & ASGI Server ---
+fastapi>=0.115.0,<1.0.0              # High-performance web framework for REST API & website
+uvicorn[standard]>=0.30.0,<1.0.0     # Production ASGI server implementation
+
+# --- Templating Engine ---
+jinja2>=3.1.4,<4.0.0                 # Template engine for server-side HTML rendering
+
+# --- Database & ORM ---
+sqlalchemy>=2.0.30,<3.0.0            # SQL toolkit and Object-Relational Mapping (ORM)
+psycopg2-binary>=2.9.9,<3.0.0        # PostgreSQL database driver for cloud deployment
+
+# --- Schema & Data Validation ---
+pydantic>=2.8.0,<3.0.0               # Schema definition and request/response validation
+
+# --- Forms & Cookie Security ---
+itsdangerous>=2.2.0,<3.0.0           # Cryptographic token signing for sessions and resets
+python-multipart>=0.0.9,<1.0.0       # Multipart/form-data parser for form and file uploads
+
+# --- Configuration Management ---
+python-dotenv>=1.0.1,<2.0.0          # Environment variable loading from .env

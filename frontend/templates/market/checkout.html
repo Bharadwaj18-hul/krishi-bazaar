@@ -1,0 +1,330 @@
+{% extends "market/base.html" %}
+{% block title %}Checkout · Krishi Bazaar{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+  <!-- Header -->
+  <div class="mb-4">
+    <span class="text-uppercase small fw-bold" style="color: var(--lux-gold-dark); letter-spacing: 2px;">SOVEREIGN CHECKOUT</span>
+    <h1 class="display-6 fw-bold mt-1 mb-0">Confirm Your Order</h1>
+    <p class="text-muted mb-0">Select a delivery address before transmitting your acquisition order.</p>
+  </div>
+
+  <!-- Checkout Progress Steps -->
+  <div class="d-flex align-items-center gap-3 mb-5 small fw-bold">
+    <div class="d-flex align-items-center gap-2">
+      <div class="rounded-circle d-flex align-items-center justify-content-center" style="width:28px;height:28px;background:var(--lux-gold);color:#07150e;font-size:13px;">1</div>
+      <span style="color:var(--lux-gold-dark);">My Bag</span>
+    </div>
+    <i class="bi bi-chevron-right text-muted"></i>
+    <div class="d-flex align-items-center gap-2">
+      <div class="rounded-circle d-flex align-items-center justify-content-center" style="width:28px;height:28px;background:var(--lux-dark);color:var(--lux-gold);font-size:13px;border:2px solid var(--lux-gold);">2</div>
+      <span class="text-dark fw-bold">Delivery Address</span>
+    </div>
+    <i class="bi bi-chevron-right text-muted"></i>
+    <div class="d-flex align-items-center gap-2">
+      <div class="rounded-circle d-flex align-items-center justify-content-center" style="width:28px;height:28px;background:#e8e3d8;color:#999;font-size:13px;">3</div>
+      <span class="text-muted">Order Confirmation</span>
+    </div>
+  </div>
+
+  <form method="post" id="checkoutForm">
+    {% csrf_token %}
+    <div class="row g-4">
+
+      <!-- Left Column: Address Selection -->
+      <div class="col-lg-8">
+
+        <!-- Saved Addresses -->
+        {% if addresses %}
+        <div class="lux-card p-4 mb-4">
+          <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
+            <div class="d-flex align-items-center gap-2">
+              <div class="lux-brand-emblem" style="width:36px;height:36px;font-size:17px;animation:none;">
+                <i class="bi bi-geo-alt-fill"></i>
+              </div>
+              <div>
+                <span class="text-uppercase small fw-bold" style="color:var(--lux-gold-dark);font-size:10px;letter-spacing:1px;">SELECT DELIVERY ADDRESS</span>
+                <h4 class="h5 fw-bold mb-0">Saved Addresses</h4>
+              </div>
+            </div>
+            <span class="badge border border-warning text-warning">{{ addresses|length }} Saved</span>
+          </div>
+
+          <div class="d-flex flex-column gap-3" id="savedAddressCards">
+            {% for addr in addresses %}
+            <label class="address-card-label d-block" for="addr_{{ addr.pk }}">
+              <input type="radio" name="address_id" id="addr_{{ addr.pk }}" value="{{ addr.pk }}"
+                class="d-none address-radio"
+                {% if addr == default_address %}checked{% endif %}
+                onchange="document.getElementById('newAddrSection').style.display='none';">
+              <div class="address-card p-3 rounded-3 d-flex align-items-start gap-3
+                {% if addr == default_address %}address-card-selected{% endif %}"
+                style="border:2px solid {% if addr == default_address %}var(--lux-gold){% else %}#e0ddd5{% endif %};cursor:pointer;transition:all 0.2s ease;background:{% if addr == default_address %}rgba(212,175,55,0.07){% else %}#faf8f4{% endif %};">
+                <!-- Address Type Icon -->
+                <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 mt-1"
+                  style="width:38px;height:38px;background:{% if addr == default_address %}var(--lux-dark){% else %}#e8e3d8{% endif %};color:{% if addr == default_address %}var(--lux-gold){% else %}#888{% endif %};">
+                  {% if addr.address_type == 'home' %}<i class="bi bi-house-fill"></i>
+                  {% elif addr.address_type == 'work' %}<i class="bi bi-building"></i>
+                  {% elif addr.address_type == 'warehouse' %}<i class="bi bi-box-seam-fill"></i>
+                  {% else %}<i class="bi bi-geo-alt-fill"></i>{% endif %}
+                </div>
+                <!-- Address Info -->
+                <div class="flex-grow-1">
+                  <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+                    <strong class="text-dark">{{ addr.full_name }}</strong>
+                    <span class="badge" style="background:rgba(212,175,55,0.15);color:var(--lux-gold-dark);font-size:10px;border:1px solid rgba(212,175,55,0.3);">
+                      {{ addr.get_address_type_display|upper }}
+                    </span>
+                    {% if addr.is_default %}
+                    <span class="badge bg-success-subtle text-success border border-success" style="font-size:10px;">
+                      <i class="bi bi-check-circle-fill me-1"></i> DEFAULT
+                    </span>
+                    {% endif %}
+                  </div>
+                  <div class="text-muted small mb-1">{{ addr.street_address }}{% if addr.landmark %}, Near {{ addr.landmark }}{% endif %}</div>
+                  <div class="text-muted small mb-1">{{ addr.city }}, {{ addr.state }} &ndash; <strong class="text-dark">{{ addr.pincode }}</strong></div>
+                  <div class="small"><i class="bi bi-telephone-fill text-success me-1"></i> {{ addr.phone }}</div>
+                </div>
+                <!-- Action Links -->
+                <div class="text-end flex-shrink-0">
+                  <a href="{% url 'address_edit' addr.pk %}" class="btn btn-sm btn-outline-secondary py-0 px-2" style="font-size:11px;">
+                    <i class="bi bi-pencil me-1"></i>Edit
+                  </a>
+                </div>
+              </div>
+            </label>
+            {% endfor %}
+          </div>
+
+          <!-- Add New Address Option -->
+          <div class="mt-3 pt-2 border-top">
+            <label class="address-card-label d-block" for="addr_new">
+              <input type="radio" name="address_id" id="addr_new" value="new"
+                class="d-none address-radio"
+                onchange="document.getElementById('newAddrSection').style.display='block';">
+              <div class="p-3 rounded-3 d-flex align-items-center gap-3"
+                style="border:2px dashed rgba(212,175,55,0.5);cursor:pointer;background:rgba(212,175,55,0.04);transition:all 0.2s ease;">
+                <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                  style="width:38px;height:38px;background:rgba(212,175,55,0.15);color:var(--lux-gold-dark);">
+                  <i class="bi bi-plus-lg fs-5"></i>
+                </div>
+                <div>
+                  <strong class="text-dark d-block">Add a New Delivery Address</strong>
+                  <small class="text-muted">Enter a different shipping address for this order</small>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- New Address Form (shown when "Add New" is selected or no addresses exist) -->
+        <div id="newAddrSection" {% if addresses and not show_new_form %}style="display:none;"{% endif %}>
+          {% if not addresses %}
+            <input type="hidden" name="address_id" value="new">
+          {% endif %}
+          <div class="lux-card p-4 mb-4">
+            <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
+              <div class="lux-brand-emblem" style="width:36px;height:36px;font-size:17px;animation:none;">
+                <i class="bi bi-plus-square-fill"></i>
+              </div>
+              <div>
+                <span class="text-uppercase small fw-bold" style="color:var(--lux-gold-dark);font-size:10px;letter-spacing:1px;">
+                  {% if not addresses %}DELIVERY ADDRESS{% else %}NEW ADDRESS{% endif %}
+                </span>
+                <h4 class="h5 fw-bold mb-0">Enter Delivery Details</h4>
+              </div>
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="lux-form-label">Full Name *</label>
+                <input type="text" name="full_name" value="{{ addr_form.full_name.value|default:'' }}" class="lux-input" placeholder="Recipient's full name" required>
+                {% if addr_form.full_name.errors %}<div class="text-danger small mt-1">{{ addr_form.full_name.errors.0 }}</div>{% endif %}
+              </div>
+              <div class="col-md-6">
+                <label class="lux-form-label">Mobile Number *</label>
+                <input type="tel" name="phone" value="{{ addr_form.phone.value|default:'' }}" class="lux-input" placeholder="10-digit mobile number" required>
+                {% if addr_form.phone.errors %}<div class="text-danger small mt-1">{{ addr_form.phone.errors.0 }}</div>{% endif %}
+              </div>
+              <div class="col-12">
+                <label class="lux-form-label">House / Flat / Floor / Building / Street *</label>
+                <input type="text" name="street_address" value="{{ addr_form.street_address.value|default:'' }}" class="lux-input" placeholder="House No., Street, Colony..." required>
+              </div>
+              <div class="col-md-6">
+                <label class="lux-form-label">Landmark <span class="text-muted fw-normal">(Optional)</span></label>
+                <input type="text" name="landmark" value="{{ addr_form.landmark.value|default:'' }}" class="lux-input" placeholder="Near school, temple, etc.">
+              </div>
+              <div class="col-md-6">
+                <label class="lux-form-label">City / Town / Village *</label>
+                <input type="text" name="city" value="{{ addr_form.city.value|default:'' }}" class="lux-input" placeholder="City or Village name" required>
+              </div>
+              <div class="col-md-6">
+                <label class="lux-form-label">State *</label>
+                <select name="state" class="lux-input" required style="cursor:pointer;">
+                  <option value="">Select State</option>
+                  {% for val, label in addr_form.fields.state.choices %}
+                    {% if val %}
+                    <option value="{{ val }}" {% if addr_form.state.value == val %}selected{% endif %}>{{ label }}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="lux-form-label">PIN Code *</label>
+                <input type="text" name="pincode" value="{{ addr_form.pincode.value|default:'' }}" class="lux-input" placeholder="6-digit PIN code" maxlength="6" pattern="[0-9]{6}" required>
+              </div>
+              <div class="col-md-6">
+                <label class="lux-form-label">Address Type</label>
+                <div class="d-flex gap-2 flex-wrap mt-1">
+                  {% for val, label in addr_form.fields.address_type.choices %}
+                  <label class="d-flex align-items-center gap-1 py-2 px-3 rounded-pill small fw-semibold"
+                    style="border:1.5px solid #d8d4c8;cursor:pointer;background:#faf8f4;">
+                    <input type="radio" name="address_type" value="{{ val }}" class="me-1"
+                      {% if addr_form.address_type.value == val or forloop.first %}checked{% endif %}>
+                    {% if val == 'home' %}🏠{% elif val == 'work' %}🏢{% elif val == 'warehouse' %}📦{% else %}📍{% endif %}
+                    {{ label }}
+                  </label>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="d-flex align-items-center gap-2 mt-4" style="cursor:pointer;">
+                  <input type="checkbox" name="is_default" class="form-check-input" {% if addr_form.is_default.value %}checked{% endif %} style="width:18px;height:18px;border-color:var(--lux-gold);">
+                  <span class="small fw-semibold text-dark">Set as my default delivery address</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Order Summary -->
+      <div class="col-lg-4">
+        <div class="lux-auth-card p-4 sticky-top" style="top:85px;">
+          <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
+            <div class="lux-brand-emblem" style="width:36px;height:36px;font-size:17px;animation:none;">
+              <i class="bi bi-receipt-cutoff"></i>
+            </div>
+            <div>
+              <span class="text-uppercase small fw-bold" style="color:var(--lux-gold-dark);font-size:10px;">ORDER SUMMARY</span>
+              <h4 class="h5 fw-bold mb-0">Acquisition Ledger</h4>
+            </div>
+          </div>
+
+          <!-- Items -->
+          <div class="d-flex flex-column gap-2 mb-3">
+            {% for item in cart_items %}
+            <div class="d-flex align-items-center gap-2 py-2 border-bottom">
+              <div class="rounded-2 overflow-hidden flex-shrink-0" style="width:42px;height:42px;background:#07150e;">
+                {% if item.product.image %}
+                  <img src="{{ item.product.image_url }}" alt="{{ item.product.crop_name }}" class="w-100 h-100" style="object-fit:cover;">
+                {% else %}
+                  <div class="w-100 h-100 d-flex align-items-center justify-content-center fs-5">🌾</div>
+                {% endif %}
+              </div>
+              <div class="flex-grow-1 small">
+                <strong class="text-dark d-block">{{ item.product.crop_name }}</strong>
+                <span class="text-muted">{{ item.quantity }} {{ item.product.unit }} &times; ₹{{ item.price }}</span>
+              </div>
+              <strong class="text-dark flex-shrink-0">₹{{ item.subtotal }}</strong>
+            </div>
+            {% endfor %}
+          </div>
+
+          <!-- Price Breakdown -->
+          <div class="d-flex flex-column gap-1 small text-muted mb-3">
+            <div class="d-flex justify-content-between">
+              <span>Commodity Subtotal:</span>
+              <strong class="text-dark">₹{{ cart_total }}</strong>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Mandi Brokerage:</span>
+              <span class="text-success fw-bold">₹0.00 (Direct)</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Delivery by Farmer:</span>
+              <span class="text-dark">Settled w/ Cultivator</span>
+            </div>
+          </div>
+
+          <hr class="my-2">
+
+          <div class="d-flex justify-content-between align-items-baseline mb-4">
+            <strong class="text-dark">Total Amount:</strong>
+            <span class="fw-bold" style="font-family:var(--font-serif);font-size:1.65rem;color:var(--lux-forest);">₹{{ cart_total }}</span>
+          </div>
+
+          <button type="submit" class="btn btn-gold w-100 py-3 fw-bold fs-6 shadow">
+            <i class="bi bi-bag-check-fill me-2"></i> Place Order
+          </button>
+          <small class="text-muted text-center d-block mt-2" style="font-size:11px;">
+            <i class="bi bi-lock-fill text-success me-1"></i> Atomic transaction · Zero broker escrow
+          </small>
+
+          <a href="{% url 'cart_detail' %}" class="btn btn-outline-secondary w-100 mt-2 py-2 small">
+            <i class="bi bi-arrow-left me-1"></i> Back to Bag
+          </a>
+
+          <!-- Guarantees -->
+          <div class="mt-4 pt-3 border-top small text-muted">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <i class="bi bi-patch-check-fill text-warning"></i>
+              <span>100% Farmer Net Remuneration</span>
+            </div>
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <i class="bi bi-shield-lock-fill text-warning"></i>
+              <span>Verified Single-Origin Estate</span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-truck-front-fill text-warning"></i>
+              <span>Live Consignment Tracking Activated</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </form>
+
+</div>
+
+<script>
+// Highlight selected address card
+document.querySelectorAll(".address-radio").forEach(function(radio) {
+  radio.addEventListener("change", function() {
+    document.querySelectorAll(".address-card").forEach(function(card) {
+      card.style.border = "2px solid #e0ddd5";
+      card.style.background = "#faf8f4";
+      card.querySelector && card.querySelector(".rounded-circle") && (card.querySelector(".rounded-circle").style.background = "#e8e3d8");
+      card.querySelector && card.querySelector(".rounded-circle") && (card.querySelector(".rounded-circle").style.color = "#888");
+    });
+    if (this.value !== "new" && this.closest(".address-card-label")) {
+      var card = this.closest(".address-card-label").querySelector(".address-card");
+      if (card) {
+        card.style.border = "2px solid var(--lux-gold)";
+        card.style.background = "rgba(212,175,55,0.07)";
+      }
+    }
+  });
+});
+
+// Validate at least one address is selected before submit
+document.getElementById("checkoutForm").addEventListener("submit", function(e) {
+  var radios = document.querySelectorAll('input[name="address_id"]');
+  var checked = Array.from(radios).some(r => r.checked);
+  {% if not addresses %}
+  // No addresses exist, hidden input already set
+  {% else %}
+  if (!checked) {
+    e.preventDefault();
+    alert("Please select a delivery address before placing your order.");
+  }
+  {% endif %}
+});
+</script>
+{% endblock %}
+

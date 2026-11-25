@@ -1,0 +1,568 @@
+{
+  "arecanut_koleroga": {
+    "id": "arecanut_koleroga",
+    "plant_name": "Arecanut Palm (Betel Nut / Supari / Adike)",
+    "scientific_plant": "Areca catechu L.",
+    "category": "palms",
+    "category_title": "Palms & Nut Trees",
+    "part_affected": "Fruit Buttons, Developing Nuts & Spikes",
+    "disease_title": "Koleroga / Fruit Rot (Mahali)",
+    "scientific_pathogen": "Phytophthora meadii McRae",
+    "pathogen_type": "Oomycete / Water-Mold Fungal Pathogen",
+    "badge": "Acute Fruit Rot",
+    "confidence": "98.8%",
+    "severity": "Critical Fruit Drop",
+    "severity_class": "text-danger",
+    "risk": "60% - 90% premature nut loss if untreated during monsoon",
+    "symptoms": "Water-soaked dark green circular lesions near the calyx / base of tender green nuts. Lesions rapidly enlarge, turning dark brown to black and producing a characteristic white felt-like fungal mycelium under humid conditions. Heavily infected arecanuts rot, lose adherence, and drop in large quantities (Mahali). Stalks and bunches become blackened and desiccated.",
+    "causes": "High relative humidity (>90%), intermittent monsoon showers, cool wet days (20-24°C), and water stagnation in poorly drained valleys.",
+    "organic_remedies": [
+      "Prophylactic Spray: Thoroughly spray bunches with 1% neutral Bordeaux mixture (1kg Copper Sulfate + 1kg Quicklime in 100L water) before South-West monsoon onset.",
+      "Polythene Bunches Shield: Cover developing arecanut bunches with UV-stabilized polythene bags (100–200 gauge) securely tied above the stalk before heavy monsoon rains.",
+      "Bio-Control Inoculation: Drench palm basins with Trichoderma harzianum or Trichoderma viride enriched farmyard manure / neem cake (2kg/palm) to suppress soil inoculum."
+    ],
+    "chemical_remedies": [
+      "Foliar Spray: Copper Oxychloride 50% WP @ 2.5 g/L or Metalaxyl-Mancozeb (Ridomil MZ) @ 2.0 g/L mixed with adhesive wetting agent (1ml/L).",
+      "Repeat Application: Apply second spray 40-45 days after the first spray during a break in monsoon rains."
+    ],
+    "preventive_measures": [
+      "Collect and destroy all fallen infected arecanuts and rotting bunch rachises; burn or deep-bury them outside the plantation.",
+      "Ensure effective drainage channels (at least 60cm deep) between rows of palms to drain excess monsoon surface water."
+    ],
+    "image": "https://images.unsplash.com/photo-1596724807490-64287ff2fb61?auto=format&fit=crop&w=800&q=80"
+  },
+  "arecanut_yellow_leaf": {
+    "id": "arecanut_yellow_leaf",
+    "plant_name": "Arecanut Palm (Betel Nut / Supari / Adike)",
+    "scientific_plant": "Areca catechu L.",
+    "category": "palms",
+    "category_title": "Palms & Nut Trees",
+    "part_affected": "Outer Fronds, Leaf Veins & Kernel",
+    "disease_title": "Yellow Leaf Disease (YLD)",
+    "scientific_pathogen": "Phytoplasma (16SrXI group)",
+    "pathogen_type": "Phytoplasma / Vector-Transmitted Organism",
+    "badge": "Systemic Degenerative Disease",
+    "confidence": "97.4%",
+    "severity": "High Chronic Decline",
+    "severity_class": "text-danger",
+    "risk": "50% - 70% yield reduction, nut shrivelling & blackening of kernel",
+    "symptoms": "Characteristic golden yellowing starts from the tips of leaflets in the lowest 2–3 fronds, spreading gradually towards the base along the lamina. Brown necrotic stripes run parallel to veins. Crown leaves become reduced in size, stiff, and brittle. Nuts become small with blackened, sponge-like endosperm (soft kernel), making them unmarketable.",
+    "causes": "Transmitted by sap-sucking plant hoppers (Proutista moesta) and lace bugs (Stephanitis typica) in humid high-rainfall tracts.",
+    "organic_remedies": [
+      "Balanced Micronutrient Nutrition: Apply 12kg compost + 2kg neem cake + 100g Borax + 200g Zinc Sulphate + 500g Magnesium Sulphate per palm annually.",
+      "Bio-Pesticide Foliar: Spray 2% Pongamia / Neem oil emulsion to control the vector plant hopper and lace bug populations.",
+      "Companion Intercropping: Grow cacao, banana, or pepper in the garden to optimize soil micro-climate and root-zone organic matter."
+    ],
+    "chemical_remedies": [
+      "Vector Suppression: Foliar spray of Thiamethoxam 25% WG @ 0.3g/L or Imidacloprid 17.8% SL @ 0.25ml/L targeting the under-surface of leaflets to suppress vector hoppers.",
+      "Root Feeding: Apply 1g of Oxytetracycline hydrochloride dissolved in 100ml water per tree via root feeding as an agronomist-supervised palliative measure."
+    ],
+    "preventive_measures": [
+      "Rogue out and destroy palms in terminal decline stages to prevent inoculum reservoirs.",
+      "Apply split doses of nitrogenous and potash fertilizers with adequate summer irrigation."
+    ],
+    "image": "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80"
+  },
+  "arecanut_anabe": {
+    "id": "arecanut_anabe",
+    "plant_name": "Arecanut Palm (Betel Nut / Supari / Adike)",
+    "scientific_plant": "Areca catechu L.",
+    "category": "palms",
+    "category_title": "Palms & Nut Trees",
+    "part_affected": "Basal Trunk, Root Collar & Crown",
+    "disease_title": "Anabe Roga / Foot Rot (Basal Stem Rot)",
+    "scientific_pathogen": "Ganoderma lucidum (Curtis) P. Karst.",
+    "pathogen_type": "Basidiomycete Wood-Decaying Fungus",
+    "badge": "Lethal Trunk Rot",
+    "confidence": "99.0%",
+    "severity": "Terminal Mortality",
+    "severity_class": "text-danger",
+    "risk": "100% tree mortality if basal bracket conks appear",
+    "symptoms": "Yellowing and withering of outer fronds followed by drooping and premature shedding. Brownish-black viscous sap bleeds from the base of the trunk up to 1 meter high. The wood inside becomes spongy and rotted. In advanced stages, characteristic fan-shaped or shelf-like fungal brackets ('Anabe' or conks) emerge from the bottom trunk.",
+    "causes": "Soil-borne wood-rotting fungus spreading through underground root contact, exacerbated by neglected palms, high water table, or root injuries.",
+    "organic_remedies": [
+      "Basin Inoculation: Apply 5kg neem cake enriched with Trichoderma harzianum (50g) in palm basins twice a year (June and October).",
+      "Organic Drenching: Drench the root zone with 2% Pseudomonas fluorescens liquid culture (5L per palm)."
+    ],
+    "chemical_remedies": [
+      "Soil Drenching: Drench soil around the trunk with 0.3% Copper Oxychloride (5-10 L per palm) or Propiconazole 25% EC (2ml/L).",
+      "Root Feeding: Feed 2ml of Tridemorph 80% EC or Hexaconazole 5% SC diluted in 100ml water into a healthy root twice a year."
+    ],
+    "preventive_measures": [
+      "Isolate diseased palms by digging isolation trenches (30cm wide, 60cm deep) around infected trees to sever root contact.",
+      "Uproot and burn dead palms along with their complete bole and root system; apply 1kg agricultural lime per pit before replanting."
+    ],
+    "image": "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800&q=80"
+  },
+  "arecanut_bud_rot": {
+    "id": "arecanut_bud_rot",
+    "plant_name": "Arecanut Palm (Betel Nut / Supari / Adike)",
+    "scientific_plant": "Areca catechu L.",
+    "category": "palms",
+    "category_title": "Palms & Nut Trees",
+    "part_affected": "Central Spindle Leaf & Growing Heart Bud",
+    "disease_title": "Bud Rot / Crown Heart Rot",
+    "scientific_pathogen": "Phytophthora meadii McRae",
+    "pathogen_type": "Oomycete Fungus",
+    "badge": "Lethal Meristem Rot",
+    "confidence": "98.2%",
+    "severity": "Critical Meristem Decay",
+    "severity_class": "text-danger",
+    "risk": "80% - 100% loss of affected palm crown if spindle rots completely",
+    "symptoms": "Initial discoloration and yellowing of the central spindle (unopened emerging frond). The spindle base turns water-soaked, rots, and can be pulled out effortlessly with a foul rotting odor. Rotting extends downward into the soft heart meristem, eventually causing the entire crown of fronds to collapse.",
+    "causes": "Rain-splashed inoculum during prolonged monsoon moisture, humid micro-climate in dense unpruned palms.",
+    "organic_remedies": [
+      "Crown Surgery: In early stages, cut and remove the rotting spindle and decayed crown tissue using a sterilized knife down to healthy green tissue.",
+      "Bordeaux Paste Dressing: Smear the cut crown wound generously with 10% Bordeaux paste and cap with a protective plastic dome until new growth emerges.",
+      "Prophylactic Spray: Spray neighboring palms with 1% Bordeaux mixture on the crown."
+    ],
+    "chemical_remedies": [
+      "Fungicidal Crown Drench: Drench the crown throat with 2g/L Metalaxyl + Mancozeb (Ridomil MZ) or 3g/L Copper Oxychloride.",
+      "Fosetyl-Al Application: Apply systemic Fosetyl-Al (Aliette) @ 2.5g/L around the crown whorl."
+    ],
+    "preventive_measures": [
+      "Ensure regular crown cleaning and prophylactic spraying of crowns before monsoon onset in endemic zones.",
+      "Avoid planting too densely; maintain standard 2.7m x 2.7m spacing for adequate air circulation."
+    ],
+    "image": "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=80"
+  },
+  "arecanut_inflorescence_dieback": {
+    "id": "arecanut_inflorescence_dieback",
+    "plant_name": "Arecanut Palm (Betel Nut / Supari / Adike)",
+    "scientific_plant": "Areca catechu L.",
+    "category": "palms",
+    "category_title": "Palms & Nut Trees",
+    "part_affected": "Flower Rachis & Tender Buttons",
+    "disease_title": "Inflorescence Dieback & Button Shedding",
+    "scientific_pathogen": "Colletotrichum gloeosporioides (Penz.)",
+    "pathogen_type": "Ascomycete Fungal Pathogen",
+    "badge": "Flower & Button Rot",
+    "confidence": "96.5%",
+    "severity": "Moderate to High",
+    "severity_class": "text-warning",
+    "risk": "35% - 50% loss of harvestable nut yield",
+    "symptoms": "Yellowing and drying of rachilla from tip downward. Female flowers (buttons) turn dark brown, shrivel, and shed prematurely. Dark necrotic spots appear on tender rachis branches.",
+    "causes": "High humidity, unseasonal rain during flowering seasons (November–March), and insect vector punctures.",
+    "organic_remedies": [
+      "Spray freshly opened spathes with 0.5% neem oil emulsion.",
+      "Remove and incinerate dried fallen inflorescences."
+    ],
+    "chemical_remedies": [
+      "Foliar spray with Mancozeb 75% WP @ 2.5g/L or Carbendazim 50% WP @ 1g/L directly on freshly opened inflorescences twice at 15-day intervals."
+    ],
+    "preventive_measures": [
+      "Maintain balanced palm nutrition and irrigate palms regularly during post-monsoon flowering period."
+    ],
+    "image": "https://images.unsplash.com/photo-1546548970-71785318a17b?auto=format&fit=crop&w=800&q=80"
+  },
+  "arecanut_healthy": {
+    "id": "arecanut_healthy",
+    "plant_name": "Arecanut Palm (Betel Nut / Supari / Adike)",
+    "scientific_plant": "Areca catechu L.",
+    "category": "palms",
+    "category_title": "Palms & Nut Trees",
+    "part_affected": "Full Palm Canopy & Nut Clusters",
+    "disease_title": "Optimal Vitality (Pristine Arecanut Palm)",
+    "scientific_pathogen": "No Pathogen Detected",
+    "pathogen_type": "Healthy Agronomic Specimen",
+    "badge": "Healthy Palm Specimen",
+    "confidence": "99.8%",
+    "severity": "Pristine",
+    "severity_class": "text-success",
+    "risk": "0% Immediate Pathological Threat",
+    "symptoms": "Vigorous deep-green fronds with uniform pinnae, firm upright spindle, vibrant developing nut bunches with healthy green button attachment, clean unblemished trunk without weeping sap.",
+    "causes": "Optimal soil aeration, balanced NPK + micronutrient management, and prophylactic seasonal sanitation.",
+    "organic_remedies": [
+      "Maintain annual organic schedule: 15kg well-decomposed farmyard manure + 2kg neem cake per palm.",
+      "Conduct pre-monsoon prophylactic spray of 1% neutral Bordeaux mixture to sustain disease resistance.",
+      "Keep soil mulch cover intact during hot summer months."
+    ],
+    "chemical_remedies": [
+      "Continue recommended NPK fertilizer dosage (100g N, 40g P2O5, 140g K2O per bearing palm per year in two split applications)."
+    ],
+    "preventive_measures": [
+      "Regular inspection of crown and trunk base every fortnight, especially prior to and during rainy season."
+    ],
+    "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80"
+  },
+  "coconut_bud_rot": {
+    "id": "coconut_bud_rot",
+    "plant_name": "Coconut Palm (Kalpavriksha)",
+    "scientific_plant": "Cocos nucifera L.",
+    "category": "palms",
+    "category_title": "Palms & Nut Trees",
+    "part_affected": "Heart Bud & Central Spindle Fronds",
+    "disease_title": "Coconut Bud Rot",
+    "scientific_pathogen": "Phytophthora palmivora (E.J. Butler)",
+    "pathogen_type": "Oomycete Fungus",
+    "badge": "Crown Bud Rot",
+    "confidence": "97.6%",
+    "severity": "Critical",
+    "severity_class": "text-danger",
+    "risk": "Total palm death if heart meristem rots",
+    "symptoms": "Yellowing and withering of the spear leaf. Central spindle decays and can be easily extracted with a foul stench. Outer leaves droop and form a skirt around the stem before dying.",
+    "causes": "Heavy rainfall, high humidity, insect injuries on crown, low temperatures.",
+    "organic_remedies": [
+      "Cut away diseased spindle and apply Bordeaux paste (10%) to the healthy crown tissue.",
+      "Cover crown with a pot or plastic shield to keep rainwater away until healing."
+    ],
+    "chemical_remedies": [
+      "Spray crowns with 1% Bordeaux mixture or Copper Oxychloride 3g/L before and during monsoon breaks."
+    ],
+    "preventive_measures": [
+      "Clean coconut crowns twice annually before South-West and North-East monsoons."
+    ],
+    "image": "https://images.unsplash.com/photo-1544077960-604201fe74bc?auto=format&fit=crop&w=800&q=80"
+  },
+  "rice_blast": {
+    "id": "rice_blast",
+    "plant_name": "Paddy / Rice (Heritage & Basmati)",
+    "scientific_plant": "Oryza sativa L.",
+    "category": "grains",
+    "category_title": "Grains & Cereals",
+    "part_affected": "Foliage, Leaf Sheath & Panicle Neck",
+    "disease_title": "Paddy Rice Blast",
+    "scientific_pathogen": "Magnaporthe oryzae (Couch & Kohn)",
+    "pathogen_type": "Ascomycete Fungus",
+    "badge": "Acute Foliar Blast",
+    "confidence": "98.5%",
+    "severity": "High Virulence",
+    "severity_class": "text-danger",
+    "risk": "30% - 60% grain yield reduction",
+    "symptoms": "Spindle-shaped elliptical lesions with pointed ends, grey/ash-colored center, and reddish-brown margin on leaf blades. Panicle neck rot causes breaking of panicles and chaffy grains.",
+    "causes": "High nitrogen fertilization, prolonged leaf wetness, cool nights (19-23°C) with dew.",
+    "organic_remedies": [
+      "Foliar spray with Pseudomonas fluorescens (10g/L) or Bacillus subtilis (5g/L) during early tillering.",
+      "Apply fermented cow urine and panchagavya spray (3%) as a foliar bio-shield."
+    ],
+    "chemical_remedies": [
+      "Tricyclazole 75% WP @ 0.6g/L or Isoprothiolane 40% EC @ 1.5ml/L at early lesion appearance."
+    ],
+    "preventive_measures": [
+      "Treat seeds with Trichoderma (10g/kg seed). Avoid excessive urea application; balance with potash."
+    ],
+    "image": "https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?auto=format&fit=crop&w=800&q=80"
+  },
+  "rice_bacterial_blight": {
+    "id": "rice_bacterial_blight",
+    "plant_name": "Paddy / Rice (Heritage & Basmati)",
+    "scientific_plant": "Oryza sativa L.",
+    "category": "grains",
+    "category_title": "Grains & Cereals",
+    "part_affected": "Leaf Lamina & Sheath",
+    "disease_title": "Bacterial Leaf Blight (BLB)",
+    "scientific_pathogen": "Xanthomonas oryzae pv. oryzae",
+    "pathogen_type": "Bacterial Pathogen",
+    "badge": "Bacterial Blight",
+    "confidence": "97.1%",
+    "severity": "Moderate to High",
+    "severity_class": "text-danger",
+    "risk": "20% - 50% photosynthetic loss",
+    "symptoms": "Water-soaked lesions beginning at leaf margins near the tip, enlarging into wavy yellowish-white stripes along veins. Ooze drops of milky bacterial exudate visible on young lesions in morning dew.",
+    "causes": "Warm temperatures (25-34°C), high humidity, windstorms, heavy rainfall, high nitrogen.",
+    "organic_remedies": [
+      "Spray fresh cow dung filtrate extract (20%) or neem seed kernel extract (NSKE 5%).",
+      "Spray Streptomyces bio-inoculant @ 2g/L."
+    ],
+    "chemical_remedies": [
+      "Copper Hydroxide 53.8% DF @ 2.0g/L or Streptocycline 100ppm (1g in 10L water) mixed with Copper Oxychloride 25g."
+    ],
+    "preventive_measures": [
+      "Drain water from flooded fields for 3-4 days to arrest bacterial multiplication."
+    ],
+    "image": "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=800&q=80"
+  },
+  "coffee_rust": {
+    "id": "coffee_rust",
+    "plant_name": "Coffee (Arabica & Robusta)",
+    "scientific_plant": "Coffea arabica L.",
+    "category": "plantation",
+    "category_title": "Plantation & Spices",
+    "part_affected": "Under-surface of Foliage",
+    "disease_title": "Coffee Leaf Rust",
+    "scientific_pathogen": "Hemileia vastatrix Berk. & Broome",
+    "pathogen_type": "Basidiomycete Rust Fungus",
+    "badge": "Endemic Rust",
+    "confidence": "99.2%",
+    "severity": "Moderate to Severe",
+    "severity_class": "text-warning",
+    "risk": "Severe defoliation, dieback & biennial bearing crash",
+    "symptoms": "Small yellowish spots on upper leaf surface corresponding to powdery, bright orange-yellow pustules on the lower abaxial surface. Affected leaves shed prematurely, leaving bare twigs.",
+    "causes": "High humidity, rain splashes, temperatures between 21-25°C, dense unpruned shade canopy.",
+    "organic_remedies": [
+      "Spray 0.5% neutral Bordeaux mixture during pre-monsoon (May–June) and post-monsoon (September–October).",
+      "Spray bio-control fungus Verticillium lecanii to parasitize rust urediniospores."
+    ],
+    "chemical_remedies": [
+      "Hexaconazole 5% EC @ 1ml/L or Oxycarboxin 20% EC @ 1ml/L during peak disease onset."
+    ],
+    "preventive_measures": [
+      "Regulate shade trees in the estate to allow 50% filtered sunlight to hit coffee bushes."
+    ],
+    "image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
+  },
+  "pepper_quick_wilt": {
+    "id": "pepper_quick_wilt",
+    "plant_name": "Black Pepper (Malabar King)",
+    "scientific_plant": "Piper nigrum L.",
+    "category": "plantation",
+    "category_title": "Plantation & Spices",
+    "part_affected": "Leaves, Spikes & Collar Region",
+    "disease_title": "Quick Wilt / Foot Rot",
+    "scientific_pathogen": "Phytophthora capsici Leonian",
+    "pathogen_type": "Oomycete Fungus",
+    "badge": "Lethal Wilt",
+    "confidence": "98.1%",
+    "severity": "Critical",
+    "severity_class": "text-danger",
+    "risk": "Entire vine death within 10-14 days of collar infection",
+    "symptoms": "Dark black water-soaked lesions with fimbriate margins appear on leaves, causing heavy leaf drop and spike fall. Collar infection causes peeling of bark and vine death within two weeks.",
+    "causes": "South-West monsoon rains, waterlogging around vine base, nematode root wounds.",
+    "organic_remedies": [
+      "Apply Trichoderma harzianum enriched neem cake (1kg/vine) in the root basin in May–June and August–September.",
+      "Spray and drench vine basin with 1% Bordeaux mixture."
+    ],
+    "chemical_remedies": [
+      "Drench with Potassium Phosphonate (Akomin) @ 3ml/L or Metalaxyl-Mancozeb @ 2g/L (5-10 L per vine)."
+    ],
+    "preventive_measures": [
+      "Prune trailing runner shoots. Ensure proper drainage to avoid standing water near standard trees."
+    ],
+    "image": "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80"
+  },
+  "cardamom_azhukal": {
+    "id": "cardamom_azhukal",
+    "plant_name": "Green Cardamom (Queen of Spices)",
+    "scientific_plant": "Elettaria cardamomum Maton",
+    "category": "plantation",
+    "category_title": "Plantation & Spices",
+    "part_affected": "Capsules, Panicles & Pseudostem",
+    "disease_title": "Azhukal / Capsule Rot",
+    "scientific_pathogen": "Phytophthora meadii / P. nicotianae",
+    "pathogen_type": "Fungal Rot",
+    "badge": "Capsule Rot",
+    "confidence": "97.9%",
+    "severity": "High",
+    "severity_class": "text-danger",
+    "risk": "40% - 60% rotting of harvestable capsules",
+    "symptoms": "Water-soaked lesions on young leaves and immature capsules. Capsules turn brownish-black, rot, decay, and emit an unpleasant odor. Infected panicles rot and dry up.",
+    "causes": "High rainfall, cloudy weather, continuous dripping from shade canopy.",
+    "organic_remedies": [
+      "Spray and drench clumps with 1% Bordeaux mixture in May and repeat in August.",
+      "Apply Trichoderma viride in compost around cardamom clumps."
+    ],
+    "chemical_remedies": [
+      "Foliar spray and drench with Copper Oxychloride (0.2%) or Metalaxyl-Mancozeb (0.2%)."
+    ],
+    "preventive_measures": [
+      "Clear trash around the cardamom clump bases before monsoon to avoid humidity buildup."
+    ],
+    "image": "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=800&q=80"
+  },
+  "mango_anthracnose": {
+    "id": "mango_anthracnose",
+    "plant_name": "Mango Tree (Alphonso / Hapus / Kesar)",
+    "scientific_plant": "Mangifera indica L.",
+    "category": "horticulture",
+    "category_title": "Horticulture & Fruit Trees",
+    "part_affected": "Tender Leaves, Blossom Panicles & Fruit",
+    "disease_title": "Mango Anthracnose & Blossom Blight",
+    "scientific_pathogen": "Colletotrichum gloeosporioides Penz.",
+    "pathogen_type": "Ascomycete Fungus",
+    "badge": "Fruit & Blossom Blight",
+    "confidence": "98.3%",
+    "severity": "Moderate to Severe",
+    "severity_class": "text-warning",
+    "risk": "Severe blossom drop & black tear-staining rot on fruits",
+    "symptoms": "Circular brown to black lesions with chlorotic halos on leaves. Blighting of flowering panicles leading to total fruit-set failure. On ripening fruits, circular depressed black spots with pinkish spore masses appear (tear-stain symptom).",
+    "causes": "High humidity (>95%), dew, unseasonal rains during flowering and fruit development.",
+    "organic_remedies": [
+      "Spray with Copper Hydroxide (2g/L) or 0.5% Bordeaux mixture during flower bud stage.",
+      "Post-harvest hot water treatment of mangoes at 52°C for 10 minutes to eliminate latent fungal spores."
+    ],
+    "chemical_remedies": [
+      "Carbendazim 50% WP @ 1g/L or Azoxystrobin 23% SC @ 1ml/L at 15-day intervals during flowering."
+    ],
+    "preventive_measures": [
+      "Prune overcrowded center branches to maintain canopy aeration; burn pruned infected twigs."
+    ],
+    "image": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"
+  },
+  "banana_panama_wilt": {
+    "id": "banana_panama_wilt",
+    "plant_name": "Banana (Nanjangud Rasabale / Grand Naine)",
+    "scientific_plant": "Musa acuminata Colla",
+    "category": "horticulture",
+    "category_title": "Horticulture & Fruit Trees",
+    "part_affected": "Vascular System, Pseudostem & Fronds",
+    "disease_title": "Panama Wilt (Fusarium Wilt TR4)",
+    "scientific_pathogen": "Fusarium oxysporum f. sp. cubense",
+    "pathogen_type": "Soil-Borne Vascular Fungus",
+    "badge": "Lethal Vascular Wilt",
+    "confidence": "98.9%",
+    "severity": "Critical",
+    "severity_class": "text-danger",
+    "risk": "100% plant loss; persistent in soil for decades",
+    "symptoms": "Prominent yellowing of the lower leaves progressing upwards. Leaves buckle at the junction of petiole and pseudostem, hanging like a skirt. Longitudinally split pseudostem base shows continuous reddish-brown to black vascular discoloration in cross section.",
+    "causes": "Soil-borne chlamydospores, infested suckers, contaminated farm tools and irrigation water.",
+    "organic_remedies": [
+      "Apply Trichoderma viride / T. harzianum (50g/plant) with 2kg neem cake at planting and 3rd month.",
+      "Apply bio-fertilizer Pseudomonas fluorescens at planting time."
+    ],
+    "chemical_remedies": [
+      "Corm injection with 2% Carbendazim (3ml of 2% solution) or soil drenching with Carbendazim 2g/L."
+    ],
+    "preventive_measures": [
+      "Use certified tissue culture disease-free plantlets. Strictly disinfect knives and farm equipment."
+    ],
+    "image": "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=80"
+  },
+  "apple_scab": {
+    "id": "apple_scab",
+    "plant_name": "Apple Tree (Himachal Royal Gala / Delicious)",
+    "scientific_plant": "Malus domestica Borkh.",
+    "category": "horticulture",
+    "category_title": "Horticulture & Fruit Trees",
+    "part_affected": "Leaves, Blossom Sepals & Fruit Skin",
+    "disease_title": "Apple Scab",
+    "scientific_pathogen": "Venturia inaequalis (Cooke) G. Winter",
+    "pathogen_type": "Ascomycete Fungal Pathogen",
+    "badge": "Orchard Scab",
+    "confidence": "98.6%",
+    "severity": "Moderate Necrosis",
+    "severity_class": "text-warning",
+    "risk": "25% - 40% fruit skin devaluing & premature drop",
+    "symptoms": "Circular velvety olive-green to dark brown spots on the upper leaf surface. Spots become raised, scabby, and corky. Affected fruits develop blackened corky cracks, stunting expansion.",
+    "causes": "Cold, wet spring seasons with extended leaf moisture periods in temperate hill orchards.",
+    "organic_remedies": [
+      "Spray with Potassium Bicarbonate (3g/L) mixed with pure cold-pressed Neem oil (5ml/L).",
+      "Spray orchard floor with 5% urea solution in autumn to hasten fallen leaf decomposition."
+    ],
+    "chemical_remedies": [
+      "Captan 50% WP @ 2.5g/L or Mancozeb 75% WP @ 3g/L at silver tip to petal fall stages.",
+      "Difenoconazole 25% EC @ 0.5ml/L or Hexaconazole @ 1ml/L for curative systemic control."
+    ],
+    "preventive_measures": [
+      "Prune inner orchard canopy branches to reduce moisture retention and allow maximum sunlight penetration."
+    ],
+    "image": "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?auto=format&fit=crop&w=800&q=80"
+  },
+  "tomato_blight": {
+    "id": "tomato_blight",
+    "plant_name": "Tomato Vine (Fresh Harvest)",
+    "scientific_plant": "Solanum lycopersicum L.",
+    "category": "vegetables",
+    "category_title": "Vegetables & Cash Crops",
+    "part_affected": "Foliage, Stems & Fruit Shoulders",
+    "disease_title": "Tomato Early Blight",
+    "scientific_pathogen": "Alternaria solani Sorauer",
+    "pathogen_type": "Foliar Blight Fungus",
+    "badge": "Foliar Blight",
+    "confidence": "97.8%",
+    "severity": "Moderate",
+    "severity_class": "text-warning",
+    "risk": "Target-spot stem girdling & fruit rotting",
+    "symptoms": "Circular dark brown necrotic spots showing concentric rings ('target-board' pattern) surrounded by a distinct chlorotic yellow halo. Lower leaves wither and die first.",
+    "causes": "High humidity with warm temperatures (24-29°C), splash irrigation, dense plant canopy.",
+    "organic_remedies": [
+      "Remove and burn infected lower leaves up to 30cm from soil line.",
+      "Spray Copper Soap / Copper Hydroxide approved for certified organic farming @ 2.5g/L.",
+      "Mulch bed with organic straw to prevent rain-splash transmission."
+    ],
+    "chemical_remedies": [
+      "Mancozeb 75% WP @ 2g/L or Chlorothalonil 75% WP @ 2g/L at weekly intervals."
+    ],
+    "preventive_measures": [
+      "Avoid overhead sprinkler irrigation; employ drip irrigation to keep foliage dry."
+    ],
+    "image": "https://images.unsplash.com/photo-1592841200221-a6898f307baa?auto=format&fit=crop&w=800&q=80"
+  },
+  "cotton_leaf_curl": {
+    "id": "cotton_leaf_curl",
+    "plant_name": "Cotton (White Gold)",
+    "scientific_plant": "Gossypium hirsutum L.",
+    "category": "vegetables",
+    "category_title": "Vegetables & Cash Crops",
+    "part_affected": "Young Leaves & Vein Network",
+    "disease_title": "Cotton Leaf Curl Virus (CLCuV)",
+    "scientific_pathogen": "Begomovirus (Whitefly-Transmitted)",
+    "pathogen_type": "Viral Disease",
+    "badge": "Vector-Borne Virus",
+    "confidence": "98.0%",
+    "severity": "High",
+    "severity_class": "text-danger",
+    "risk": "Severe stunting, boll shedding & 40-70% fiber loss",
+    "symptoms": "Upward or downward cupping/curling of leaves, thickening of main veins, and formation of leaf-like enations on lower leaf surfaces. Plants are severely stunted.",
+    "causes": "Transmitted by whitefly (Bemisia tabaci) in dry, warm climatic conditions.",
+    "organic_remedies": [
+      "Install yellow sticky traps (15-20 per acre) to monitor and trap whitefly vectors.",
+      "Foliar spray with 2% neem oil or 5% neem seed kernel extract (NSKE)."
+    ],
+    "chemical_remedies": [
+      "Spray Diafenthiuron 50% WP @ 1.2g/L or Pyriproxyfen 10% EC @ 2ml/L to control whiteflies."
+    ],
+    "preventive_measures": [
+      "Destroy alternate weed hosts (Abutilon, Xanthium) along farm borders."
+    ],
+    "image": "https://images.unsplash.com/photo-1594488518063-44d4715f3333?auto=format&fit=crop&w=800&q=80"
+  },
+  "citrus_canker": {
+    "id": "citrus_canker",
+    "plant_name": "Citrus (Lemon / Orange / Lime)",
+    "scientific_plant": "Citrus aurantifolia (Christm.) Swingle",
+    "category": "horticulture",
+    "category_title": "Horticulture & Fruit Trees",
+    "part_affected": "Foliage, Twigs & Fruit Rind",
+    "disease_title": "Citrus Bacterial Canker",
+    "scientific_pathogen": "Xanthomonas axonopodis pv. citri",
+    "pathogen_type": "Bacterial Pathogen",
+    "badge": "Bacterial Canker",
+    "confidence": "97.5%",
+    "severity": "Moderate to High",
+    "severity_class": "text-warning",
+    "risk": "Premature fruit drop and unmarketable blemished fruit",
+    "symptoms": "Raised corky blister-like lesions with a cratered center and a bright oily yellow halo on leaves, stems, and fruits. Lesions feel rough and scabby to touch.",
+    "causes": "Rain-splash and wind-driven water, leaf miner insect wounds providing entry.",
+    "organic_remedies": [
+      "Prune and incinerate all canker-infected twigs prior to new flush.",
+      "Foliar spray of 1% Bordeaux mixture on young spring and monsoon flushes."
+    ],
+    "chemical_remedies": [
+      "Streptocycline (1g in 10L water) + Copper Oxychloride (30g in 10L water) sprayed at 20-day intervals."
+    ],
+    "preventive_measures": [
+      "Control citrus leaf miner using neem-based insecticides as leaf cuts encourage bacterial entry."
+    ],
+    "image": "https://images.unsplash.com/photo-1590502593747-42a996133562?auto=format&fit=crop&w=800&q=80"
+  },
+  "healthy": {
+    "id": "healthy",
+    "plant_name": "General Agricultural Plant / Tree",
+    "scientific_plant": "Plantae Specimen",
+    "category": "healthy",
+    "category_title": "Healthy Crop Specimens",
+    "part_affected": "Foliage, Stem & Fruit",
+    "disease_title": "Optimal Agronomic Vitality",
+    "scientific_pathogen": "No Pathogen Detected",
+    "pathogen_type": "Pristine Biological State",
+    "badge": "100% Healthy Specimen",
+    "confidence": "99.9%",
+    "severity": "Pristine",
+    "severity_class": "text-success",
+    "risk": "0% Immediate Pathological Threat",
+    "symptoms": "Vibrant uniform chlorophyll pigmentation, clean stomatal surface, zero necrotic lesions, firm turgor pressure, clean unspotted fruit, robust vascular vascular health.",
+    "causes": "Optimal soil biological activity, proper water drainage, balanced microbial and nutrient nourishment.",
+    "organic_remedies": [
+      "Continue routine organic compost and bio-fertilizer schedule.",
+      "Apply prophylactic bi-weekly neem oil (0.5%) spray as preventive shield.",
+      "Ensure regular soil moisture checks."
+    ],
+    "chemical_remedies": [
+      "No chemical intervention needed."
+    ],
+    "preventive_measures": [
+      "Routine weekly field scouting to catch early signs of pest or fungal arrival."
+    ],
+    "image": "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&w=800&q=80"
+  }
+}

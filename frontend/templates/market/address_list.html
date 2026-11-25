@@ -1,0 +1,106 @@
+{% extends "market/base.html" %}
+{% block title %}My Address Book · Krishi Bazaar{% endblock %}
+{% block content %}
+<div class="container py-4">
+
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+    <div>
+      <span class="text-uppercase small fw-bold" style="color:var(--lux-gold-dark);letter-spacing:2px;">DELIVERY SETTINGS</span>
+      <h1 class="display-6 fw-bold mb-1">My Address Book</h1>
+      <p class="text-muted mb-0">Manage your saved delivery addresses for quick checkout.</p>
+    </div>
+    <a href="{% url 'address_add' %}" class="btn btn-gold px-4 py-2 fw-bold">
+      <i class="bi bi-plus-lg me-1"></i> Add New Address
+    </a>
+  </div>
+
+  {% if messages %}
+    {% for m in messages %}
+      <div class="alert alert-{{ m.tags|default:'info' }} alert-dismissible fade show small" role="alert">
+        <i class="bi bi-info-circle-fill me-2"></i> {{ m }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  {% if addresses %}
+  <div class="row g-4">
+    {% for addr in addresses %}
+    <div class="col-md-6 col-lg-4">
+      <div class="lux-card p-4 h-100 position-relative" style="{% if addr.is_default %}border-color:var(--lux-gold);{% endif %}">
+        {% if addr.is_default %}
+          <span class="position-absolute top-0 end-0 m-3 badge bg-success-subtle text-success border border-success" style="font-size:10px;">
+            <i class="bi bi-check-circle-fill me-1"></i> DEFAULT
+          </span>
+        {% endif %}
+
+        <!-- Type Badge -->
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <div class="rounded-circle d-flex align-items-center justify-content-center"
+            style="width:40px;height:40px;background:{% if addr.is_default %}var(--lux-dark){% else %}rgba(212,175,55,0.15){% endif %};color:{% if addr.is_default %}var(--lux-gold){% else %}var(--lux-gold-dark){% endif %};">
+            {% if addr.address_type == 'home' %}<i class="bi bi-house-fill fs-5"></i>
+            {% elif addr.address_type == 'work' %}<i class="bi bi-building fs-5"></i>
+            {% elif addr.address_type == 'warehouse' %}<i class="bi bi-box-seam-fill fs-5"></i>
+            {% else %}<i class="bi bi-geo-alt-fill fs-5"></i>{% endif %}
+          </div>
+          <div>
+            <span class="badge" style="background:rgba(212,175,55,0.15);color:var(--lux-gold-dark);font-size:10px;border:1px solid rgba(212,175,55,0.3);">
+              {{ addr.get_address_type_display|upper }}
+            </span>
+            <strong class="text-dark d-block">{{ addr.full_name }}</strong>
+          </div>
+        </div>
+
+        <!-- Address Details -->
+        <ul class="list-unstyled small text-muted mb-3">
+          <li class="mb-1"><i class="bi bi-house me-2 text-warning"></i>{{ addr.street_address }}</li>
+          {% if addr.landmark %}<li class="mb-1"><i class="bi bi-geo me-2 text-warning"></i>Near {{ addr.landmark }}</li>{% endif %}
+          <li class="mb-1"><i class="bi bi-geo-alt me-2 text-warning"></i>{{ addr.city }}, {{ addr.state }}</li>
+          <li class="mb-1"><i class="bi bi-mailbox2 me-2 text-warning"></i>PIN: <strong class="text-dark">{{ addr.pincode }}</strong></li>
+          <li><i class="bi bi-telephone-fill me-2 text-success"></i>{{ addr.phone }}</li>
+        </ul>
+
+        <!-- Actions -->
+        <div class="d-flex flex-wrap gap-2 mt-auto">
+          <a href="{% url 'address_edit' addr.pk %}" class="btn btn-sm btn-outline-dark flex-fill">
+            <i class="bi bi-pencil me-1"></i> Edit
+          </a>
+          {% if not addr.is_default %}
+          <form method="post" action="{% url 'address_set_default' addr.pk %}" class="flex-fill">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-gold w-100">
+              <i class="bi bi-check-circle me-1"></i> Set Default
+            </button>
+          </form>
+          {% endif %}
+          <form method="post" action="{% url 'address_delete' addr.pk %}" onsubmit="return confirm('Remove this address?')">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-outline-danger">
+              <i class="bi bi-trash3"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% else %}
+  <!-- Empty State -->
+  <div class="lux-card text-center p-5 my-4">
+    <div class="lux-brand-emblem mx-auto mb-3" style="width:72px;height:72px;font-size:32px;animation:none;">
+      <i class="bi bi-geo-alt"></i>
+    </div>
+    <h2 class="display-6 fw-bold mb-2">No Addresses Saved</h2>
+    <p class="text-muted mx-auto mb-4" style="max-width:480px;">
+      Add a delivery address to your account for fast checkout on future orders.
+    </p>
+    <a href="{% url 'address_add' %}" class="btn btn-gold px-4 py-3 fw-bold">
+      <i class="bi bi-plus-lg me-2"></i> Add First Delivery Address
+    </a>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}
+

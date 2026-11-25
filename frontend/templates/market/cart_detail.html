@@ -1,0 +1,253 @@
+{% extends "market/base.html" %}
+{% block title %}Acquisition Bag · Krishi Bazaar Sovereign Exchange{% endblock %}
+
+{% block content %}
+<div class="container py-3">
+
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb small">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-decoration-none text-muted"><i class="bi bi-house me-1"></i>Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'home' %}#catalog" class="text-decoration-none text-muted">Catalog</a></li>
+      <li class="breadcrumb-item active" style="color: var(--lux-gold-dark);" aria-current="page">Acquisition Bag</li>
+    </ol>
+  </nav>
+
+  <!-- Luxury Header Banner -->
+  <div class="lux-hero my-3 p-4 p-md-5">
+    <div class="row align-items-center">
+      <div class="col-lg-9">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span class="lux-badge-pill">
+            <i class="bi bi-bag-check-fill" style="color: var(--lux-gold);"></i> SOVEREIGN ACQUISITIONS
+          </span>
+          <span class="badge border border-warning text-warning-emphasis bg-warning-subtle px-3 py-1 rounded-pill small fw-bold">
+            Zero Middleman Markup
+          </span>
+        </div>
+        <h1 class="lux-hero-title mb-2">Your Produce Acquisition Bag.</h1>
+        <p class="lux-hero-desc mb-0">
+          Review single-origin agricultural commodities sourced directly from verified estate stewards before batch transmission.
+        </p>
+      </div>
+      <div class="col-lg-3 text-lg-end mt-3 mt-lg-0">
+        <div class="d-inline-flex flex-column align-items-lg-end">
+          <span class="small text-white-50 text-uppercase letter-spacing-1">Distinct Commodities</span>
+          <span class="display-6 fw-bold" style="color: var(--lux-gold);">{{ cart_count }} Item{{ cart_count|pluralize }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if cart_items %}
+  <div class="row g-4 my-3">
+
+    <!-- Left: Cart Items List -->
+    <div class="col-lg-8">
+      <div class="lux-card p-0" style="overflow: hidden;">
+        
+        <div class="lux-table-header p-3 px-4 d-flex justify-content-between align-items-center" style="background: #091811; color: #fff; border-bottom: 2px solid var(--lux-gold);">
+          <h3 class="h6 fw-bold text-white mb-0 text-uppercase letter-spacing-1">
+            <i class="bi bi-boxes me-2" style="color: var(--lux-gold);"></i> Allotment Summary
+          </h3>
+          <span class="small text-white-50">{{ cart_total_qty }} Total Units</span>
+        </div>
+
+        <div class="p-3 p-md-4">
+          {% for item in cart_items %}
+          <div class="row align-items-center py-3 {% if not forloop.last %}border-bottom{% endif %} g-3">
+            
+            <!-- Thumbnail -->
+            <div class="col-3 col-md-2">
+              <div class="rounded-3 overflow-hidden" style="width: 100%; height: 75px; background: #07150e; border: 1px solid rgba(212,175,55,0.3);">
+                {% if item.product.image %}
+                  <img src="{{ item.product.image_url }}" alt="{{ item.product.crop_name }}" class="w-100 h-100" style="object-fit: cover;">
+                {% else %}
+                  <div class="w-100 h-100 d-flex align-items-center justify-content-center text-muted fs-4">🌾</div>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Product info -->
+            <div class="col-9 col-md-4">
+              <span class="badge border border-warning-subtle text-dark-emphasis small mb-1" style="font-size: 10px;">
+                <i class="bi bi-geo-alt-fill text-warning me-1"></i>{{ item.product.location }}
+              </span>
+              <h4 class="h6 fw-bold mb-1">
+                <a href="{% url 'product_detail' item.product.pk %}" class="text-decoration-none text-dark hover-gold">
+                  {{ item.product.crop_name }}
+                </a>
+              </h4>
+              <div class="small text-muted">
+                Cultivator: <strong class="text-dark">{{ item.product.farmer.get_full_name|default:item.product.farmer.username }}</strong>
+              </div>
+              <div class="small text-muted">
+                Max Stock: {{ item.max_available }} {{ item.product.unit }}
+              </div>
+            </div>
+
+            <!-- Unit Price -->
+            <div class="col-4 col-md-2 text-md-center">
+              <span class="small text-muted d-block d-md-none">Unit Price:</span>
+              <span class="fw-bold text-dark">₹{{ item.price }}</span>
+              <span class="small text-muted d-block">/ {{ item.product.unit }}</span>
+            </div>
+
+            <!-- Quantity Selector Form -->
+            <div class="col-5 col-md-2">
+              <form method="post" action="{% url 'cart_update' item.product.pk %}" class="d-flex align-items-center gap-1">
+                {% csrf_token %}
+                <input type="number" name="quantity" value="{{ item.quantity }}" min="0.01" max="{{ item.max_available }}" step="any" class="form-control form-control-sm text-center fw-bold" style="border: 1.5px solid var(--lux-gold); border-radius: 8px;" onchange="this.form.submit()">
+                <button type="submit" class="btn btn-sm btn-outline-secondary p-1" title="Update Quantity">
+                  <i class="bi bi-check-lg"></i>
+                </button>
+              </form>
+              <small class="text-muted text-center d-block mt-1" style="font-size: 11px;">{{ item.product.unit }}</small>
+            </div>
+
+            <!-- Subtotal & Remove -->
+            <div class="col-3 col-md-2 text-end">
+              <div class="fs-6 fw-bold" style="color: var(--lux-forest);">₹{{ item.subtotal }}</div>
+              <form method="post" action="{% url 'cart_remove' item.product.pk %}" class="d-inline" onsubmit="return confirm('Remove {{ item.product.crop_name|escapejs }} from bag?')">{% csrf_token %}
+                <button type="submit" class="btn btn-link text-danger small text-decoration-none mt-1 p-0"><i class="bi bi-trash3 me-1"></i> Remove</button>
+              </form>
+            </div>
+
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Cart Action Footer -->
+        <div class="p-3 px-4 d-flex flex-wrap justify-content-between align-items-center gap-2" style="background: #faf8f4; border-top: 1px solid #ede8dc;">
+          <a href="{% url 'home' %}#catalog" class="btn btn-outline-dark btn-sm fw-semibold">
+            <i class="bi bi-arrow-left me-1"></i> Add More Single-Origin Produce
+          </a>
+          <form method="post" action="{% url 'cart_clear' %}" class="d-inline" onsubmit="return confirm('Are you sure you want to clear your entire acquisition bag?')">{% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash me-1"></i> Clear Entire Bag</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Right: Order Ledger Summary -->
+    <div class="col-lg-4">
+      <div class="lux-auth-card p-4 sticky-top" style="top: 85px;">
+        
+        <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
+          <div class="lux-brand-emblem" style="width: 38px; height: 38px; font-size: 18px; animation: none;">
+            <i class="bi bi-receipt-cutoff"></i>
+          </div>
+          <div>
+            <span class="text-uppercase small fw-bold" style="color: var(--lux-gold-dark); font-size: 10px; letter-spacing: 1px;">SETTLEMENT BREAKDOWN</span>
+            <h3 class="h5 fw-bold mb-0">Acquisition Ledger</h3>
+          </div>
+        </div>
+
+        <!-- Ledger details -->
+        <div class="d-flex flex-column gap-2 small text-muted mb-4">
+          <div class="d-flex justify-content-between">
+            <span>Commodity Subtotal:</span>
+            <strong class="text-dark">₹{{ cart_total }}</strong>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Mandi Brokerage Toll:</span>
+            <span class="text-success fw-bold">₹0.00 (100% Direct)</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Terroir Provenance Fee:</span>
+            <span class="text-success fw-bold">Complimentary</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Direct Farm Gate Logistics:</span>
+            <span class="text-dark">Settled with Cultivator</span>
+          </div>
+
+          <hr class="my-2">
+
+          <div class="d-flex justify-content-between align-items-baseline">
+            <strong class="text-dark fs-6">Gross Valuation:</strong>
+            <span class="display-6 fw-bold" style="color: var(--lux-forest); font-family: var(--font-serif); font-size: 1.85rem;">
+              ₹{{ cart_total }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Checkout Action Button -->
+        {% if user.is_authenticated %}
+          {% if user.profile.role == 'farmer' and not user.is_staff %}
+            <div class="alert alert-warning small p-3 mb-3">
+              <i class="bi bi-exclamation-triangle-fill me-1"></i>
+              You are currently authenticated as an <strong>Estate Cultivator</strong>. Only registered Buyers or Administrators can execute harvest acquisitions.
+            </div>
+            <a href="{% url 'farmer_dashboard' %}" class="btn btn-outline-dark w-100 py-2">
+              Return to Farmer Workspace
+            </a>
+          {% else %}
+            <a href="{% url 'checkout' %}" class="btn btn-gold w-100 py-3 fw-bold fs-6 shadow">
+              <i class="bi bi-shield-check me-2"></i> Proceed to Checkout
+            </a>
+            <small class="text-muted text-center d-block mt-2" style="font-size: 11px;">
+              <i class="bi bi-lock-fill text-success me-1"></i> Atomic transaction guarantees inventory escrow.
+            </small>
+          {% endif %}
+        {% else %}
+          <div class="p-3 rounded-3 mb-3" style="background: rgba(212,175,55,0.08); border: 1px dashed var(--lux-gold);">
+            <p class="small text-muted mb-2">
+              Sign in with your Buyer credentials to transmit direct orders to verified estate stewards.
+            </p>
+            <a href="{% url 'login' %}?next={% url 'cart_detail' %}" class="btn btn-gold w-100 py-2 fw-bold">
+              <i class="bi bi-box-arrow-in-right me-1"></i> Sign In to Transmit Order
+            </a>
+          </div>
+          <a href="{% url 'register' %}" class="btn btn-gold-outline w-100 py-2 fw-semibold text-center small">
+            Create Buyer Account
+          </a>
+        {% endif %}
+
+        <!-- Guarantees list -->
+        <div class="mt-4 pt-3 border-top small text-muted">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <i class="bi bi-patch-check-fill text-warning"></i>
+            <span>100% Net Remuneration to Farmer</span>
+          </div>
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <i class="bi bi-shield-lock-fill text-warning"></i>
+            <span>Verified Agro-Climatic Terroir</span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-truck-front-fill text-warning"></i>
+            <span>Harvested &amp; Dispatched to Order</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  {% else %}
+  
+  <!-- Empty Cart State -->
+  <div class="lux-card text-center p-5 my-4">
+    <div class="lux-brand-emblem mx-auto mb-3" style="width: 72px; height: 72px; font-size: 32px; animation: none;">
+      <i class="bi bi-bag-x"></i>
+    </div>
+    <h2 class="display-6 fw-bold mb-2">Your Acquisition Bag is Empty</h2>
+    <p class="text-muted mx-auto mb-4" style="max-width: 520px;">
+      You have not reserved any single-origin crop allotments yet. Explore our curated catalog of authentic saffron, basmati, coffee, and spices direct from generational stewards.
+    </p>
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+      <a href="{% url 'home' %}#catalog" class="btn btn-gold px-4 py-3 fw-bold">
+        <i class="bi bi-grid-3x3-gap me-2"></i> Explore Harvest Catalog
+      </a>
+      <a href="{% url 'services' %}" class="btn btn-gold-outline px-4 py-3 fw-bold">
+        <i class="bi bi-gear-wide-connected me-2"></i> View Exchange Services
+      </a>
+    </div>
+  </div>
+
+  {% endif %}
+
+</div>
+{% endblock %}
+

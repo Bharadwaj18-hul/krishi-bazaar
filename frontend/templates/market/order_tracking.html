@@ -1,0 +1,340 @@
+{% extends "market/base.html" %}
+{% block title %}Track Consignment #{{ order.id }} · Krishi Bazaar{% endblock %}
+
+{% block content %}
+<div class="container py-3">
+
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb small">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-decoration-none text-muted"><i class="bi bi-house me-1"></i>Home</a></li>
+      {% if user == order.buyer %}
+        <li class="breadcrumb-item"><a href="{% url 'buyer_orders' %}" class="text-decoration-none text-muted">My Acquisitions</a></li>
+      {% else %}
+        <li class="breadcrumb-item"><a href="{% url 'farmer_dashboard' %}" class="text-decoration-none text-muted">Farmer Portal</a></li>
+      {% endif %}
+      <li class="breadcrumb-item active" style="color: var(--lux-gold-dark);" aria-current="page">Delivery Tracking #{{ order.id }}</li>
+    </ol>
+  </nav>
+
+  <!-- Luxury Header Banner -->
+  <div class="lux-hero my-3 p-4 p-md-5">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span class="lux-badge-pill">
+            <i class="bi bi-truck-front-fill" style="color: var(--lux-gold);"></i> DIRECT ESTATE DISPATCH TRACKER
+          </span>
+          {% if step >= 3 %}
+            <span class="badge bg-success-subtle text-success border border-success px-3 py-1 rounded-pill small fw-bold">
+              <i class="bi bi-box-seam me-1"></i> Parcel Handed Over to Carrier
+            </span>
+          {% elif step == 2 %}
+            <span class="badge bg-warning-subtle text-warning-emphasis border border-warning px-3 py-1 rounded-pill small fw-bold">
+              <i class="bi bi-clock-history me-1"></i> Packaging at Estate
+            </span>
+          {% else %}
+            <span class="badge bg-secondary-subtle text-secondary border border-secondary px-3 py-1 rounded-pill small">
+              Awaiting Farmer Confirmation
+            </span>
+          {% endif %}
+        </div>
+
+        <h1 class="lux-hero-title mb-2">Live Consignment Tracking</h1>
+        <p class="lux-hero-desc mb-0">
+          Tracking direct harvest transit from <strong>{{ order.product.location }}</strong> to <strong>{{ order.destination_address }}</strong>.
+        </p>
+      </div>
+
+      <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+        <div class="p-3 rounded-3 d-inline-block text-start" style="background: rgba(255,255,255,0.06); border: 1.5px solid var(--lux-gold);">
+          <span class="small text-white-50 d-block text-uppercase letter-spacing-1">Tracking Docket ID</span>
+          <div class="d-flex align-items-center gap-2">
+            <span class="fs-5 fw-bold text-white font-monospace" id="docketNumber">
+              {{ order.tracking_number|default:"PENDING-DISPATCH" }}
+            </span>
+            {% if order.tracking_number %}
+              <button class="btn btn-sm btn-outline-warning p-1" onclick="copyDocket()" title="Copy Docket ID">
+                <i class="bi bi-clipboard"></i>
+              </button>
+            {% endif %}
+          </div>
+          <small class="text-white-50 d-block mt-1">Carrier: {{ order.courier_partner }}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Visual 5-Step Delivery Stepper Timeline -->
+  <div class="lux-card p-4 p-md-5 my-4">
+    <div class="text-center mb-4">
+      <span class="text-uppercase small fw-bold" style="color: var(--lux-gold-dark); letter-spacing: 2px;">DISPATCH PROGRESSION</span>
+      <h3 class="h4 fw-bold mt-1">Real-Time Agrarian Journey</h3>
+    </div>
+
+    <!-- Stepper Graphic -->
+    <div class="position-relative py-3">
+      
+      <!-- Progress Track Line -->
+      <div class="position-absolute top-50 start-0 translate-middle-y w-100" style="height: 6px; background: #e8e3d8; z-index: 1;">
+        <div style="height: 100%; width: {% if step == 1 %}10%{% elif step == 2 %}32%{% elif step == 3 %}55%{% elif step == 4 %}78%{% elif step == 5 %}100%{% endif %}; background: var(--lux-gold-grad); transition: width 0.6s ease;"></div>
+      </div>
+
+      <!-- Step Nodes Row -->
+      <div class="d-flex justify-content-between position-relative text-center" style="z-index: 2;">
+        
+        <!-- Step 1: Placed -->
+        <div class="d-flex flex-column align-items-center" style="width: 18%;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center shadow-sm mb-2" style="width: 44px; height: 44px; background: {% if step >= 1 %}var(--lux-gold){% else %}#fff{% endif %}; color: #07150e; border: 3px solid #fff; font-size: 18px; font-weight: bold;">
+            <i class="bi bi-receipt"></i>
+          </div>
+          <strong class="small text-dark d-block">Order Placed</strong>
+          <span class="text-muted" style="font-size: 11px;">{{ order.created_at|date:"d M, h:i A" }}</span>
+        </div>
+
+        <!-- Step 2: Accepted -->
+        <div class="d-flex flex-column align-items-center" style="width: 18%;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center shadow-sm mb-2" style="width: 44px; height: 44px; background: {% if step >= 2 %}var(--lux-gold){% else %}#e8e3d8{% endif %}; color: #07150e; border: 3px solid #fff; font-size: 18px; font-weight: bold;">
+            <i class="bi bi-patch-check"></i>
+          </div>
+          <strong class="small text-dark d-block">Estate Confirmed</strong>
+          <span class="text-muted" style="font-size: 11px;">Stock Reserved</span>
+        </div>
+
+        <!-- Step 3: Parcel Handed Over -->
+        <div class="d-flex flex-column align-items-center" style="width: 18%;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center shadow-sm mb-2" style="width: 44px; height: 44px; background: {% if step >= 3 %}var(--lux-gold){% else %}#e8e3d8{% endif %}; color: #07150e; border: 3px solid #fff; font-size: 18px; font-weight: bold; {% if step == 3 %}box-shadow: 0 0 0 6px rgba(212,175,55,0.3) !important;{% endif %}">
+            <i class="bi bi-box-seam-fill"></i>
+          </div>
+          <strong class="small text-dark d-block">Parcel Handed Over</strong>
+          <span class="text-muted" style="font-size: 11px;">
+            {% if order.dispatched_at %}{{ order.dispatched_at|date:"d M, h:i A" }}{% else %}Awaiting Dispatch{% endif %}
+          </span>
+        </div>
+
+        <!-- Step 4: In-Transit -->
+        <div class="d-flex flex-column align-items-center" style="width: 18%;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center shadow-sm mb-2" style="width: 44px; height: 44px; background: {% if step >= 4 %}var(--lux-gold){% else %}#e8e3d8{% endif %}; color: #07150e; border: 3px solid #fff; font-size: 18px; font-weight: bold; {% if step == 4 %}box-shadow: 0 0 0 6px rgba(212,175,55,0.3) !important;{% endif %}">
+            <i class="bi bi-truck"></i>
+          </div>
+          <strong class="small text-dark d-block">In-Transit</strong>
+          <span class="text-muted" style="font-size: 11px;">Regional Cold-Chain</span>
+        </div>
+
+        <!-- Step 5: Delivered -->
+        <div class="d-flex flex-column align-items-center" style="width: 18%;">
+          <div class="rounded-circle d-flex align-items-center justify-content-center shadow-sm mb-2" style="width: 44px; height: 44px; background: {% if step >= 5 %}var(--lux-emerald){% else %}#e8e3d8{% endif %}; color: #fff; border: 3px solid #fff; font-size: 18px; font-weight: bold;">
+            <i class="bi bi-check2-all"></i>
+          </div>
+          <strong class="small text-dark d-block">Delivered</strong>
+          <span class="text-muted" style="font-size: 11px;">Buyer Handover</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Farmer / Admin Simulation Controls -->
+    {% if user == order.product.farmer or user.is_staff %}
+      <div class="mt-4 pt-4 border-top">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 p-3 rounded-3" style="background: rgba(212,175,55,0.08); border: 1px dashed var(--lux-gold);">
+          <div>
+            <strong class="text-dark small d-block"><i class="bi bi-gear-wide-connected me-1 text-warning"></i> Cultivator Telematics Control Console:</strong>
+            <span class="text-muted" style="font-size: 12px;">Simulate and update the physical courier tracking stages for this consignment:</span>
+          </div>
+          <div class="d-flex gap-2 flex-wrap">
+            <form method="post" action="{% url 'update_delivery_step' order.pk 2 %}" class="d-inline">{% csrf_token %}
+              <button type="submit" class="btn btn-sm {% if step == 2 %}btn-dark{% else %}btn-outline-dark{% endif %}">Step 2: Preparing</button>
+            </form>
+            <form method="post" action="{% url 'update_delivery_step' order.pk 3 %}" class="d-inline">{% csrf_token %}
+              <button type="submit" class="btn btn-sm {% if step == 3 %}btn-dark{% else %}btn-outline-dark{% endif %}">Step 3: Parcel Given / Dispatched</button>
+            </form>
+            <form method="post" action="{% url 'update_delivery_step' order.pk 4 %}" class="d-inline">{% csrf_token %}
+              <button type="submit" class="btn btn-sm {% if step == 4 %}btn-dark{% else %}btn-outline-dark{% endif %}">Step 4: In-Transit</button>
+            </form>
+            <form method="post" action="{% url 'update_delivery_step' order.pk 5 %}" class="d-inline">{% csrf_token %}
+              <button type="submit" class="btn btn-sm {% if step == 5 %}btn-success{% else %}btn-outline-success{% endif %}">Step 5: Mark Delivered</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+  </div>
+
+  <!-- Two Column Information Display -->
+  <div class="row g-4 mb-5">
+    
+    <!-- Left: Consignment Details -->
+    <div class="col-lg-6">
+      <div class="lux-card p-4 h-100">
+        <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
+          <div class="lux-brand-emblem" style="width: 38px; height: 38px; font-size: 18px; animation: none;">
+            <i class="bi bi-box2-heart"></i>
+          </div>
+          <div>
+            <span class="text-uppercase small fw-bold" style="color: var(--lux-gold-dark); font-size: 10px; letter-spacing: 1px;">CONSIGNMENT SPECIFICATION</span>
+            <h4 class="h5 fw-bold mb-0">Harvest Allotment Details</h4>
+          </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-3 p-3 rounded-3 mb-3" style="background: #faf8f4; border: 1px solid #ede8dc;">
+          <div class="rounded-3 overflow-hidden" style="width: 70px; height: 70px; background: #07150e; flex-shrink: 0;">
+            {% if order.product.image %}
+              <img src="{{ order.product.image_url }}" alt="{{ order.product.crop_name }}" class="w-100 h-100" style="object-fit: cover;">
+            {% else %}
+              <div class="w-100 h-100 d-flex align-items-center justify-content-center text-muted fs-4">🌾</div>
+            {% endif %}
+          </div>
+          <div class="flex-grow-1">
+            <h5 class="h6 fw-bold mb-1">{{ order.product.crop_name }}</h5>
+            <div class="small text-muted">
+              Volume: <strong>{{ order.quantity }} {{ order.product.unit }}</strong> &bull; Total: <strong style="color: var(--lux-forest);">₹{{ order.total_price }}</strong>
+            </div>
+            <div class="small text-muted">
+              <i class="bi bi-geo-alt me-1 text-danger"></i> Origin: {{ order.product.location }}
+            </div>
+          </div>
+        </div>
+
+        <ul class="list-unstyled small text-muted d-flex flex-column gap-2 mb-3">
+          <li class="d-flex justify-content-between py-1 border-bottom">
+            <span>Estate Cultivator:</span>
+            <strong class="text-dark">{{ order.product.farmer.get_full_name|default:order.product.farmer.username }}</strong>
+          </li>
+          <li class="d-flex justify-content-between py-1 border-bottom">
+            <span>Cultivator Direct Contact:</span>
+            {% if order.product.farmer.profile.phone %}
+              <a href="tel:{{ order.product.farmer.profile.phone }}" class="text-decoration-none fw-bold" style="color: var(--lux-forest);">
+                <i class="bi bi-telephone-fill text-success me-1"></i> {{ order.product.farmer.profile.phone }}
+              </a>
+            {% else %}
+              <span>Registered on Sovereign Protocol</span>
+            {% endif %}
+          </li>
+          <li class="d-flex justify-content-between py-1 border-bottom">
+            <span>Logistics Partner:</span>
+            <strong class="text-dark">{{ order.courier_partner }}</strong>
+          </li>
+          <li class="d-flex justify-content-between py-1 border-bottom">
+            <span>Packaging &amp; Handling:</span>
+            <span class="text-dark">{{ order.dispatch_notes|default:"Hermetic moisture-sealed agro-sacks" }}</span>
+          </li>
+          <li class="d-flex justify-content-between py-1">
+            <span>Buyer Delivery Destination:</span>
+            <strong class="text-dark text-end">
+              {% if order.shipping_city %}
+                {{ order.shipping_name }}<br>
+                <small class="text-muted">{{ order.shipping_address }}, {{ order.shipping_city }}, {{ order.shipping_state }} – {{ order.shipping_pincode }}</small><br>
+                <small class="text-success"><i class="bi bi-telephone-fill me-1"></i>{{ order.shipping_phone }}</small>
+              {% else %}
+                {{ order.buyer.profile.location|default:"Client Destination Address" }}
+              {% endif %}
+            </strong>
+          </li>
+        </ul>
+
+        {% if order.product.farmer.profile.phone %}
+          <div class="d-grid mt-auto">
+            <a href="tel:{{ order.product.farmer.profile.phone }}" class="btn btn-gold-outline btn-sm py-2 fw-bold text-center">
+              <i class="bi bi-telephone-outbound me-1"></i> Contact Cultivator Directly
+            </a>
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+
+    <!-- Right: Telematics Checkpoints History -->
+    <div class="col-lg-6">
+      <div class="lux-card p-4 h-100">
+        <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
+          <div class="lux-brand-emblem" style="width: 38px; height: 38px; font-size: 18px; animation: none;">
+            <i class="bi bi-compass"></i>
+          </div>
+          <div>
+            <span class="text-uppercase small fw-bold" style="color: var(--lux-gold-dark); font-size: 10px; letter-spacing: 1px;">TELEMATICS AUDIT TRAIL</span>
+            <h4 class="h5 fw-bold mb-0">Consignment Transit Logs</h4>
+          </div>
+        </div>
+
+        <div class="position-relative ps-3 my-3" style="border-left: 2px solid var(--lux-gold);">
+          
+          <!-- Checkpoint 1 -->
+          <div class="mb-3 position-relative">
+            <div class="position-absolute rounded-circle" style="width: 12px; height: 12px; background: var(--lux-gold); left: -22px; top: 4px;"></div>
+            <strong class="small text-dark d-block">Order Confirmed by Sovereign Exchange</strong>
+            <p class="small text-muted mb-0">Direct contract established between buyer and cultivator. Escrow locked.</p>
+            <span class="text-muted" style="font-size: 10.5px;">{{ order.created_at|date:"d M Y, h:i A" }}</span>
+          </div>
+
+          <!-- Checkpoint 2 -->
+          {% if step >= 2 %}
+          <div class="mb-3 position-relative">
+            <div class="position-absolute rounded-circle" style="width: 12px; height: 12px; background: var(--lux-gold); left: -22px; top: 4px;"></div>
+            <strong class="small text-dark d-block">Harvest Graded &amp; Packaging Completed</strong>
+            <p class="small text-muted mb-0">{{ order.product.location }} Estate Depot. Organoleptic moisture check passed.</p>
+            <span class="text-muted" style="font-size: 10.5px;">{{ order.created_at|date:"d M Y" }}, 02:00 PM IST</span>
+          </div>
+          {% endif %}
+
+          <!-- Checkpoint 3 -->
+          {% if step >= 3 %}
+          <div class="mb-3 position-relative">
+            <div class="position-absolute rounded-circle" style="width: 12px; height: 12px; background: var(--lux-gold); left: -22px; top: 4px;"></div>
+            <strong class="small text-dark d-block">Parcel Handed to {{ order.courier_partner }}</strong>
+            <p class="small text-muted mb-0">Consignment loaded onto temperature-monitored direct transit vehicle.</p>
+            <span class="text-muted" style="font-size: 10.5px;">
+              {% if order.dispatched_at %}{{ order.dispatched_at|date:"d M Y, h:i A" }}{% else %}Today{% endif %}
+            </span>
+          </div>
+          {% endif %}
+
+          <!-- Checkpoint 4 -->
+          {% if step >= 4 %}
+          <div class="mb-3 position-relative">
+            <div class="position-absolute rounded-circle" style="width: 12px; height: 12px; background: var(--lux-gold); left: -22px; top: 4px;"></div>
+            <strong class="small text-dark d-block">Transit Through Inter-State Terroir Hub</strong>
+            <p class="small text-muted mb-0">Out for final dispatch route to delivery destination.</p>
+            <span class="text-muted" style="font-size: 10.5px;">Live In-Transit Status Active</span>
+          </div>
+          {% endif %}
+
+          <!-- Checkpoint 5 -->
+          {% if step >= 5 %}
+          <div class="position-relative">
+            <div class="position-absolute rounded-circle" style="width: 12px; height: 12px; background: var(--lux-emerald); left: -22px; top: 4px;"></div>
+            <strong class="small text-success d-block"><i class="bi bi-check-circle-fill me-1"></i> Delivered to Buyer</strong>
+            <p class="small text-muted mb-0">Consignment received and verified with unadulterated single-origin seals intact.</p>
+            <span class="text-muted" style="font-size: 10.5px;">Full Settlement Complete</span>
+          </div>
+          {% endif %}
+
+        </div>
+
+        <div class="p-3 rounded-2 mt-auto" style="background: rgba(20,58,40,0.06); border: 1px solid rgba(212,175,55,0.3);">
+          <div class="d-flex align-items-center gap-2 small">
+            <i class="bi bi-shield-lock-fill text-warning fs-5"></i>
+            <div>
+              <strong class="text-dark d-block">Authenticity Protocol Protected</strong>
+              <span class="text-muted" style="font-size: 11px;">Zero cold-chain tampering. Sealed with tamper-evident agrarian QR seals.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  function copyDocket() {
+    const docket = document.getElementById('docketNumber').innerText.trim();
+    navigator.clipboard.writeText(docket).then(() => {
+      alert('Tracking Docket #' + docket + ' copied to clipboard!');
+    });
+  }
+</script>
+{% endblock %}
+

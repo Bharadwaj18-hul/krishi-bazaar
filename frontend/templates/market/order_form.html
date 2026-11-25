@@ -1,0 +1,52 @@
+{% extends "market/base.html" %}
+{% block title %}Acquisition Contract · {{ product.crop_name }}{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="lux-auth-card">
+        <div class="text-center mb-4">
+          <div class="lux-brand-emblem mx-auto mb-3" style="width: 48px; height: 48px; font-size: 22px;">
+            <i class="bi bi-cart-check-fill"></i>
+          </div>
+          <span class="text-uppercase small fw-bold letter-spacing-1" style="color: var(--lux-gold-dark);">CONTRACT INITIATION</span>
+          <h2 class="h3 fw-bold mt-1">Reserve {{ product.crop_name }}</h2>
+          <p class="text-muted small mb-0">Direct procurement from producer <strong>{{ product.farmer.get_full_name|default:product.farmer.username }}</strong></p>
+        </div>
+
+        <div class="p-3 mb-4 rounded-3 d-flex justify-content-between align-items-center" style="background: var(--lux-alabaster-muted); border: 1px solid var(--lux-border-gold);">
+          <div>
+            <small class="text-muted text-uppercase d-block fw-semibold">Unit Price</small>
+            <strong class="fs-5" style="color: var(--lux-forest);">₹{{ product.price }}</strong>
+            <span class="text-muted small">/ {{ product.unit }}</span>
+          </div>
+          <div class="text-end">
+            <small class="text-muted text-uppercase d-block fw-semibold">Available Stock</small>
+            <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1 fw-bold">{{ product.quantity }} {{ product.unit }}</span>
+          </div>
+        </div>
+
+        <form method="post">
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="mb-3">
+              <label class="lux-form-label">Purchase Quantity (in {{ product.unit }})</label>
+              {{ field }}
+              {% for e in field.errors %}<div class="text-danger small mt-1"><i class="bi bi-exclamation-circle me-1"></i>{{ e }}</div>{% endfor %}
+            </div>
+          {% endfor %}
+
+          <div class="d-grid gap-2 mt-4 pt-2">
+            <button class="btn btn-gold py-3 fw-bold fs-6">
+              <i class="bi bi-shield-check me-1"></i> Submit Purchase Request
+            </button>
+            <a class="btn btn-outline-secondary py-2" href="{% url 'product_detail' product.pk %}">
+              Return to Harvest Detail
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

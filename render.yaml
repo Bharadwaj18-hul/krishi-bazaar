@@ -1,0 +1,29 @@
+databases:
+  - name: krishi-db
+    plan: free
+    databaseName: krishi_bazaar
+
+services:
+  - type: web
+    name: krishi-bazaar
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips='*'
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11
+      - key: SECRET_KEY
+        generateValue: true
+      - key: SESSION_HTTPS_ONLY
+        value: "true"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: krishi-db
+          property: connectionString
+      - key: SEED_PASSWORD      # password for the demo admin / farmer1 / buyer1 accounts - set it in the dashboard
+        sync: false
+      - key: APP_URL            # e.g. https://krishi-bazaar.onrender.com (used in password-reset e-mails)
+        sync: false
+      # Optional e-mail notifications / password reset (leave unset to only log them):
+      # SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, SMTP_FROM

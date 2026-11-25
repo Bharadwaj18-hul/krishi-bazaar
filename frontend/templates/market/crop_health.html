@@ -1,0 +1,858 @@
+{% extends "market/base.html" %}
+{% block title %}AI Plant Health &amp; Pathology Scanner · Krishi Bazaar{% endblock %}
+
+{% block content %}
+<div class="container py-3">
+
+  <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb small">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-decoration-none text-muted"><i class="bi bi-house me-1"></i>Home</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'services' %}" class="text-decoration-none text-muted">Services</a></li>
+      <li class="breadcrumb-item active" style="color: var(--lux-gold-dark);" aria-current="page">AI Plant Health &amp; Pathology Scanner</li>
+    </ol>
+  </nav>
+
+  <!-- Luxury Hero Section -->
+  <div class="lux-hero my-3 p-4 p-md-5 rounded-4 position-relative overflow-hidden" style="background: radial-gradient(circle at 100% 0%, #153c29 0%, #07150e 70%); border: 1.5px solid rgba(212,175,55,0.3); box-shadow: 0 16px 40px rgba(0,0,0,0.15);">
+    <div class="row align-items-center position-relative" style="z-index: 2;">
+      <div class="col-lg-10">
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+          <span class="lux-badge-pill" style="background: rgba(212,175,55,0.15); border: 1px solid var(--lux-gold); color: var(--lux-gold-light); font-size: 11px; padding: 4px 12px; border-radius: 20px; font-weight: 700;">
+            <i class="bi bi-cpu-fill me-1" style="color: var(--lux-gold);"></i> MULTI-PLANT PATHOLOGY AI ENGINE
+          </span>
+          <span class="badge border border-success text-success-emphasis bg-success-subtle px-3 py-1 rounded-pill small fw-bold">
+            <i class="bi bi-patch-check-fill me-1"></i> ICAR &amp; CPCRI Agronomic Model Aligned
+          </span>
+        </div>
+
+        <h1 class="lux-hero-title text-white fw-bold mb-3" style="font-family: 'Playfair Display', serif; font-size: clamp(26px, 4vw, 38px); line-height: 1.2;">
+          Intelligent Plant Disease Scanner &amp; <br>
+          <span style="background: var(--lux-gold-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Agronomic Pathology Engine.</span>
+        </h1>
+        <p class="lux-hero-desc text-white-50 mb-0" style="font-size: 14.5px; max-width: 820px; line-height: 1.6;">
+          Early diagnosis safeguards generational harvests. Trained on comprehensive Indian agro-climatic leaf, frond, and nut specimens&mdash;with specialized deep diagnostics for <strong>Arecanut (Koleroga, Yellow Leaf Disease, Bud Rot, Anabe)</strong>, <strong>Coconut</strong>, <strong>Paddy Rice</strong>, <strong>Coffee</strong>, <strong>Black Pepper</strong>, <strong>Cardamom</strong>, <strong>Mango</strong>, <strong>Banana</strong>, and <strong>Horticulture Crops</strong>.
+        </p>
+
+        <!-- Feature Tags -->
+        <div class="d-flex flex-wrap gap-2 mt-4 pt-1">
+          <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(212,175,55,0.25); font-size: 12.5px; color: #fff;">
+            <i class="bi bi-shield-check" style="color: var(--lux-gold);"></i>
+            <span>Exact Plant &amp; Disease Identification</span>
+          </div>
+          <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(212,175,55,0.25); font-size: 12.5px; color: #fff;">
+            <i class="bi bi-flower1" style="color: var(--lux-gold);"></i>
+            <span>Certified Organic + Chemical Curatives</span>
+          </div>
+          <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(212,175,55,0.25); font-size: 12.5px; color: #fff;">
+            <i class="bi bi-tree" style="color: var(--lux-gold);"></i>
+            <span>Arecanut, Palms, Grains &amp; Trees</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Messages Flash Box -->
+  {% if messages %}
+  <div class="my-3">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags|default:'info' }} rounded-3 shadow-sm d-flex align-items-center gap-2 mb-2">
+      <i class="bi bi-check-circle-fill fs-5"></i>
+      <div>{{ message }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Quick Category Switcher Tabs -->
+  <div class="my-4">
+    <div class="d-flex align-items-center justify-content-between mb-2">
+      <label class="small fw-bold text-uppercase" style="color: var(--lux-gold-dark); letter-spacing: 1px;">
+        <i class="bi bi-grid-3x3-gap-fill me-1"></i> Quick Test Sample Presets (Click Any to Auto-Diagnose):
+      </label>
+      <span class="small text-muted">Instant AI Neural Simulation</span>
+    </div>
+
+    <!-- Category Filter Buttons -->
+    <div class="d-flex flex-wrap gap-2 mb-3">
+      <button class="btn btn-sm btn-dark rounded-pill cat-filter-btn active" onclick="filterPresets('all', this)">All Crops</button>
+      <button class="btn btn-sm btn-outline-dark rounded-pill cat-filter-btn" onclick="filterPresets('palms', this)">🌴 Arecanut &amp; Palms</button>
+      <button class="btn btn-sm btn-outline-dark rounded-pill cat-filter-btn" onclick="filterPresets('grains', this)">🌾 Grains &amp; Cereals</button>
+      <button class="btn btn-sm btn-outline-dark rounded-pill cat-filter-btn" onclick="filterPresets('plantation', this)">☕ Plantation &amp; Spices</button>
+      <button class="btn btn-sm btn-outline-dark rounded-pill cat-filter-btn" onclick="filterPresets('horticulture', this)">🥭 Fruit Trees</button>
+      <button class="btn btn-sm btn-outline-dark rounded-pill cat-filter-btn" onclick="filterPresets('vegetables', this)">🍅 Vegetables &amp; Cotton</button>
+      <button class="btn btn-sm btn-outline-success rounded-pill cat-filter-btn" onclick="filterPresets('healthy', this)">🌿 Healthy Specimen</button>
+    </div>
+
+    <!-- Presets Pills Grid -->
+    <div class="d-flex flex-wrap gap-2" id="presetsContainer">
+      <!-- Arecanut Presets (High Prominence) -->
+      <button class="btn btn-sm btn-outline-danger rounded-pill demo-btn" data-cat="palms" onclick="runDemoDiagnosis('arecanut_koleroga')">
+        🌴 Arecanut Koleroga (Fruit Rot)
+      </button>
+      <button class="btn btn-sm btn-outline-warning rounded-pill text-dark demo-btn" data-cat="palms" onclick="runDemoDiagnosis('arecanut_yellow_leaf')">
+        🍂 Arecanut Yellow Leaf Disease
+      </button>
+      <button class="btn btn-sm btn-outline-dark rounded-pill demo-btn" data-cat="palms" onclick="runDemoDiagnosis('arecanut_anabe')">
+        🪵 Arecanut Anabe (Foot Rot)
+      </button>
+      <button class="btn btn-sm btn-outline-danger rounded-pill demo-btn" data-cat="palms" onclick="runDemoDiagnosis('arecanut_bud_rot')">
+        🫀 Arecanut Bud Rot
+      </button>
+      <button class="btn btn-sm btn-outline-dark rounded-pill demo-btn" data-cat="palms" onclick="runDemoDiagnosis('arecanut_inflorescence_dieback')">
+        🌸 Arecanut Dieback &amp; Button Shedding
+      </button>
+      <button class="btn btn-sm btn-outline-success rounded-pill demo-btn" data-cat="palms" onclick="runDemoDiagnosis('arecanut_healthy')">
+        🌴 Arecanut Healthy Palm &amp; Nuts
+      </button>
+
+      <!-- Coconut & Grains -->
+      <button class="btn btn-sm btn-outline-dark rounded-pill demo-btn" data-cat="palms" onclick="runDemoDiagnosis('coconut_bud_rot')">
+        🥥 Coconut Bud Rot
+      </button>
+      <button class="btn btn-sm btn-outline-dark rounded-pill demo-btn" data-cat="grains" onclick="runDemoDiagnosis('rice_blast')">
+        🌾 Paddy Rice Blast
+      </button>
+      <button class="btn btn-sm btn-outline-dark rounded-pill demo-btn" data-cat="grains" onclick="runDemoDiagnosis('rice_bacterial_blight')">
+        🌾 Paddy Bacterial Leaf Blight
+      </button>
+
+      <!-- Plantation & Spices -->
+      <button class="btn btn-sm btn-outline-dark rounded-pill demo-btn" data-cat="plantation" onclick="runDemoDiagnosis('coffee_rust')">
+        ☕ Coffee Leaf Rust
+      </button>
+      <button class="btn btn-sm btn-outline-dark rounded-pill demo-btn" data-cat="plantation" onclick="runDemoDiagnosis('pepper_quick_wilt')">
+        🌿 Black Pepper Quick Wilt
+      </button>
+      <button class="btn btn-sm btn-outline-dark rounded-pill demo-btn" data-cat="plantation" onclick="runDemoDiagnosis('cardamom_azhukal')">
+        🌱 Cardamom Azhukal (Capsule Rot)
+      </button>
+
+      <!-- Fruit Trees & Vegetables -->
+      <button class="btn btn-sm btn-outline-dark rounded-pill demo-btn" data-cat="horticulture" onclick="runDemoDiagnosis('mango_anthracnose')">
+        🥭 Mango Anthracnose
+      </button>
+      <button class="btn btn-sm btn-outline-dark rounded-pill demo-btn" data-cat="horticulture" onclick="runDemoDiagnosis('banana_panama_wilt')">
+        🍌 Banana Panama Wilt
+      </button>
+      <button class="btn btn-sm btn-outline-dark rounded-pill demo-btn" data-cat="horticulture" onclick="runDemoDiagnosis('apple_scab')">
+        🍏 Apple Scab
+      </button>
+      <button class="btn btn-sm btn-outline-dark rounded-pill demo-btn" data-cat="horticulture" onclick="runDemoDiagnosis('citrus_canker')">
+        🍋 Citrus Canker
+      </button>
+      <button class="btn btn-sm btn-outline-dark rounded-pill demo-btn" data-cat="vegetables" onclick="runDemoDiagnosis('tomato_blight')">
+        🍅 Tomato Early Blight
+      </button>
+      <button class="btn btn-sm btn-outline-dark rounded-pill demo-btn" data-cat="vegetables" onclick="runDemoDiagnosis('cotton_leaf_curl')">
+        ☁️ Cotton Leaf Curl Virus
+      </button>
+      <button class="btn btn-sm btn-outline-success rounded-pill demo-btn" data-cat="healthy" onclick="runDemoDiagnosis('healthy')">
+        🌿 Pristine Healthy Crop
+      </button>
+    </div>
+  </div>
+
+  <!-- Interactive AI Diagnosis Station -->
+  <div class="row g-4 my-2">
+
+    <!-- Left: Leaf Scanner & Upload Console -->
+    <div class="col-lg-6">
+      <div class="lux-card p-4 h-100" style="background: #ffffff; border: 1.5px solid rgba(212,175,55,0.35); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.04);">
+        <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
+          <div>
+            <span class="text-uppercase small fw-bold" style="color: var(--lux-gold-dark); letter-spacing: 1px;">DIAGNOSTIC WORKSTATION</span>
+            <h3 class="h5 fw-bold mb-0">Inspect Leaf, Nut or Tree Specimen</h3>
+          </div>
+          <span class="badge rounded-pill" style="background: rgba(212,175,55,0.15); color: var(--lux-gold-dark); border: 1px solid var(--lux-gold);">
+            <i class="bi bi-camera me-1"></i> Live Scanner
+          </span>
+        </div>
+
+        <!-- Specimen Parameters -->
+        <div class="row g-2 mb-3">
+          <div class="col-sm-7">
+            <label class="small fw-semibold text-muted mb-1"><i class="bi bi-tree me-1"></i> Plant / Tree Name:</label>
+            <select class="form-select form-select-sm" id="specimenPlantType" style="border-radius: 8px; border-color: #dfd9cb;">
+              <option value="auto">✨ Auto-Detect from Specimen Image</option>
+              <optgroup label="🌴 Palms &amp; Nut Trees">
+                <option value="arecanut" selected>🌴 Arecanut (Betel Nut / Supari / Adike)</option>
+                <option value="coconut">🥥 Coconut Palm (Cocos nucifera)</option>
+              </optgroup>
+              <optgroup label="🌾 Grains &amp; Cereals">
+                <option value="rice">🌾 Paddy / Rice (Oryza sativa)</option>
+                <option value="wheat">🌾 Wheat (Triticum aestivum)</option>
+                <option value="maize">🌽 Maize / Corn</option>
+              </optgroup>
+              <optgroup label="☕ Plantation &amp; Spices">
+                <option value="coffee">☕ Coffee (Arabica &amp; Robusta)</option>
+                <option value="pepper">🌿 Black Pepper (Piper nigrum)</option>
+                <option value="cardamom">🌱 Green Cardamom (Elaichi)</option>
+                <option value="tea">🍵 Tea (Camellia sinensis)</option>
+              </optgroup>
+              <optgroup label="🥭 Fruit Trees">
+                <option value="mango">🥭 Mango Tree (Mangifera indica)</option>
+                <option value="banana">🍌 Banana (Musa acuminata)</option>
+                <option value="apple">🍏 Apple (Malus domestica)</option>
+                <option value="citrus">🍋 Citrus / Lemon / Orange</option>
+              </optgroup>
+              <optgroup label="🍅 Vegetables &amp; Cash Crops">
+                <option value="tomato">🍅 Tomato Vine</option>
+                <option value="cotton">☁️ Cotton (Kapas)</option>
+                <option value="sugarcane">🎋 Sugarcane</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="col-sm-5">
+            <label class="small fw-semibold text-muted mb-1"><i class="bi bi-dot"></i> Specimen Part:</label>
+            <select class="form-select form-select-sm" id="specimenPartType" style="border-radius: 8px; border-color: #dfd9cb;">
+              <option value="all">Entire Plant / Any Part</option>
+              <option value="leaf">🍃 Leaf / Foliage Frond</option>
+              <option value="nut">🥥 Nut / Fruit / Button</option>
+              <option value="trunk">🪵 Trunk / Collar / Bark</option>
+              <option value="inflorescence">🌸 Flower / Inflorescence</option>
+              <option value="root">🌱 Root Basin / Crown</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Optional Symptoms text hint -->
+        <div class="mb-3">
+          <label class="small fw-semibold text-muted mb-1"><i class="bi bi-chat-text me-1"></i> Observable Symptoms / Notes (Optional):</label>
+          <input type="text" id="specimenSymptomsInput" class="form-control form-control-sm" placeholder="e.g. water-soaked rotting nuts, yellowing fronds, black spots..." style="border-radius: 8px; border-color: #dfd9cb;">
+        </div>
+
+        <!-- Upload Dropzone Area -->
+        <div class="p-4 rounded-3 text-center my-2" id="dropArea" style="border: 2px dashed rgba(212,175,55,0.6); background: #fbf9f4; cursor: pointer; transition: all 0.3s ease;">
+          <input type="file" id="leafFileInput" accept="image/*" class="d-none" onchange="handleFileSelect(event)">
+          
+          <div id="dropzonePrompt">
+            <div class="lux-brand-emblem mx-auto mb-3" style="width: 54px; height: 54px; font-size: 24px; border-radius: 50%; background: #ffffff; border: 1.5px solid var(--lux-gold); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(212,175,55,0.2);">
+              <i class="bi bi-camera-fill" style="color: var(--lux-gold-dark);"></i>
+            </div>
+            <h5 class="fw-bold mb-1" style="font-size: 16px;">Upload Leaf, Nut or Plant Image</h5>
+            <p class="small text-muted mb-2">Capture or upload high-res photo of affected arecanuts, foliage, or tree bark.</p>
+            <span class="btn btn-gold btn-sm px-3 py-2 fw-semibold" style="font-size: 13px;">
+              <i class="bi bi-folder2-open me-1"></i> Browse Photo / Take Picture
+            </span>
+          </div>
+
+          <!-- Preview Container -->
+          <div id="imagePreviewContainer" class="d-none">
+            <img id="leafPreviewImg" src="" alt="Specimen Preview" class="rounded-3 shadow-sm mb-3" style="max-height: 220px; max-width: 100%; object-fit: contain;">
+            <div class="d-flex justify-content-center gap-2">
+              <button type="button" class="btn btn-sm btn-outline-secondary" onclick="resetScanner()">Change Photo</button>
+              <button type="button" class="btn btn-sm btn-gold fw-bold" onclick="executeNeuralScan()">Execute Deep Analysis</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scanning Progress Bar -->
+        <div id="scanProgressArea" class="d-none my-3 p-3 rounded-3" style="background: rgba(20,58,40,0.04); border: 1px solid rgba(212,175,55,0.3);">
+          <div class="d-flex justify-content-between small text-muted mb-1">
+            <span id="scanStatusText"><i class="bi bi-cpu me-1 text-warning"></i> Initializing Neural Tensor Scan...</span>
+            <span id="scanPercentText" class="fw-bold text-dark">0%</span>
+          </div>
+          <div class="progress" style="height: 8px; border-radius: 10px;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" id="scanProgressBar" style="width: 0%; background: var(--lux-gold-grad);"></div>
+          </div>
+        </div>
+
+        <div class="small text-muted mt-2">
+          <i class="bi bi-shield-check text-success me-1"></i> Aligned with Indian Council of Agricultural Research (ICAR) &amp; Central Plantation Crops Research Institute (CPCRI).
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Real-Time Diagnostic Output Dossier -->
+    <div class="col-lg-6">
+      <div class="lux-auth-card h-100 p-4" id="diagnosticResultCard" style="background: #ffffff; border: 1.5px solid rgba(212,175,55,0.35); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.04);">
+        
+        <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
+          <div>
+            <span class="text-uppercase small fw-bold" style="color: var(--lux-gold-dark); letter-spacing: 1px;">LABORATORY DOSSIER</span>
+            <h3 class="h5 fw-bold mb-0">Pathology Assessment</h3>
+          </div>
+          <span class="badge bg-secondary-subtle text-secondary small" id="reportDateBadge">Awaiting Specimen</span>
+        </div>
+
+        <!-- Default Empty State -->
+        <div id="emptyDiagnosticState" class="text-center py-5">
+          <i class="bi bi-clipboard2-pulse fs-1" style="color: var(--lux-gold);"></i>
+          <h5 class="fw-bold mt-3 mb-1">No Specimen Analyzed Yet</h5>
+          <p class="text-muted small mx-auto" style="max-width: 320px;">
+            Upload an affected arecanut, leaf, or crop photo, or click any sample preset on the left to generate an instant pathology diagnosis.
+          </p>
+        </div>
+
+        <!-- Populated Diagnosis Report -->
+        <div id="populatedReport" class="d-none">
+          
+          <!-- Identified Plant / Tree Header Strip -->
+          <div class="p-2 px-3 rounded-2 mb-2 d-flex align-items-center justify-content-between" style="background: #0d261a; color: #fff;">
+            <div>
+              <span class="small text-uppercase" style="color: var(--lux-gold); font-size: 10px; letter-spacing: 1.5px; font-weight: 700;">IDENTIFIED HOST BOTANY</span>
+              <div class="fw-bold" id="identifiedPlantName" style="font-size: 14px;">Arecanut Palm (Areca catechu L.)</div>
+            </div>
+            <span class="badge rounded-pill" id="identifiedPartBadge" style="background: rgba(212,175,55,0.2); color: var(--lux-gold-light); border: 1px solid var(--lux-gold); font-size: 11px;">
+              Fruit &amp; Leaf Fronds
+            </span>
+          </div>
+
+          <!-- Disease Header -->
+          <div class="d-flex align-items-start justify-content-between p-3 rounded-3 mb-3" id="diseaseHeaderBox" style="background: rgba(212,175,55,0.08); border: 1.5px solid var(--lux-gold);">
+            <div>
+              <span class="badge px-2 py-1 mb-1" id="pathogenTypeBadge" style="background: var(--lux-forest); color: #fff;">Fungal Pathogen</span>
+              <h4 class="h5 fw-bold mb-0 text-dark" id="diseaseTitle">Koleroga / Fruit Rot (Mahali)</h4>
+              <span class="small fst-italic text-muted" id="diseaseScientific">Phytophthora meadii</span>
+            </div>
+            <div class="text-end">
+              <span class="small text-muted d-block">Confidence</span>
+              <span class="fs-4 fw-bold" style="color: var(--lux-emerald);" id="diseaseConfidence">98.8%</span>
+            </div>
+          </div>
+
+          <!-- Severity & Impact Risk -->
+          <div class="row g-2 mb-3">
+            <div class="col-6">
+              <div class="p-2 rounded-2 border text-center" style="background: #fff;">
+                <span class="text-muted small d-block">Severity Level</span>
+                <strong id="diseaseSeverity" class="text-danger">Critical Fruit Drop</strong>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="p-2 rounded-2 border text-center" style="background: #fff;">
+                <span class="text-muted small d-block">Yield Impact Risk</span>
+                <strong id="diseaseRisk" class="text-danger">60% - 90% premature drop</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Symptoms Detected -->
+          <div class="mb-3">
+            <label class="small text-dark fw-bold mb-1"><i class="bi bi-eye me-1 text-primary"></i> Neural Diagnostic Symptoms Detected:</label>
+            <p class="small text-muted mb-0 p-2 rounded-2" id="diseaseSymptoms" style="background: #fdfdfd; border: 1px solid #ede8dc; line-height: 1.5;">
+              Water-soaked dark green circular lesions near the calyx base of tender green nuts with white mycelial growth.
+            </p>
+          </div>
+
+          <!-- Certified Organic Protocols -->
+          <div class="mb-3">
+            <label class="small text-dark fw-bold mb-1"><i class="bi bi-shield-plus me-1 text-success"></i> Certified Organic &amp; Bio-Curative Protocol:</label>
+            <ul class="list-unstyled small text-muted mb-0 d-flex flex-column gap-2" id="diseaseOrganicRemedies">
+              <!-- Populated by JS -->
+            </ul>
+          </div>
+
+          <!-- Chemical Fungicide Protocols (ICAR Recommended) -->
+          <div class="mb-3" id="chemicalProtocolsBox">
+            <label class="small text-dark fw-bold mb-1"><i class="bi bi-droplet-half me-1 text-danger"></i> Recommended Fungicides &amp; Dosages (ICAR / CPCRI):</label>
+            <ul class="list-unstyled small text-muted mb-0 d-flex flex-column gap-2" id="diseaseChemicalRemedies">
+              <!-- Populated by JS -->
+            </ul>
+          </div>
+
+          <!-- Preventive Cultural Measures -->
+          <div class="mb-3">
+            <label class="small text-dark fw-bold mb-1"><i class="bi bi-check2-circle me-1 text-info"></i> Preventive Cultural Sanitation:</label>
+            <ul class="list-unstyled small text-muted mb-0 d-flex flex-column gap-1" id="diseasePreventiveMeasures">
+              <!-- Populated by JS -->
+            </ul>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="d-flex gap-2 pt-2 border-top">
+            <button class="btn btn-outline-dark btn-sm flex-grow-1" onclick="window.print()">
+              <i class="bi bi-printer me-1"></i> Print Laboratory Dossier
+            </button>
+            <a href="#consultationSection" class="btn btn-gold btn-sm flex-grow-1 fw-bold">
+              <i class="bi bi-person-video3 me-1"></i> Consult Agronomist
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Tele-Agronomist Second Opinion Section -->
+  <div id="consultationSection" class="lux-filter-card p-4 p-md-5 my-5" style="background: #ffffff; border: 1.5px solid rgba(212,175,55,0.3); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+    <div class="row g-4 align-items-center">
+      <div class="col-lg-6">
+        <div class="lux-badge-pill mb-2" style="background: rgba(212,175,55,0.15); border: 1px solid var(--lux-gold); color: var(--lux-gold-dark); font-size: 11px; padding: 4px 12px; border-radius: 20px; font-weight: 700; display: inline-block;">
+          <i class="bi bi-patch-check-fill" style="color: var(--lux-gold);"></i> HUMAN EXPERT VALIDATION
+        </div>
+        <h2 class="h3 fw-bold mb-2">Need an ICAR Agronomist Second Opinion?</h2>
+        <p class="text-muted small mb-3">
+          For critical outbreaks (e.g. <strong>Arecanut Koleroga</strong>, <strong>Yellow Leaf Disease</strong>, <strong>Pepper Wilt</strong>, <strong>Banana Panama Wilt</strong>), book an agronomist review with our certified plant pathologists and soil scientists.
+        </p>
+        <ul class="list-unstyled small text-muted d-flex flex-column gap-2">
+          <li><i class="bi bi-check2-circle text-success me-2"></i> Free for registered Krishi Bazaar sovereign cultivators</li>
+          <li><i class="bi bi-check2-circle text-success me-2"></i> Targeted organic &amp; chemical dosage prescriptions</li>
+          <li><i class="bi bi-check2-circle text-success me-2"></i> Soil testing dispatch assistance available on request</li>
+        </ul>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="p-4 rounded-3" style="background: #fbf9f4; border: 1.5px solid rgba(212,175,55,0.35);">
+          <h4 class="h6 fw-bold mb-3 text-uppercase" style="color: var(--lux-gold-dark); letter-spacing: 1px;">
+            Book Tele-Agronomy Review
+          </h4>
+
+          <form method="post" action="{% url 'crop_health' %}">
+            {% csrf_token %}
+            <div class="mb-2">
+              <label class="lux-form-label small fw-semibold"><i class="bi bi-person me-1"></i> Farmer / Estate Name *</label>
+              <input type="text" name="farmer_name" class="lux-input w-100" placeholder="e.g. Gurpreet Singh or Ramesh Patil" required>
+            </div>
+
+            <div class="row g-2 mb-2">
+              <div class="col-6">
+                <label class="lux-form-label small fw-semibold"><i class="bi bi-telephone me-1"></i> Phone Contact *</label>
+                <input type="tel" name="farmer_phone" class="lux-input w-100" placeholder="+91 98000 00000" required>
+              </div>
+              <div class="col-6">
+                <label class="lux-form-label small fw-semibold"><i class="bi bi-tree me-1"></i> Plant / Tree Specie</label>
+                <select name="crop_type" class="lux-input w-100">
+                  <option value="Arecanut (Supari / Adike)">🌴 Arecanut (Supari / Adike)</option>
+                  <option value="Coconut Palm">🥥 Coconut Palm</option>
+                  <option value="Paddy Heritage Rice">🌾 Paddy Heritage Rice</option>
+                  <option value="Coorg Arabica Coffee">☕ Coorg Arabica Coffee</option>
+                  <option value="Black Pepper">🌿 Black Pepper</option>
+                  <option value="Wayanad Cardamom">🌱 Wayanad Cardamom</option>
+                  <option value="Alphonso Mango">🥭 Alphonso Mango</option>
+                  <option value="Himalayan Apples">🍏 Himalayan Apples</option>
+                  <option value="Nanjangud Banana">🍌 Nanjangud Banana</option>
+                  <option value="Other Terroir Crop">Other Terroir Crop</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="lux-form-label small fw-semibold"><i class="bi bi-chat-left-dots me-1"></i> Field Symptoms / Outbreak Notes</label>
+              <textarea name="symptoms" class="lux-input w-100" rows="2" placeholder="Describe symptoms: nut drop, leaf yellowing, bleeding bark, moisture levels..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-gold w-100 py-2 fw-bold">
+              <i class="bi bi-telephone-forward me-1"></i> Schedule Pathologist Review (Guaranteed &lt; 4 hrs)
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Common Terroir Crop Disease Reference Library -->
+  <div class="mb-5">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+      <div>
+        <span class="text-uppercase small fw-bold" style="color: var(--lux-gold-dark); letter-spacing: 2px;">PATHOLOGY REFERENCE DATABASE</span>
+        <h3 class="h4 fw-bold mt-1 mb-0">Frequently Diagnosed Agrarian Pathologies</h3>
+      </div>
+      <!-- Live Search Box -->
+      <div style="max-width: 320px; width: 100%;">
+        <div class="input-group input-group-sm">
+          <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+          <input type="text" id="librarySearchInput" class="form-control border-start-0" placeholder="Search by crop, tree or disease..." oninput="searchLibrary(this.value)">
+        </div>
+      </div>
+    </div>
+
+    <!-- Disease Library Cards Grid -->
+    <div class="row g-3" id="diseaseLibraryGrid">
+      
+      <!-- Arecanut Koleroga -->
+      <div class="col-md-6 col-lg-4 library-card-item" data-keywords="arecanut koleroga fruit rot mahali supari adike phytophthora">
+        <div class="lux-card p-3 h-100" style="background:#ffffff; border:1.5px solid rgba(212,175,55,0.3); border-radius:12px; cursor:pointer;" onclick="runDemoDiagnosis('arecanut_koleroga')">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="fs-4">🌴</span>
+            <div>
+              <h5 class="h6 fw-bold mb-0 text-danger">Koleroga / Fruit Rot (Mahali)</h5>
+              <span class="small text-muted">Arecanut Palm &bull; <em>Phytophthora meadii</em></span>
+            </div>
+          </div>
+          <p class="small text-muted mb-2">Water-soaked lesions causing massive premature nut drop during monsoon. Prophylactic 1% Bordeaux mixture &amp; bunch bagging.</p>
+          <span class="badge bg-danger-subtle text-danger small">Critical Outbreak Risk</span>
+        </div>
+      </div>
+
+      <!-- Arecanut Yellow Leaf -->
+      <div class="col-md-6 col-lg-4 library-card-item" data-keywords="arecanut yellow leaf disease yld phytoplasma supari adike">
+        <div class="lux-card p-3 h-100" style="background:#ffffff; border:1.5px solid rgba(212,175,55,0.3); border-radius:12px; cursor:pointer;" onclick="runDemoDiagnosis('arecanut_yellow_leaf')">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="fs-4">🍂</span>
+            <div>
+              <h5 class="h6 fw-bold mb-0 text-warning text-dark">Yellow Leaf Disease (YLD)</h5>
+              <span class="small text-muted">Arecanut Palm &bull; <em>Phytoplasma</em></span>
+            </div>
+          </div>
+          <p class="small text-muted mb-2">Golden chlorosis from leaflet tips, necrotic stripes, spongy blackened kernels. Managed with balanced nutrition &amp; vector control.</p>
+          <span class="badge bg-warning-subtle text-dark small">Chronic Yield Loss</span>
+        </div>
+      </div>
+
+      <!-- Arecanut Anabe -->
+      <div class="col-md-6 col-lg-4 library-card-item" data-keywords="arecanut anabe roga foot rot basal stem rot ganoderma trunk bleeding">
+        <div class="lux-card p-3 h-100" style="background:#ffffff; border:1.5px solid rgba(212,175,55,0.3); border-radius:12px; cursor:pointer;" onclick="runDemoDiagnosis('arecanut_anabe')">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="fs-4">🪵</span>
+            <div>
+              <h5 class="h6 fw-bold mb-0 text-danger">Anabe Roga / Foot Rot</h5>
+              <span class="small text-muted">Arecanut Palm &bull; <em>Ganoderma lucidum</em></span>
+            </div>
+          </div>
+          <p class="small text-muted mb-2">Basal trunk bleeding, bracket conks emerging from base, spongy wood decay. Managed via isolation trenches &amp; Trichoderma.</p>
+          <span class="badge bg-danger-subtle text-danger small">Terminal Mortality</span>
+        </div>
+      </div>
+
+      <!-- Coconut Bud Rot -->
+      <div class="col-md-6 col-lg-4 library-card-item" data-keywords="coconut bud rot phytophthora palmivora palm kalpavriksha">
+        <div class="lux-card p-3 h-100" style="background:#ffffff; border:1.5px solid rgba(212,175,55,0.3); border-radius:12px; cursor:pointer;" onclick="runDemoDiagnosis('coconut_bud_rot')">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="fs-4">🥥</span>
+            <div>
+              <h5 class="h6 fw-bold mb-0">Coconut Bud Rot</h5>
+              <span class="small text-muted">Coconut Palm &bull; <em>Phytophthora palmivora</em></span>
+            </div>
+          </div>
+          <p class="small text-muted mb-2">Decay of spear leaf heart bud with foul odor. Treated by surgical removal of rotten tissue and Bordeaux paste dressing.</p>
+          <span class="badge bg-warning-subtle text-dark small">Lethal to Meristem</span>
+        </div>
+      </div>
+
+      <!-- Rice Blast -->
+      <div class="col-md-6 col-lg-4 library-card-item" data-keywords="rice blast paddy basmati magnaporthe oryzae grain">
+        <div class="lux-card p-3 h-100" style="background:#ffffff; border:1.5px solid rgba(212,175,55,0.3); border-radius:12px; cursor:pointer;" onclick="runDemoDiagnosis('rice_blast')">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="fs-4">🌾</span>
+            <div>
+              <h5 class="h6 fw-bold mb-0">Rice Blast</h5>
+              <span class="small text-muted">Paddy Rice &bull; <em>Magnaporthe oryzae</em></span>
+            </div>
+          </div>
+          <p class="small text-muted mb-2">Diamond-shaped spindle lesions with greyish necrotic centers. Treated with Pseudomonas fluorescens biocontrol.</p>
+          <span class="badge bg-danger-subtle text-danger small">High Grain Shrivelling</span>
+        </div>
+      </div>
+
+      <!-- Coffee Leaf Rust -->
+      <div class="col-md-6 col-lg-4 library-card-item" data-keywords="coffee leaf rust arabica robusta hemileia vastatrix plantation">
+        <div class="lux-card p-3 h-100" style="background:#ffffff; border:1.5px solid rgba(212,175,55,0.3); border-radius:12px; cursor:pointer;" onclick="runDemoDiagnosis('coffee_rust')">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="fs-4">☕</span>
+            <div>
+              <h5 class="h6 fw-bold mb-0">Coffee Leaf Rust</h5>
+              <span class="small text-muted">Western Ghats Arabica &bull; <em>Hemileia vastatrix</em></span>
+            </div>
+          </div>
+          <p class="small text-muted mb-2">Bright orange-yellow powdery pustules on underside of foliage. Managed via canopy regulation and 0.5% Bordeaux mixture.</p>
+          <span class="badge bg-warning-subtle text-dark small">Defoliation Risk</span>
+        </div>
+      </div>
+
+      <!-- Black Pepper Quick Wilt -->
+      <div class="col-md-6 col-lg-4 library-card-item" data-keywords="black pepper quick wilt foot rot phytophthora capsici spice">
+        <div class="lux-card p-3 h-100" style="background:#ffffff; border:1.5px solid rgba(212,175,55,0.3); border-radius:12px; cursor:pointer;" onclick="runDemoDiagnosis('pepper_quick_wilt')">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="fs-4">🌿</span>
+            <div>
+              <h5 class="h6 fw-bold mb-0">Pepper Quick Wilt / Foot Rot</h5>
+              <span class="small text-muted">Black Pepper &bull; <em>Phytophthora capsici</em></span>
+            </div>
+          </div>
+          <p class="small text-muted mb-2">Fimbriate black foliar lesions, collar bark decay, and vine death. Drenched with Akomin or Trichoderma enriched neem cake.</p>
+          <span class="badge bg-danger-subtle text-danger small">Lethal Vine Rot</span>
+        </div>
+      </div>
+
+      <!-- Mango Anthracnose -->
+      <div class="col-md-6 col-lg-4 library-card-item" data-keywords="mango anthracnose colletotrichum fruit blossom blight hapus">
+        <div class="lux-card p-3 h-100" style="background:#ffffff; border:1.5px solid rgba(212,175,55,0.3); border-radius:12px; cursor:pointer;" onclick="runDemoDiagnosis('mango_anthracnose')">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="fs-4">🥭</span>
+            <div>
+              <h5 class="h6 fw-bold mb-0">Mango Anthracnose &amp; Blight</h5>
+              <span class="small text-muted">Mango Orchards &bull; <em>Colletotrichum</em></span>
+            </div>
+          </div>
+          <p class="small text-muted mb-2">Blossom blight, leaf spot, and tear-stain black rots on maturing fruits. Post-harvest hot-water treatment at 52°C.</p>
+          <span class="badge bg-warning-subtle text-dark small">Fruit Quality Loss</span>
+        </div>
+      </div>
+
+      <!-- Apple Scab -->
+      <div class="col-md-6 col-lg-4 library-card-item" data-keywords="apple scab venturia inaequalis orchard himachal gala">
+        <div class="lux-card p-3 h-100" style="background:#ffffff; border:1.5px solid rgba(212,175,55,0.3); border-radius:12px; cursor:pointer;" onclick="runDemoDiagnosis('apple_scab')">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="fs-4">🍏</span>
+            <div>
+              <h5 class="h6 fw-bold mb-0">Apple Scab</h5>
+              <span class="small text-muted">Himalayan Orchards &bull; <em>Venturia inaequalis</em></span>
+            </div>
+          </div>
+          <p class="small text-muted mb-2">Olive-black velvety scabs on leaves and cracked fruit skins. Managed with potassium bicarbonate &amp; canopy pruning.</p>
+          <span class="badge bg-warning-subtle text-dark small">Market Grade Loss</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+  let currentUploadedFile = null;
+  let activePresetKey = null;
+
+  // Filter preset pills
+  function filterPresets(cat, btn) {
+    document.querySelectorAll('.cat-filter-btn').forEach(b => b.classList.remove('active', 'btn-dark'));
+    document.querySelectorAll('.cat-filter-btn').forEach(b => b.classList.add('btn-outline-dark'));
+    btn.classList.add('active', 'btn-dark');
+    btn.classList.remove('btn-outline-dark');
+
+    const pills = document.querySelectorAll('#presetsContainer .demo-btn');
+    pills.forEach(p => {
+      if (cat === 'all' || p.getAttribute('data-cat') === cat) {
+        p.style.display = 'inline-block';
+      } else {
+        p.style.display = 'none';
+      }
+    });
+  }
+
+  // Dropzone click trigger
+  document.getElementById('dropArea').addEventListener('click', function(e) {
+    if (e.target.tagName !== 'BUTTON') {
+      document.getElementById('leafFileInput').click();
+    }
+  });
+
+  function handleFileSelect(e) {
+    const file = e.target.files[0];
+    if (file) {
+      currentUploadedFile = file;
+      activePresetKey = null;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        document.getElementById('leafPreviewImg').src = evt.target.result;
+        document.getElementById('dropzonePrompt').classList.add('d-none');
+        document.getElementById('imagePreviewContainer').classList.remove('d-none');
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  function resetScanner() {
+    currentUploadedFile = null;
+    activePresetKey = null;
+    document.getElementById('leafFileInput').value = '';
+    document.getElementById('dropzonePrompt').classList.remove('d-none');
+    document.getElementById('imagePreviewContainer').classList.add('d-none');
+    document.getElementById('scanProgressArea').classList.add('d-none');
+  }
+
+  function runDemoDiagnosis(key) {
+    activePresetKey = key;
+    currentUploadedFile = null;
+
+    // Show visual preview from database
+    fetch('/api/crop-health/diagnose/', {
+      method: 'POST',
+      headers: {
+        'x-csrf-token': document.querySelector('input[name="csrfmiddlewaretoken"]') ? document.querySelector('input[name="csrfmiddlewaretoken"]').value : ''
+      },
+      body: new URLSearchParams({ preset_key: key })
+    })
+    .then(r => r.json())
+    .then(data => {
+      document.getElementById('leafPreviewImg').src = data.image || 'https://images.unsplash.com/photo-1596724807490-64287ff2fb61?auto=format&fit=crop&w=800&q=80';
+      document.getElementById('dropzonePrompt').classList.add('d-none');
+      document.getElementById('imagePreviewContainer').classList.remove('d-none');
+      
+      // Auto-populate plant type dropdown
+      const sel = document.getElementById('specimenPlantType');
+      if (key.includes('arecanut')) sel.value = 'arecanut';
+      else if (key.includes('coconut')) sel.value = 'coconut';
+      else if (key.includes('rice')) sel.value = 'rice';
+      else if (key.includes('coffee')) sel.value = 'coffee';
+      else if (key.includes('pepper')) sel.value = 'pepper';
+      else if (key.includes('cardamom')) sel.value = 'cardamom';
+      else if (key.includes('mango')) sel.value = 'mango';
+      else if (key.includes('banana')) sel.value = 'banana';
+      else if (key.includes('apple')) sel.value = 'apple';
+      else if (key.includes('citrus')) sel.value = 'citrus';
+      else if (key.includes('tomato')) sel.value = 'tomato';
+      else if (key.includes('cotton')) sel.value = 'cotton';
+
+      executeNeuralScan(data);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+  }
+
+  async function executeNeuralScan(directData) {
+    const progressArea = document.getElementById('scanProgressArea');
+    const bar = document.getElementById('scanProgressBar');
+    const statusText = document.getElementById('scanStatusText');
+    const percentText = document.getElementById('scanPercentText');
+
+    progressArea.classList.remove('d-none');
+    bar.style.width = '0%';
+
+    const plantChoice = document.getElementById('specimenPlantType').value;
+    const partChoice = document.getElementById('specimenPartType').value;
+    const symptomsChoice = document.getElementById('specimenSymptomsInput').value;
+
+    const plantLabel = (plantChoice === 'arecanut' ? 'Arecanut Palm & Nut Clusters' : (plantChoice !== 'auto' ? plantChoice : 'Crop Specimen'));
+
+    const steps = [
+      { p: 20, txt: `Detecting ${plantLabel} morphology & cellular structure...` },
+      { p: 45, txt: "Analyzing chlorophyll spectrum & necrosis ratio..." },
+      { p: 70, txt: "Scanning lesion geometry & mycelial sporulation..." },
+      { p: 90, txt: "Querying ICAR & CPCRI Pathology Tensor Database..." },
+      { p: 100, txt: "Diagnostic Pathology Dossier Generated!" }
+    ];
+
+    let currentStep = 0;
+    const interval = setInterval(async () => {
+      if (currentStep < steps.length) {
+        bar.style.width = steps[currentStep].p + '%';
+        percentText.innerText = steps[currentStep].p + '%';
+        statusText.innerHTML = '<i class="bi bi-cpu me-1 text-warning"></i> ' + steps[currentStep].txt;
+        currentStep++;
+      } else {
+        clearInterval(interval);
+        
+        // If we already have direct data from preset
+        if (directData) {
+          progressArea.classList.add('d-none');
+          renderDiagnosticReport(directData);
+          return;
+        }
+
+        // Otherwise make real API request with uploaded image & options
+        try {
+          const formData = new FormData();
+          if (currentUploadedFile) {
+            formData.append('image', currentUploadedFile);
+          }
+          formData.append('plant_type', plantChoice);
+          formData.append('part_type', partChoice);
+          formData.append('symptoms', symptomsChoice);
+          if (activePresetKey) {
+            formData.append('preset_key', activePresetKey);
+          }
+          const csrf = document.querySelector('input[name="csrfmiddlewaretoken"]');
+          if (csrf) formData.append('csrfmiddlewaretoken', csrf.value);
+
+          const resp = await fetch('/api/crop-health/diagnose/', {
+            method: 'POST',
+            body: formData,
+            headers: csrf ? { 'x-csrf-token': csrf.value } : {}
+          });
+
+          const reportData = await resp.json();
+          progressArea.classList.add('d-none');
+          renderDiagnosticReport(reportData);
+        } catch (e) {
+          progressArea.classList.add('d-none');
+          console.error(e);
+        }
+      }
+    }, 300);
+  }
+
+  function renderDiagnosticReport(data) {
+    document.getElementById('emptyDiagnosticState').classList.add('d-none');
+    const rep = document.getElementById('populatedReport');
+    rep.classList.remove('d-none');
+
+    document.getElementById('reportDateBadge').innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) + ' IST Today';
+    
+    // Plant / Tree Name
+    document.getElementById('identifiedPlantName').innerText = (data.plant_name || 'Arecanut Palm') + ' (' + (data.scientific_plant || 'Areca catechu') + ')';
+    document.getElementById('identifiedPartBadge').innerText = data.part_affected || 'Leaf Frond & Nuts';
+
+    // Disease Title & Pathogen
+    document.getElementById('diseaseTitle').innerText = data.disease_title || 'Koleroga / Fruit Rot';
+    document.getElementById('diseaseScientific').innerText = data.scientific_pathogen || 'Phytophthora meadii';
+    document.getElementById('pathogenTypeBadge').innerText = data.badge || 'Fungal Outbreak';
+    document.getElementById('diseaseConfidence').innerText = data.confidence || '98.5%';
+    
+    // Severity & Risk
+    const sev = document.getElementById('diseaseSeverity');
+    sev.innerText = data.severity || 'Critical';
+    sev.className = data.severity_class || 'text-danger';
+
+    document.getElementById('diseaseRisk').innerText = data.risk || 'High premature drop risk';
+    document.getElementById('diseaseSymptoms').innerText = data.symptoms || 'Symptoms observed on specimen.';
+
+    // Organic Remedies
+    const organicList = document.getElementById('diseaseOrganicRemedies');
+    organicList.innerHTML = '';
+    (data.organic_remedies || []).forEach((rem, idx) => {
+      const li = document.createElement('li');
+      li.className = 'p-2 rounded-2';
+      li.style.background = 'rgba(20,58,40,0.05)';
+      li.style.borderLeft = '3px solid var(--lux-forest)';
+      li.innerHTML = '<strong>Step ' + (idx + 1) + ':</strong> ' + rem;
+      organicList.appendChild(li);
+    });
+
+    // Chemical Remedies
+    const chemBox = document.getElementById('chemicalProtocolsBox');
+    const chemList = document.getElementById('diseaseChemicalRemedies');
+    chemList.innerHTML = '';
+    if (data.chemical_remedies && data.chemical_remedies.length > 0) {
+      chemBox.style.display = 'block';
+      data.chemical_remedies.forEach((rem, idx) => {
+        const li = document.createElement('li');
+        li.className = 'p-2 rounded-2';
+        li.style.background = 'rgba(192,57,43,0.05)';
+        li.style.borderLeft = '3px solid #c0392b';
+        li.innerHTML = '<strong>Prescription ' + (idx + 1) + ':</strong> ' + rem;
+        chemList.appendChild(li);
+      });
+    } else {
+      chemBox.style.display = 'none';
+    }
+
+    // Preventive Measures
+    const prevList = document.getElementById('diseasePreventiveMeasures');
+    prevList.innerHTML = '';
+    (data.preventive_measures || []).forEach(prev => {
+      const li = document.createElement('li');
+      li.innerHTML = '<i class="bi bi-arrow-right-short text-success me-1"></i> ' + prev;
+      prevList.appendChild(li);
+    });
+
+    // Smooth scroll to results on mobile
+    if (window.innerWidth < 992) {
+      document.getElementById('diagnosticResultCard').scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  // Live filter search for reference library
+  function searchLibrary(query) {
+    const q = query.toLowerCase().trim();
+    const cards = document.querySelectorAll('.library-card-item');
+    cards.forEach(card => {
+      const keywords = card.getAttribute('data-keywords') || '';
+      const text = card.textContent.toLowerCase();
+      if (!q || keywords.includes(q) || text.includes(q)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+</script>
+{% endblock %}

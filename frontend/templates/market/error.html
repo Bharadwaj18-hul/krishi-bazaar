@@ -1,0 +1,18 @@
+{% extends "market/base.html" %}
+{% block title %}{{ title }} · Krishi Bazaar{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center"><div class="col-12 col-md-8 col-lg-6">
+    <div class="lux-auth-card text-center">
+      <div style="font-size:56px;">🌾</div>
+      <span class="text-uppercase small fw-bold" style="color: var(--lux-gold-dark);">Error {{ status }}</span>
+      <h1 class="h3 fw-bold mt-1">{{ title }}</h1>
+      <p class="text-muted">{{ message }}</p>
+      <div class="d-flex gap-2 justify-content-center mt-4">
+        <a class="btn btn-gold px-4" href="{% url 'home' %}">Back to the marketplace</a>
+        <a class="btn btn-outline-secondary px-4" href="javascript:history.back()">Go back</a>
+      </div>
+    </div>
+  </div></div>
+</div>
+{% endblock %}

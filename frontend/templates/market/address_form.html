@@ -1,0 +1,106 @@
+{% extends "market/base.html" %}
+{% block title %}{% if is_edit %}Edit Address{% else %}Add Address{% endif %} · Krishi Bazaar{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+
+      <div class="mb-4">
+        <a href="{% url 'address_list' %}" class="text-muted text-decoration-none small">
+          <i class="bi bi-arrow-left me-1"></i> Back to Address Book
+        </a>
+      </div>
+
+      <div class="lux-auth-card">
+        <div class="text-center mb-4">
+          <div class="lux-brand-emblem mx-auto mb-3" style="width:48px;height:48px;font-size:22px;">
+            <i class="bi bi-geo-alt-fill"></i>
+          </div>
+          <span class="text-uppercase small fw-bold" style="color:var(--lux-gold-dark);">
+            {% if is_edit %}UPDATE{% else %}NEW{% endif %} DELIVERY ADDRESS
+          </span>
+          <h2 class="h3 fw-bold mt-1">
+            {% if is_edit %}Edit Address{% else %}Add Delivery Address{% endif %}
+          </h2>
+        </div>
+
+        <form method="post">
+          {% csrf_token %}
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="lux-form-label">Full Name *</label>
+              <input type="text" name="full_name" value="{{ form.full_name.value|default:'' }}" class="lux-input" placeholder="Recipient's full name" required>
+              {% if form.full_name.errors %}<div class="text-danger small mt-1">{{ form.full_name.errors.0 }}</div>{% endif %}
+            </div>
+            <div class="col-md-6">
+              <label class="lux-form-label">Mobile Number *</label>
+              <input type="tel" name="phone" value="{{ form.phone.value|default:'' }}" class="lux-input" placeholder="10-digit mobile number" required>
+              {% if form.phone.errors %}<div class="text-danger small mt-1">{{ form.phone.errors.0 }}</div>{% endif %}
+            </div>
+            <div class="col-12">
+              <label class="lux-form-label">House / Flat / Floor / Building / Street *</label>
+              <input type="text" name="street_address" value="{{ form.street_address.value|default:'' }}" class="lux-input" placeholder="House No., Street, Colony..." required>
+            </div>
+            <div class="col-md-6">
+              <label class="lux-form-label">Landmark <span class="text-muted fw-normal">(Optional)</span></label>
+              <input type="text" name="landmark" value="{{ form.landmark.value|default:'' }}" class="lux-input" placeholder="Near school, temple, etc.">
+            </div>
+            <div class="col-md-6">
+              <label class="lux-form-label">City / Town / Village *</label>
+              <input type="text" name="city" value="{{ form.city.value|default:'' }}" class="lux-input" placeholder="City or Village name" required>
+            </div>
+            <div class="col-md-6">
+              <label class="lux-form-label">State *</label>
+              <select name="state" class="lux-input" required style="cursor:pointer;">
+                <option value="">Select State</option>
+                {% for val, label in form.fields.state.choices %}
+                  {% if val %}
+                  <option value="{{ val }}" {% if form.state.value == val %}selected{% endif %}>{{ label }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="lux-form-label">PIN Code *</label>
+              <input type="text" name="pincode" value="{{ form.pincode.value|default:'' }}" class="lux-input" placeholder="6-digit PIN code" maxlength="6" pattern="[0-9]{6}" required>
+            </div>
+            <div class="col-12">
+              <label class="lux-form-label">Address Type</label>
+              <div class="d-flex gap-2 flex-wrap mt-1">
+                {% for val, label in form.fields.address_type.choices %}
+                <label class="d-flex align-items-center gap-1 py-2 px-3 rounded-pill small fw-semibold"
+                  style="border:1.5px solid #d8d4c8;cursor:pointer;background:#faf8f4;">
+                  <input type="radio" name="address_type" value="{{ val }}" class="me-1"
+                    {% if form.address_type.value == val %}checked{% elif forloop.first and not form.address_type.value %}checked{% endif %}>
+                  {% if val == 'home' %}🏠{% elif val == 'work' %}🏢{% elif val == 'warehouse' %}📦{% else %}📍{% endif %}
+                  {{ label }}
+                </label>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="col-12">
+              <label class="d-flex align-items-center gap-2" style="cursor:pointer;">
+                <input type="checkbox" name="is_default" class="form-check-input"
+                  {% if form.is_default.value %}checked{% endif %}
+                  style="width:18px;height:18px;border-color:var(--lux-gold);">
+                <span class="small fw-semibold text-dark">Set as my default delivery address</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="d-grid gap-2 mt-4 pt-2">
+            <button class="btn btn-gold py-3 fw-bold fs-6">
+              <i class="bi bi-check-circle me-1"></i>
+              {% if is_edit %}Update Address{% else %}Save Address{% endif %}
+            </button>
+            <a href="{% url 'address_list' %}" class="btn btn-outline-secondary py-2">Cancel</a>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+

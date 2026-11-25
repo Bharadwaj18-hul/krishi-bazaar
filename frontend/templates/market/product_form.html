@@ -1,0 +1,71 @@
+{% extends "market/base.html" %}
+{% block title %}{{ title }} · Krishi Bazaar Producer Portal{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+      <div class="lux-auth-card">
+        <div class="mb-4">
+          <span class="text-uppercase small fw-bold letter-spacing-1" style="color: var(--lux-gold-dark);">ESTATE INVENTORY SPECIFICATION</span>
+          <h2 class="h3 fw-bold mt-1">{{ title }}</h2>
+          <p class="text-muted small">Provide precise details regarding crop variety, quantity, origin, and pricing.</p>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row g-3">
+            <div class="col-md-8">
+              <label class="lux-form-label">Crop name *</label>
+              <input class="lux-input" name="crop_name" maxlength="100" required value="{{ form.crop_name.value }}">
+            </div>
+            <div class="col-md-4">
+              <label class="lux-form-label">Category</label>
+              <select class="lux-input" name="category">
+                {% for key, label in [('grains','Heritage Grains'),('fruits','Orchard Fruits'),('vegetables','Fresh Harvest'),('spices','Estate Spices'),('other','Other')] %}
+                  <option value="{{ key }}" {% if form.category.value == key %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="lux-form-label">Description</label>
+              <textarea class="lux-input" name="description" rows="3">{{ form.description.value }}</textarea>
+            </div>
+            <div class="col-md-4">
+              <label class="lux-form-label">Quantity *</label>
+              <input class="lux-input" name="quantity" type="number" step="0.01" min="0.01" required value="{{ form.quantity.value }}">
+            </div>
+            <div class="col-md-4">
+              <label class="lux-form-label">Unit</label>
+              <input class="lux-input" name="unit" maxlength="20" value="{{ form.unit.value }}">
+            </div>
+            <div class="col-md-4">
+              <label class="lux-form-label">Price per unit (₹) *</label>
+              <input class="lux-input" name="price" type="number" step="0.01" min="0.01" required value="{{ form.price.value }}">
+            </div>
+            <div class="col-md-6">
+              <label class="lux-form-label">Origin / location *</label>
+              <input class="lux-input" name="location" maxlength="150" required value="{{ form.location.value }}">
+            </div>
+            <div class="col-md-6">
+              <label class="lux-form-label">Harvest date</label>
+              <input class="lux-input" name="harvest_date" type="date" value="{{ form.harvest_date.value }}">
+            </div>
+            <div class="col-12">
+              <label class="lux-form-label">Photo <span class="text-muted fw-normal">(JPG, PNG or WEBP, max 3 MB)</span></label>
+              {% if product and product.image %}
+                <div class="mb-2"><img src="{{ product.image_url }}" alt="Current photo" style="height:90px;border-radius:8px;object-fit:cover;"> <small class="text-muted ms-2">Choose a new file to replace it.</small></div>
+              {% endif %}
+              <input class="lux-input" type="file" name="image" accept="image/jpeg,image/png,image/webp">
+            </div>
+          </div>
+
+          <div class="d-flex flex-column flex-sm-row gap-2 mt-4 pt-2">
+            <button class="btn btn-gold py-2 px-4 fw-bold"><i class="bi bi-check2-circle me-1"></i> Save &amp; Publish Harvest</button>
+            <a class="btn btn-outline-secondary py-2 px-4" href="{% url 'farmer_dashboard' %}">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

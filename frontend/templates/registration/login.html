@@ -1,0 +1,1217 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portal Authentication &middot; Krishi Bazaar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"/>
+  <style>
+    :root {
+      --lux-dark: #07150e;
+      --lux-forest: #0d261a;
+      --lux-emerald: #143a28;
+      --lux-gold: #d4af37;
+      --lux-gold-light: #f3e2b1;
+      --lux-gold-dark: #a67c1e;
+      --lux-gold-grad: linear-gradient(135deg, #f0d596 0%, #d4af37 50%, #a67c1e 100%);
+      --lux-bg: #f7f5f0;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      background: var(--lux-bg);
+      color: var(--lux-dark);
+      overflow-x: hidden;
+    }
+
+    /* ── LEFT PANEL ── */
+    .auth-left {
+      flex: 1;
+      position: relative;
+      background: var(--lux-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      padding: 48px 40px;
+    }
+    .auth-left canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    .auth-left-inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: #fff;
+      max-width: 440px;
+    }
+    .auth-logo-ring {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      border: 2px solid var(--lux-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 30px;
+      background: rgba(212,175,55,0.08);
+      box-shadow: 0 0 40px rgba(212,175,55,0.25);
+      animation: ringPulse 3s ease-in-out infinite;
+    }
+    @keyframes ringPulse {
+      0%,100% { box-shadow: 0 0 40px rgba(212,175,55,0.25); }
+      50% { box-shadow: 0 0 70px rgba(212,175,55,0.5); }
+    }
+    .auth-brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 900;
+      background: var(--lux-gold-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .auth-brand-tag {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(212,175,55,0.7);
+      margin-bottom: 36px;
+    }
+    .auth-pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-align: left;
+    }
+    .auth-pillar {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(212,175,55,0.15);
+      border-radius: 12px;
+      padding: 14px 16px;
+      backdrop-filter: blur(4px);
+    }
+    .auth-pillar-icon {
+      font-size: 20px;
+      color: var(--lux-gold);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .auth-pillar-text h4 {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+    .auth-pillar-text p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.45;
+    }
+
+    .float-icon {
+      position: absolute;
+      color: rgba(212,175,55,0.06);
+      font-size: 72px;
+      pointer-events: none;
+      animation: floatIco 7s ease-in-out infinite;
+    }
+    .float-icon:nth-child(1) { top: 8%; left: 10%; animation-delay: 0s; }
+    .float-icon:nth-child(2) { top: 20%; right: 10%; animation-delay: 1s; }
+    .float-icon:nth-child(3) { bottom: 15%; left: 8%; animation-delay: 2s; }
+    .float-icon:nth-child(4) { bottom: 10%; right: 12%; animation-delay: 3s; }
+    @keyframes floatIco {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-12px) rotate(6deg); }
+    }
+
+    /* ── RIGHT PANEL ── */
+    .auth-right {
+      width: 520px;
+      min-width: 340px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 44px 44px 56px;
+      overflow-y: auto;
+      position: relative;
+      min-height: 100vh;
+    }
+    .auth-right::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--lux-gold-grad);
+    }
+    .auth-shimmer-bar {
+      position: absolute;
+      top: 0; left: -100%; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+      animation: shimmerBar 2.5s ease-in-out infinite;
+    }
+    @keyframes shimmerBar { to { left: 100%; } }
+
+    .back-home-link {
+      align-self: flex-end;
+      font-size: 12px;
+      color: #888;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 12px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .back-home-link:hover { color: var(--lux-gold-dark); }
+
+    /* ── AUTH TABS (Sign In / Register) ── */
+    .auth-tabs {
+      display: flex;
+      background: #f1ede4;
+      padding: 4px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      border: 1px solid #e3decb;
+    }
+    .auth-tab {
+      flex: 1;
+      padding: 10px 14px;
+      border: none;
+      background: transparent;
+      border-radius: 9px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .auth-tab.active {
+      background: #ffffff;
+      color: var(--lux-forest);
+      box-shadow: 0 2px 8px rgba(7,21,14,0.08);
+      font-weight: 700;
+    }
+
+    .auth-heading-label {
+      font-size: 10px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--lux-gold-dark);
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .auth-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--lux-dark);
+      line-height: 1.15;
+      margin-bottom: 6px;
+    }
+    .auth-subheading {
+      font-size: 13px;
+      color: #777;
+      margin-bottom: 20px;
+      line-height: 1.45;
+    }
+
+    /* ── CONTINUE WITH GOOGLE BUTTON ── */
+    .btn-google-auth {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      padding: 12px 18px;
+      background: #ffffff;
+      border: 1.5px solid #d9d4c7;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #3c4043;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      margin-bottom: 18px;
+    }
+    .btn-google-auth:hover {
+      background: #faf8f5;
+      border-color: var(--lux-gold);
+      box-shadow: 0 4px 14px rgba(212,175,55,0.18);
+      color: var(--lux-dark);
+      transform: translateY(-1px);
+    }
+    .btn-google-auth svg { flex-shrink: 0; }
+
+    /* Divider */
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 18px 0 20px;
+      color: #aaa;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #eae5d8;
+    }
+    .auth-divider span {
+      padding: 0 12px;
+    }
+
+    /* ── SUB-TOGGLE FOR LOGIN (Password vs Gmail OTP) ── */
+    .login-method-toggle {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .login-method-btn {
+      flex: 1;
+      padding: 8px 10px;
+      background: #f7f5f0;
+      border: 1px solid #e5dfd0;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .login-method-btn.active {
+      background: rgba(20,58,40,0.06);
+      border-color: var(--lux-forest);
+      color: var(--lux-forest);
+      font-weight: 700;
+    }
+
+    /* ── FIELDS ── */
+    .lux-field {
+      position: relative;
+      margin-bottom: 16px;
+    }
+    .lux-field-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 5px;
+    }
+    .lux-field-label .req {
+      color: #c0392b;
+      margin-left: 2px;
+    }
+    .lux-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .lux-input {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1.5px solid #dfd9cb;
+      border-radius: 9px;
+      font-size: 13.5px;
+      outline: none;
+      background: #ffffff;
+      color: var(--lux-dark);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .lux-input:focus {
+      border-color: var(--lux-gold);
+      box-shadow: 0 0 0 3px rgba(212,175,55,0.15);
+    }
+    .lux-input-icon {
+      position: absolute;
+      right: 14px;
+      color: #aaa;
+      font-size: 15px;
+      pointer-events: none;
+    }
+    .lux-input-icon.clickable {
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    .lux-input-icon.clickable:hover {
+      color: var(--lux-gold-dark);
+    }
+
+    /* Input attached button (e.g. Send OTP) */
+    .lux-input-with-btn {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-field-action {
+      flex-shrink: 0;
+      padding: 0 16px;
+      background: var(--lux-forest);
+      color: #ffffff;
+      border: none;
+      border-radius: 9px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-field-action:hover:not(:disabled) {
+      background: var(--lux-emerald);
+      transform: translateY(-1px);
+    }
+    .btn-field-action:disabled {
+      background: #c2bdb1;
+      cursor: not-allowed;
+    }
+
+    .otp-status-msg {
+      font-size: 11.5px;
+      margin-top: 5px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      display: none;
+      align-items: center;
+      gap: 6px;
+    }
+    .otp-status-msg.success {
+      background: #eef8f1;
+      color: #1a7c3e;
+      border: 1px solid #c3e6cb;
+      display: flex;
+    }
+    .otp-status-msg.error {
+      background: #fdf2f2;
+      color: #c0392b;
+      border: 1px solid #f5c6cb;
+      display: flex;
+    }
+
+    /* ── DEDICATED OTP RESEND OPTION BAR ── */
+    .otp-resend-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+      padding: 10px 14px;
+      background: #fbf9f4;
+      border: 1px dashed rgba(212,175,55,0.45);
+      border-radius: 8px;
+      font-size: 12px;
+      color: #555;
+    }
+    .btn-resend-action {
+      background: none;
+      border: none;
+      padding: 0;
+      color: var(--lux-gold-dark);
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: color 0.2s, transform 0.1s;
+    }
+    .btn-resend-action:hover:not(:disabled) {
+      color: var(--lux-forest);
+      text-decoration: underline;
+    }
+    .btn-resend-action:disabled {
+      color: #a09a8e;
+      cursor: not-allowed;
+      text-decoration: none;
+    }
+    .resend-countdown-badge {
+      display: inline-block;
+      font-size: 11px;
+      background: #ede8dc;
+      color: #777;
+      padding: 1px 7px;
+      border-radius: 10px;
+      margin-left: 3px;
+      font-weight: 600;
+    }
+    .btn-resend-action:not(:disabled) .resend-countdown-badge {
+      background: rgba(20,58,40,0.1);
+      color: var(--lux-forest);
+    }
+
+    /* Role Toggle in Register */
+    .role-toggle-wrap {
+      margin-bottom: 16px;
+    }
+    .role-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .role-opt {
+      border: 1.5px solid #ded8c9;
+      border-radius: 9px;
+      padding: 10px 12px;
+      text-align: center;
+      cursor: pointer;
+      background: #fdfdfd;
+      transition: all 0.2s;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #555;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .role-opt i { font-size: 18px; }
+    .role-opt.active {
+      border-color: var(--lux-gold);
+      background: rgba(212,175,55,0.08);
+      color: var(--lux-dark);
+      font-weight: 700;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* Primary gold button */
+    .btn-lux-gold {
+      width: 100%;
+      padding: 14px;
+      background: var(--lux-gold-grad);
+      color: var(--lux-dark);
+      font-weight: 700;
+      font-size: 13.5px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 9px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-lux-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(212,175,55,0.38);
+    }
+    .btn-lux-gold:active { transform: translateY(0); }
+
+    /* Alerts */
+    .messages-box { margin-bottom: 16px; }
+    .msg-alert {
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .msg-alert.error, .msg-alert.danger { background: #fdf2f2; color: #c0392b; border: 1px solid #f5c6cb; }
+    .msg-alert.success { background: #eef8f1; color: #1a7c3e; border: 1px solid #c3e6cb; }
+    .msg-alert.info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+
+    .field-error {
+      font-size: 11px;
+      color: #c0392b;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .auth-footer-link {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 12.5px;
+      color: #888;
+    }
+    .auth-footer-link a {
+      color: var(--lux-gold-dark);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .auth-footer-link a:hover { text-decoration: underline; }
+
+    /* Tab content hiding */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    @media (max-width: 900px) {
+      body { flex-direction: column; }
+      .auth-left { display: none; }
+      .auth-right { width: 100%; min-height: 100vh; padding: 36px 20px 48px; }
+      .form-row-2 { grid-template-columns: 1fr; gap: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LEFT DECORATIVE PANEL -->
+  <div class="auth-left">
+    <canvas id="lux-auth-particles"></canvas>
+    <span class="float-icon"><i class="bi bi-flower1"></i></span>
+    <span class="float-icon"><i class="bi bi-tree"></i></span>
+    <span class="float-icon"><i class="bi bi-basket3"></i></span>
+    <span class="float-icon"><i class="bi bi-sun"></i></span>
+
+    <div class="auth-left-inner">
+      <div class="auth-logo-ring">
+        <i class="bi bi-shield-check" style="color: var(--lux-gold);"></i>
+      </div>
+      <div class="auth-brand-name">Krishi Bazaar</div>
+      <div class="auth-brand-tag">Sovereign Agrarian Exchange</div>
+
+      <div class="auth-pillars">
+        <div class="auth-pillar">
+          <div class="auth-pillar-icon"><i class="bi bi-patch-check-fill"></i></div>
+          <div class="auth-pillar-text">
+            <h4>Verified Cultivators &amp; Patrons</h4>
+            <p>Every producer is authenticated with documented origin and zero middlemen.</p>
+          </div>
+        </div>
+        <div class="auth-pillar">
+          <div class="auth-pillar-icon"><i class="bi bi-envelope-check-fill"></i></div>
+          <div class="auth-pillar-text">
+            <h4>Direct Gmail OTP Security</h4>
+            <p>High-security verification codes delivered instantly to your verified Gmail inbox.</p>
+          </div>
+        </div>
+        <div class="auth-pillar">
+          <div class="auth-pillar-icon"><i class="bi bi-google"></i></div>
+          <div class="auth-pillar-text">
+            <h4>Fast 1-Click Google Sign-In</h4>
+            <p>Instant access to your agricultural portfolio with authenticated single sign-on.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT AUTH CONSOLE -->
+  <div class="auth-right">
+    <div class="auth-shimmer-bar"></div>
+
+    <a href="{% url 'home' %}" class="back-home-link">
+      <i class="bi bi-arrow-left"></i> Return to Homepage
+    </a>
+
+    <!-- Top Tab Switcher: Sign In vs Create Account -->
+    <div class="auth-tabs">
+      <button type="button" class="auth-tab {% if active_tab != 'register' %}active{% endif %}" id="tabBtnLogin" onclick="switchTab('login')">
+        <i class="bi bi-box-arrow-in-right"></i> Sign In
+      </button>
+      <button type="button" class="auth-tab {% if active_tab == 'register' %}active{% endif %}" id="tabBtnRegister" onclick="switchTab('register')">
+        <i class="bi bi-person-plus-fill"></i> Create Account
+      </button>
+    </div>
+
+    <!-- Messages / Flash Alerts -->
+    {% if messages %}
+    <div class="messages-box">
+      {% for message in messages %}
+      <div class="msg-alert {% if message.tags %}{{ message.tags }}{% endif %}">
+        <i class="bi bi-info-circle"></i> {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Global Non-Field Errors -->
+    {% if form and form.non_field_errors %}
+    <div class="msg-alert error">
+      <i class="bi bi-x-circle-fill"></i>
+      <div>{% for e in form.non_field_errors %}{{ e }}{% endfor %}</div>
+    </div>
+    {% endif %}
+
+    <!-- ================================================================= -->
+    <!-- TAB 1: SIGN IN PANEL                                              -->
+    <!-- ================================================================= -->
+    <div class="tab-panel {% if active_tab != 'register' %}active{% endif %}" id="panelLogin">
+      <div class="auth-heading-label">&#9670; Console Access</div>
+      <h1 class="auth-heading">Welcome Back.</h1>
+      <p class="auth-subheading">Access your agrarian exchange console with Google, password or Gmail OTP.</p>
+
+      <!-- Continue with Google Button -->
+      <a href="{% url 'google_login' %}" class="btn-google-auth">
+        <svg width="19" height="19" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+        </svg>
+        <span>Continue with Google</span>
+      </a>
+
+      <div class="auth-divider">
+        <span>OR CHOOSE SIGN-IN METHOD</span>
+      </div>
+
+      <!-- Login Sub-Toggle: Password vs OTP -->
+      <div class="login-method-toggle">
+        <button type="button" class="login-method-btn active" id="btnMethodPwd" onclick="setLoginMethod('pwd')">
+          <i class="bi bi-key me-1"></i> Password Sign In
+        </button>
+        <button type="button" class="login-method-btn" id="btnMethodOtp" onclick="setLoginMethod('otp')">
+          <i class="bi bi-envelope-at me-1"></i> Gmail OTP Sign In
+        </button>
+      </div>
+
+      <!-- Mode A: Standard Password Login Form -->
+      <form method="post" action="{% url 'login' %}" id="loginFormPwd">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next_url|default(request.GET.next if (request and request.GET) else '') }}"/>
+
+        <div class="lux-field">
+          <label class="lux-field-label" for="login_username">Username</label>
+          <div class="lux-input-wrap">
+            <input type="text" id="login_username" name="username" class="lux-input" placeholder="e.g. farmer1 or buyer1" required autocomplete="username"/>
+            <span class="lux-input-icon"><i class="bi bi-person"></i></span>
+          </div>
+        </div>
+
+        <div class="lux-field">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <label class="lux-field-label" for="login_password" style="margin-bottom:0;">Password</label>
+            <a href="{% url 'forgot_password' %}" style="font-size:11.5px; color:var(--lux-gold-dark); text-decoration:none;">Forgot password?</a>
+          </div>
+          <div class="lux-input-wrap" style="margin-top:5px;">
+            <input type="password" id="login_password" name="password" class="lux-input" placeholder="Enter your account password" required autocomplete="current-password"/>
+            <span class="lux-input-icon clickable" onclick="togglePwdVisibility('login_password', this)"><i class="bi bi-eye-slash"></i></span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-lux-gold">
+          <span>Authenticate &amp; Enter Console</span>
+          <i class="bi bi-arrow-right"></i>
+        </button>
+      </form>
+
+      <!-- Mode B: Gmail OTP Login Form -->
+      <form method="post" action="{% url 'otp_login' %}" id="loginFormOtp" style="display:none;">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next_url|default(request.GET.next if (request and request.GET) else '') }}"/>
+
+        <div class="lux-field">
+          <label class="lux-field-label" for="otp_login_email">Registered Gmail Address</label>
+          <div class="lux-input-with-btn">
+            <input type="email" id="otp_login_email" name="email" class="lux-input" placeholder="e.g. yourname@gmail.com" required autocomplete="email"/>
+            <button type="button" class="btn-field-action" id="btnLoginSendOtp" onclick="sendOtp('otp_login_email', 'btnLoginSendOtp', 'loginOtpStatus', 'login')">
+              <i class="bi bi-send-fill"></i> Send OTP
+            </button>
+          </div>
+          <div class="otp-status-msg" id="loginOtpStatus"></div>
+        </div>
+
+        <div class="lux-field">
+          <label class="lux-field-label" for="otp_login_code">Enter 6-Digit Verification Code</label>
+          <div class="lux-input-wrap">
+            <input type="text" id="otp_login_code" name="otp" class="lux-input" placeholder="000000" maxlength="6" pattern="[0-9]{6}" required autocomplete="one-time-code"/>
+            <span class="lux-input-icon"><i class="bi bi-shield-lock"></i></span>
+          </div>
+          <!-- Dedicated Resend Option Bar -->
+          <div class="otp-resend-bar" id="loginResendBar" style="display:none;">
+            <span><i class="bi bi-info-circle me-1" style="color:var(--lux-gold-dark);"></i> Didn't get the code? Check Spam or</span>
+            <button type="button" class="btn-resend-action" id="btnLoginResend" onclick="resendOtp('otp_login_email', 'btnLoginResend', 'loginOtpStatus', 'login')" disabled>
+              <i class="bi bi-arrow-clockwise"></i> Resend OTP <span class="resend-countdown-badge" id="loginTimerBadge">30s</span>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-lux-gold">
+          <span>Verify OTP &amp; Sign In</span>
+          <i class="bi bi-check-circle"></i>
+        </button>
+      </form>
+
+      <div class="auth-footer-link">
+        Don't have an account yet?
+        <a href="javascript:void(0)" onclick="switchTab('register')">Create an account &rarr;</a>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- TAB 2: CREATE ACCOUNT (REGISTRATION) PANEL                        -->
+    <!-- ================================================================= -->
+    <div class="tab-panel {% if active_tab == 'register' %}active{% endif %}" id="panelRegister">
+      <div class="auth-heading-label">&#9670; Membership Admission</div>
+      <h1 class="auth-heading">Join the Collective.</h1>
+      <p class="auth-subheading">Register with Gmail verification to trade authentic single-origin harvest produce.</p>
+
+      <!-- Continue with Google Button (for Register) -->
+      <a href="{% url 'google_login' %}" class="btn-google-auth">
+        <svg width="19" height="19" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+        </svg>
+        <span>Sign up with Google</span>
+      </a>
+
+      <div class="auth-divider">
+        <span>OR COMPLETE REGISTRATION FORM</span>
+      </div>
+
+      <form method="post" action="{% url 'register' %}" id="registerForm">
+        {% csrf_token %}
+
+        <!-- Role Selector -->
+        <div class="role-toggle-wrap">
+          <label class="lux-field-label">Select Your Role <span class="req">*</span></label>
+          <div class="role-toggle">
+            <div class="role-opt {% if form and form.role and form.role.value == 'farmer' %}{% else %}active{% endif %}" id="roleOptBuyer" onclick="selectRole('buyer')">
+              <i class="bi bi-bag-check-fill" style="color:var(--lux-gold-dark);"></i>
+              <span>Buyer (Patron / Consumer)</span>
+            </div>
+            <div class="role-opt {% if form and form.role and form.role.value == 'farmer' %}active{% endif %}" id="roleOptFarmer" onclick="selectRole('farmer')">
+              <i class="bi bi-tree-fill" style="color:#2d7d46;"></i>
+              <span>Farmer (Cultivator / Estate)</span>
+            </div>
+          </div>
+          <input type="hidden" name="role" id="regRoleInput" value="{% if form and form.role %}{{ form.role.value }}{% else %}buyer{% endif %}"/>
+        </div>
+
+        <!-- Full Name -->
+        <div class="lux-field">
+          <label class="lux-field-label" for="reg_first_name">Full Name <span class="req">*</span></label>
+          <div class="lux-input-wrap">
+            <input type="text" id="reg_first_name" name="first_name" class="lux-input" value="{% if form and form.first_name %}{{ form.first_name.value }}{% endif %}" placeholder="e.g. Ramesh Kumar" required autocomplete="name"/>
+            <span class="lux-input-icon"><i class="bi bi-person-badge"></i></span>
+          </div>
+        </div>
+
+        <!-- Gmail / Email Address with Send OTP Button -->
+        <div class="lux-field">
+          <label class="lux-field-label" for="reg_email">Gmail / Email Address <span class="req">*</span></label>
+          <div class="lux-input-with-btn">
+            <input type="email" id="reg_email" name="email" class="lux-input" value="{% if form and form.email %}{{ form.email.value }}{% endif %}" placeholder="e.g. ramesh@gmail.com" required autocomplete="email"/>
+            <button type="button" class="btn-field-action" id="btnRegSendOtp" onclick="sendOtp('reg_email', 'btnRegSendOtp', 'regOtpStatus', 'register')">
+              <i class="bi bi-send-fill"></i> Send OTP
+            </button>
+          </div>
+          <div class="otp-status-msg" id="regOtpStatus"></div>
+        </div>
+
+        <!-- 6-digit OTP code verification field -->
+        <div class="lux-field" id="regOtpField">
+          <label class="lux-field-label" for="reg_otp">
+            6-Digit Verification Code <span class="req">*</span>
+            <span style="font-weight: normal; color:#666; font-size:11px;">(Sent to your Gmail inbox)</span>
+          </label>
+          <div class="lux-input-with-btn">
+            <input type="text" id="reg_otp" name="otp" class="lux-input" placeholder="Enter 6-digit OTP" maxlength="6" pattern="[0-9]{6}" autocomplete="one-time-code"/>
+            <button type="button" class="btn-field-action" id="btnRegVerifyOtp" onclick="verifyOtp('reg_email', 'reg_otp', 'btnRegVerifyOtp', 'regOtpStatus')" style="background:#2d7d46;">
+              <i class="bi bi-check2-circle"></i> Verify
+            </button>
+          </div>
+          <!-- Dedicated Resend Option Bar -->
+          <div class="otp-resend-bar" id="regResendBar" style="display:none;">
+            <span><i class="bi bi-info-circle me-1" style="color:var(--lux-gold-dark);"></i> Didn't receive email? Check Spam or</span>
+            <button type="button" class="btn-resend-action" id="btnRegResend" onclick="resendOtp('reg_email', 'btnRegResend', 'regOtpStatus', 'register')" disabled>
+              <i class="bi bi-arrow-clockwise"></i> Resend OTP <span class="resend-countdown-badge" id="regTimerBadge">30s</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Username -->
+        <div class="lux-field">
+          <label class="lux-field-label" for="reg_username">Account Username <span class="req">*</span></label>
+          <div class="lux-input-wrap">
+            <input type="text" id="reg_username" name="username" class="lux-input" value="{% if form and form.username %}{{ form.username.value }}{% endif %}" placeholder="Choose a unique username" required autocomplete="username"/>
+            <span class="lux-input-icon"><i class="bi bi-at"></i></span>
+          </div>
+        </div>
+
+        <!-- Passwords (Grid) -->
+        <div class="form-row-2">
+          <div class="lux-field">
+            <label class="lux-field-label" for="reg_password">Password <span class="req">*</span></label>
+            <div class="lux-input-wrap">
+              <input type="password" id="reg_password" name="password" class="lux-input" placeholder="Min. 6 chars" minlength="6" required autocomplete="new-password"/>
+              <span class="lux-input-icon clickable" onclick="togglePwdVisibility('reg_password', this)"><i class="bi bi-eye-slash"></i></span>
+            </div>
+          </div>
+          <div class="lux-field">
+            <label class="lux-field-label" for="reg_confirm_password">Confirm Password <span class="req">*</span></label>
+            <div class="lux-input-wrap">
+              <input type="password" id="reg_confirm_password" name="confirm_password" class="lux-input" placeholder="Repeat password" minlength="6" required autocomplete="new-password"/>
+              <span class="lux-input-icon clickable" onclick="togglePwdVisibility('reg_confirm_password', this)"><i class="bi bi-eye-slash"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location & Phone -->
+        <div class="form-row-2">
+          <div class="lux-field">
+            <label class="lux-field-label" for="reg_location">Farm / City Location</label>
+            <div class="lux-input-wrap">
+              <input type="text" id="reg_location" name="location" class="lux-input" value="{% if form and form.location %}{{ form.location.value }}{% endif %}" placeholder="e.g. Mysuru, Karnataka"/>
+              <span class="lux-input-icon"><i class="bi bi-geo-alt"></i></span>
+            </div>
+          </div>
+          <div class="lux-field">
+            <label class="lux-field-label" for="reg_phone">Phone Number</label>
+            <div class="lux-input-wrap">
+              <input type="tel" id="reg_phone" name="phone" class="lux-input" value="{% if form and form.phone %}{{ form.phone.value }}{% endif %}" placeholder="e.g. 9876543210"/>
+              <span class="lux-input-icon"><i class="bi bi-telephone"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-lux-gold" id="btnRegisterSubmit">
+          <i class="bi bi-shield-check"></i>
+          <span>Verify &amp; Complete Registration</span>
+        </button>
+      </form>
+
+      <div class="auth-footer-link">
+        Already registered?
+        <a href="javascript:void(0)" onclick="switchTab('login')">Sign in here &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    /* ── Tab Switcher ── */
+    function switchTab(tab) {
+      const panelLogin = document.getElementById('panelLogin');
+      const panelRegister = document.getElementById('panelRegister');
+      const tabBtnLogin = document.getElementById('tabBtnLogin');
+      const tabBtnRegister = document.getElementById('tabBtnRegister');
+
+      if (tab === 'register') {
+        panelLogin.classList.remove('active');
+        panelRegister.classList.add('active');
+        tabBtnLogin.classList.remove('active');
+        tabBtnRegister.classList.add('active');
+        history.replaceState(null, null, '#register');
+      } else {
+        panelRegister.classList.remove('active');
+        panelLogin.classList.add('active');
+        tabBtnRegister.classList.remove('active');
+        tabBtnLogin.classList.add('active');
+        history.replaceState(null, null, '#login');
+      }
+    }
+
+    // Auto-detect hash in URL
+    if (window.location.hash === '#register') {
+      switchTab('register');
+    }
+
+    /* ── Role Selector ── */
+    function selectRole(role) {
+      document.getElementById('regRoleInput').value = role;
+      const optBuyer = document.getElementById('roleOptBuyer');
+      const optFarmer = document.getElementById('roleOptFarmer');
+      if (role === 'farmer') {
+        optFarmer.classList.add('active');
+        optBuyer.classList.remove('active');
+      } else {
+        optBuyer.classList.add('active');
+        optFarmer.classList.remove('active');
+      }
+    }
+
+    /* ── Login Method Switcher (Password vs OTP) ── */
+    function setLoginMethod(method) {
+      const formPwd = document.getElementById('loginFormPwd');
+      const formOtp = document.getElementById('loginFormOtp');
+      const btnPwd = document.getElementById('btnMethodPwd');
+      const btnOtp = document.getElementById('btnMethodOtp');
+
+      if (method === 'otp') {
+        formPwd.style.display = 'none';
+        formOtp.style.display = 'block';
+        btnPwd.classList.remove('active');
+        btnOtp.classList.add('active');
+      } else {
+        formOtp.style.display = 'none';
+        formPwd.style.display = 'block';
+        btnOtp.classList.remove('active');
+        btnPwd.classList.add('active');
+      }
+    }
+
+    /* ── Password Visibility Toggle ── */
+    function togglePwdVisibility(inputId, iconWrap) {
+      const input = document.getElementById(inputId);
+      const icon = iconWrap.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'bi bi-eye';
+      } else {
+        input.type = 'password';
+        icon.className = 'bi bi-eye-slash';
+      }
+    }
+
+    /* ── CSRF Token Helper ── */
+    function getCsrfToken() {
+      const input = document.querySelector('input[name="csrfmiddlewaretoken"]');
+      return input ? input.value : '';
+    }
+
+    /* ── Send & Resend OTP via AJAX ── */
+    let otpTimers = {};
+
+    function startResendCountdown(purpose, sendBtnId, resendBtnId, timerBadgeId) {
+      const sendBtn = document.getElementById(sendBtnId);
+      const resendBtn = document.getElementById(resendBtnId);
+      const timerBadge = document.getElementById(timerBadgeId);
+      const resendBar = document.getElementById(purpose === 'register' ? 'regResendBar' : 'loginResendBar');
+
+      if (resendBar) resendBar.style.display = 'flex';
+      if (resendBtn) {
+        resendBtn.disabled = true;
+        resendBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Resend OTP <span class="resend-countdown-badge" id="' + timerBadgeId + '">30s</span>';
+      }
+
+      if (otpTimers[purpose]) {
+        clearInterval(otpTimers[purpose]);
+      }
+
+      let seconds = 30;
+      const currentTimerBadge = document.getElementById(timerBadgeId);
+      if (currentTimerBadge) currentTimerBadge.textContent = seconds + 's';
+      if (sendBtn) sendBtn.innerHTML = `Sent &bull; ${seconds}s`;
+
+      otpTimers[purpose] = setInterval(() => {
+        seconds--;
+        const badge = document.getElementById(timerBadgeId);
+        if (seconds <= 0) {
+          clearInterval(otpTimers[purpose]);
+          if (sendBtn) {
+            sendBtn.disabled = false;
+            sendBtn.innerHTML = '<i class="bi bi-send-fill"></i> Send OTP';
+          }
+          if (resendBtn) {
+            resendBtn.disabled = false;
+            resendBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> <strong>Resend OTP Now</strong>';
+          }
+          if (badge) {
+            badge.textContent = 'Ready';
+          }
+        } else {
+          if (badge) badge.textContent = seconds + 's';
+          if (sendBtn) sendBtn.innerHTML = `Sent &bull; ${seconds}s`;
+        }
+      }, 1000);
+    }
+
+    async function sendOtp(emailInputId, btnId, statusId, purpose) {
+      const emailInput = document.getElementById(emailInputId);
+      const btn = document.getElementById(btnId);
+      const statusBox = document.getElementById(statusId);
+      const email = emailInput.value.trim();
+
+      if (!email || !email.includes('@') || !email.includes('.')) {
+        statusBox.className = 'otp-status-msg error';
+        statusBox.innerHTML = '<i class="bi bi-exclamation-circle-fill"></i> Please enter a valid Gmail address.';
+        statusBox.style.display = 'flex';
+        emailInput.focus();
+        return;
+      }
+
+      btn.disabled = true;
+      const originalBtnText = btn.innerHTML;
+      btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Sending...';
+      statusBox.style.display = 'none';
+
+      try {
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('purpose', purpose);
+        formData.append('csrfmiddlewaretoken', getCsrfToken());
+
+        const res = await fetch('/auth/otp/send/', {
+          method: 'POST',
+          body: formData,
+          headers: { 'x-csrf-token': getCsrfToken() }
+        });
+
+        const data = await res.json();
+        if (data.ok) {
+          statusBox.className = 'otp-status-msg success';
+          if (data.delivery === 'smtp') {
+            statusBox.innerHTML = '<i class="bi bi-check-circle-fill"></i> ' + data.message;
+          } else if (data.delivery === 'console') {
+            statusBox.innerHTML = '<i class="bi bi-info-circle-fill"></i> ' + data.message;
+          } else {
+            statusBox.innerHTML = '<i class="bi bi-exclamation-triangle-fill"></i> ' + data.message;
+          }
+          statusBox.style.display = 'flex';
+
+          const resendBtnId = purpose === 'register' ? 'btnRegResend' : 'btnLoginResend';
+          const timerBadgeId = purpose === 'register' ? 'regTimerBadge' : 'loginTimerBadge';
+          startResendCountdown(purpose, btnId, resendBtnId, timerBadgeId);
+        } else {
+          statusBox.className = 'otp-status-msg error';
+          statusBox.innerHTML = '<i class="bi bi-exclamation-triangle-fill"></i> ' + (data.error || 'Failed to send OTP.');
+          statusBox.style.display = 'flex';
+          btn.disabled = false;
+          btn.innerHTML = originalBtnText;
+        }
+      } catch (err) {
+        statusBox.className = 'otp-status-msg error';
+        statusBox.innerHTML = '<i class="bi bi-wifi-off"></i> Network error while requesting OTP.';
+        statusBox.style.display = 'flex';
+        btn.disabled = false;
+        btn.innerHTML = originalBtnText;
+      }
+    }
+
+    /* ── Dedicated Resend OTP Action ── */
+    function resendOtp(emailInputId, resendBtnId, statusId, purpose) {
+      const sendBtnId = purpose === 'register' ? 'btnRegSendOtp' : 'btnLoginSendOtp';
+      const statusBox = document.getElementById(statusId);
+      statusBox.className = 'otp-status-msg success';
+      statusBox.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Dispatching fresh verification code...';
+      statusBox.style.display = 'flex';
+      sendOtp(emailInputId, sendBtnId, statusId, purpose);
+    }
+
+    /* ── Verify OTP Inline via AJAX ── */
+    async function verifyOtp(emailInputId, otpInputId, btnId, statusId) {
+      const email = document.getElementById(emailInputId).value.trim();
+      const otpInput = document.getElementById(otpInputId);
+      const otp = otpInput.value.trim();
+      const btn = document.getElementById(btnId);
+      const statusBox = document.getElementById(statusId);
+
+      if (!otp || otp.length !== 6) {
+        statusBox.className = 'otp-status-msg error';
+        statusBox.innerHTML = '<i class="bi bi-exclamation-circle"></i> Please enter the 6-digit code received on Gmail.';
+        statusBox.style.display = 'flex';
+        otpInput.focus();
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = 'Checking...';
+
+      try {
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('otp', otp);
+        formData.append('csrfmiddlewaretoken', getCsrfToken());
+
+        const res = await fetch('/auth/otp/verify/', {
+          method: 'POST',
+          body: formData,
+          headers: { 'x-csrf-token': getCsrfToken() }
+        });
+
+        const data = await res.json();
+        if (data.ok) {
+          statusBox.className = 'otp-status-msg success';
+          statusBox.innerHTML = '<i class="bi bi-patch-check-fill"></i> Verified! Your Gmail address is confirmed.';
+          statusBox.style.display = 'flex';
+          btn.innerHTML = '<i class="bi bi-check-lg"></i> Verified';
+          btn.style.background = '#1a7c3e';
+          otpInput.style.borderColor = '#1a7c3e';
+        } else {
+          statusBox.className = 'otp-status-msg error';
+          statusBox.innerHTML = '<i class="bi bi-x-circle-fill"></i> ' + (data.error || 'Invalid code.');
+          statusBox.style.display = 'flex';
+          btn.disabled = false;
+          btn.innerHTML = '<i class="bi bi-check2-circle"></i> Verify';
+        }
+      } catch (err) {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-check2-circle"></i> Verify';
+      }
+    }
+
+    /* ── Left Particle Canvas ── */
+    (function(){
+      const canvas = document.getElementById('lux-auth-particles');
+      if(!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let W, H, particles = [];
+      function resize(){
+        W = canvas.width = canvas.offsetWidth;
+        H = canvas.height = canvas.offsetHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      for(let i=0;i<55;i++){
+        particles.push({
+          x: Math.random()*1000,
+          y: Math.random()*1000,
+          r: Math.random()*1.8+0.4,
+          vx: (Math.random()-0.5)*0.25,
+          vy: -(Math.random()*0.5+0.2),
+          a: Math.random()
+        });
+      }
+
+      function draw(){
+        ctx.clearRect(0,0,W,H);
+        particles.forEach(p=>{
+          ctx.beginPath();
+          ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          ctx.fillStyle = `rgba(212,175,55,${p.a*0.6})`;
+          ctx.fill();
+          p.x += p.vx;
+          p.y += p.vy;
+          if(p.y<-5) p.y = H+5;
+          if(p.x<-5) p.x = W+5;
+          if(p.x>W+5) p.x = -5;
+          p.a = 0.3 + 0.7*Math.abs(Math.sin(Date.now()*0.001 + p.x));
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+  </script>
+</body>
+</html>

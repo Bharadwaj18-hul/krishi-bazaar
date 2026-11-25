@@ -1,0 +1,47 @@
+# ── Python ──────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ── Virtual Environments ─────────────────────────────────
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ── Environment Variables & Secrets ──────────────────────
+.env
+.env.local
+*.env
+
+# ── Local database (create demo data with: python seed.py) ─
+*.sqlite3
+*.db
+
+# ── Photos uploaded by farmers on a running site (the demo photos stay in git) ──
+media/products/up_*
+
+# ── Logs & Cache ─────────────────────────────────────────
+*.log
+.coverage
+htmlcov/
+.pytest_cache/
+
+# ── OS & IDE Metadata ────────────────────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+*.iml
