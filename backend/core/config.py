@@ -26,7 +26,9 @@ PORT = int(os.getenv("PORT", "8000"))
 # --- Database -----------------------------------------------------------------
 DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'db.sqlite3'}")
 if DATABASE_URL.startswith("postgres://"):  # Render/Heroku style URL
-    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+psycopg2://", 1)
+elif DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+psycopg2://", 1)
 
 # --- Sessions / security -------------------------------------------------------
 SECRET_KEY = os.getenv("SECRET_KEY", "").strip()
